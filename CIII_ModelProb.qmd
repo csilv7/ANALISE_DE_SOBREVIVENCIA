@@ -1,0 +1,70 @@
+```{=html}
+<style>
+  body{text-align: justify}
+</style>
+```
+
+:::: progress
+::: {.progress-bar style="width: 100%;"}
+:::
+::::
+
+# Técnicas Paramétricas - Modelos Probabilísticos
+
+## Introdução
+
+## Modelo Exponencial
+
+### Distribuição Exponencial
+
+### Simulações
+
+Simularemos uma amostra aleatória proveniente de uma distribuição exponencial.
+
+```{r}
+# -------------
+# [1] Simulação
+# -------------
+
+# Lambda verdadeiro
+lambda <- 0.5
+
+# Definindo semente para reprodutibilidade
+set.seed(123)
+
+# Definindo o tamanho da amostra
+n <- 1000
+
+# Simulando
+survival_times <- rexp(n, rate = lambda)
+```
+
+Após simulação, é exibido o histogrma dos dados na @fig-histExp
+
+```{r}
+#| fig-cap: "Histograma dos dados simulados a partir de uma Distribuição Exponecial"
+#| label: fig-histExp
+
+# -------------------------
+# [2] Visualização do dados
+# -------------------------
+
+library(ggplot2)
+
+df <- data.frame(TIME = survival_times)
+
+ggplot(data = df, aes(x = TIME)) +
+  geom_histogram(bins = 20, fill = "gray", color = "black") +
+  labs(x = "Dados Simulados", y = "Frequência") +
+  theme_minimal()
+```
+
+
+## Modelo Weibull
+
+### Distribuição Weibull
+
+:::: progress
+::: {.progress-bar style="width: 100%;"}
+:::
+::::

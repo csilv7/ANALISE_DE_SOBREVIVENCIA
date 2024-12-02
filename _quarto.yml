@@ -1,0 +1,66 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Análise de Sobrevivência"
+  subtitle: "Iniciação Ciêntifica - PIBIC 2024 (UFPA)"
+  date: "DD-MM-AAAA"
+  
+  author:
+    name: "Breno Cauã Rodrigues da Silva"
+    orcid: 0009-0005-9740-2069
+    corresponding: true
+    affiliations:
+      - name: "Universidade Federal do Pará"
+      - name: "Instituto de Ciências Exatas e Naturais"
+      - name: "Falculdade de Estatística"
+      
+  page-footer:
+    left: |
+      Copyright: (**SILVA, B.C.R - 2024**)
+    right: |
+      Construído <a href="https://quarto.org/"> Pacote Quarto no R4.3</a>.
+  repo-url : https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA
+  repo-subdir: book
+  repo-branch: main
+  repo-actions: [edit, issue, source]
+  downloads: [pdf, docx]
+  sharing: [twitter, facebook]
+  page-navigation: true
+  chapters:
+    - index.qmd
+    - CI_ConceitosBasicos.qmd
+    - CII_EstimNaoParam.qmd
+    - CIII_ModelProb.qmd
+
+comments:
+  hypothesis: true
+
+bibliography: references.bib
+
+format:
+  html:
+    number-sections: true
+    df-print: paged
+    theme:
+      light: [blue,custom.scss]
+      dark:  [cyborg,custom.scss]
+    code-fold: true
+    code-tools: true
+    code-link: true
+    toc-title: Índice
+    toc-location: right
+  pdf:
+    documentclass: scrreprt
+    number-sections: true
+    pdf-engine: xelatex
+    fontsize: 12pt
+    geometry: margin=2.5cm
+  docx:
+    number-sections: true
+
+execute:
+  echo: true
+
+lang: pt

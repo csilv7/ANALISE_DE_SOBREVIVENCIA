@@ -1,0 +1,162 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Análise de Sobrevivência",
+    "section": "",
+    "text": "Prefácio",
+    "crumbs": [
+      "Prefácio"
+    ]
+  },
+  {
+    "objectID": "index.html#resumo",
+    "href": "index.html#resumo",
+    "title": "Análise de Sobrevivência",
+    "section": "Resumo",
+    "text": "Resumo",
+    "crumbs": [
+      "Prefácio"
+    ]
+  },
+  {
+    "objectID": "index.html#abstract",
+    "href": "index.html#abstract",
+    "title": "Análise de Sobrevivência",
+    "section": "Abstract",
+    "text": "Abstract",
+    "crumbs": [
+      "Prefácio"
+    ]
+  },
+  {
+    "objectID": "CI_ConceitosBasicos.html",
+    "href": "CI_ConceitosBasicos.html",
+    "title": "1  Conceitos Básicos e Exemplos",
+    "section": "",
+    "text": "1.1 Introdução\nO primeiro capítulo do livro de Enrico Antônio Colosimo e Suely Ruiz Giolo tem como objetivo apresentar alguns conceitos e fundamentos de uma das áreas da Estatística e Análise de Dados que mais cresceram nas últimas duas décadas do século passado. Esse crescimento foi impulsionado pelo desenvolvimento e avanço de técnicas, juntamente com o progresso computacional.\nNa Análise de Sobrevivência, a variável resposta é, geralmente, o tempo até a ocorrência de um determinado evento. De forma mais precisa, trata-se de uma técnica estatística utilizada para modelar e entender o tempo até que ocorra um evento de interesse, denominado tempo de falha. Para um entendimento inicial, Colosimo e Giolo dão os seguintes exemplos: tempo até a morte de um paciente, tempo até a cura ou até a recidiva de uma doença.\nUma questão que pode surgir é: por que não usar outras técnicas estatísticas? O uso de outras abordagens não é adequado para dados de sobrevivência devido à característica desses dados, que é a presença de censura. De forma simples, censura refere-se à observação parcial da resposta, o que ocorre quando o acompanhamento do paciente é interrompido por alguma razão. Sendo um conceito chave na análise de sobrevivência, podemos defini-la como a situação em que o tempo de falha real não é conhecido, apenas que ele excede certo ponto.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Conceitos Básicos e Exemplos</span>"
+    ]
+  },
+  {
+    "objectID": "CI_ConceitosBasicos.html#tempo-de-falha",
+    "href": "CI_ConceitosBasicos.html#tempo-de-falha",
+    "title": "1  Conceitos Básicos e Exemplos",
+    "section": "1.2 Tempo de Falha",
+    "text": "1.2 Tempo de Falha\nEm Análise de Sobrevivência, é essencial definir alguns pontos fundamentais para o estudo. O primeiro deles é o tempo de início do estudo, que deve ser definido com precisão, garantindo que os indivíduos sejam comparáveis na origem do estudo, diferenciando-se apenas nas medidas das covariáveis. Existem muitas alternativas para definir o tempo inicial. Geralmente, esse tempo é o tempo real ou “de relógio”. Porém, em outras áreas, como a Engenharia, outras medidas podem ser utilizadas. Colosimo e Giolo fornecem exemplos como número de ciclos, quilometragem de um carro ou qualquer outra medida de carga.\nOutro ponto importante relacionado ao Tempo de Falha é a definição do evento de interesse. Normalmente, esses eventos correspondem a situações indesejáveis, por isso são chamados de falhas. A definição da falha deve ser clara e precisa. Destaca-se um trecho do livro:\n\n*“Em algumas situações, a definição de falha já é clara, como morte ou recidiva, mas em outras pode assumir termos ambíguos. Por exemplo, fabricantes de produtos alimentícios desejam saber o tempo de vida de seus produtos expostos em balcões frigoríficos de supermercados. O tempo de falha vai do momento de exposição (chegada ao supermercado) até o produto se tornar ‘inapropriado para consumo’. Esse evento deve ser claramente definido antes do início do estudo. Por exemplo, o produto é considerado inapropriado para consumo quando atinge uma concentração específica de microrganismos por* \\(mm^{2}\\) de área.”",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Conceitos Básicos e Exemplos</span>"
+    ]
+  },
+  {
+    "objectID": "CI_ConceitosBasicos.html#censura",
+    "href": "CI_ConceitosBasicos.html#censura",
+    "title": "1  Conceitos Básicos e Exemplos",
+    "section": "1.3 Censura",
+    "text": "1.3 Censura\nFrequentemente, estudos clínicos que assumem a resposta como uma variável temporal são prospectivos e de longa duração. Mesmo sendo longos, esses estudos costumam terminar antes que todos os indivíduos venham a falhar.\nUma característica comum a esses estudos é a presença de censura, ou seja, observações incompletas ou parciais. É importante ressaltar que, mesmo censuradas, essas observações fornecem informações valiosas sobre o tempo de vida dos pacientes. Colosimo e Giolo destacam a importância de manter os dados censurados na análise:\n\n“Ressalta-se que, mesmo censurados, todos os resultados provenientes de um estudo de sobrevivência devem ser incluídos na análise estatística. Duas razões justificam esse procedimento: (i) mesmo sendo incompletas, as observações censuradas fornecem informações sobre o tempo de vida dos pacientes; (ii) a exclusão das censuras no cálculo das estatísticas pode levar a conclusões enviesadas.”\n\nSão apresentados três tipos principais de censura:\n\nCensura Tipo I: O estudo é encerrado após um período de tempo pré-estabelecido.\nCensura Tipo II: O estudo termina quando o evento de interesse ocorre em um número específico de indivíduos.\nCensura Aleatória: Ocorre quando um paciente é retirado do estudo antes do evento.\n\nNo livro, a Figura 1.1 ilustra esses tipos de censura, todos conhecidos como censura à direita, pois o evento ocorre após o tempo registrado. Contudo, outros tipos de censura, como à esquerda e intervalar, também são possíveis.\nCensura à esquerda ocorre quando o evento já aconteceu antes da observação. Um exemplo do livro é um estudo sobre a idade em que as crianças aprendem a ler em determinada comunidade:\n\n“Quando os pesquisadores começaram a pesquisa, algumas crianças já sabiam ler e não se lembravam com que idade isso ocorreu, caracterizando observações censuradas à esquerda.”\n\nNo mesmo estudo, há censura à direita para crianças que não sabiam ler quando os dados foram coletados. Neste caso, os tempos de vida são considerados duplamente censurados (Turnbull, 1974).\nDe forma geral, a censura intervalar ocorre em estudos com visitas periódicas espaçadas, onde só se sabe que a falha ocorreu dentro de um intervalo de tempo. Quando o tempo de falha \\(T\\) é impreciso, é dito que ele pertence a um intervalo \\(T \\in (L, U]\\). Esses dados são conhecidos como sobrevivência intervalar ou dados de censura intervalar. Note que tempos exatos de falha, sejam censura à direita ou à esquerda, são casos especiais de sobrevivência intervalar com \\(L = U\\). Em particular, \\(U = 0\\) para censura à direita e \\(L = 0\\) para censura à esquerda (Lindsey et al., 1998). veja a nota a seguir, que enfatiza um trecho que merece atenção no livro.\n\nNota: “A presença de censura traz desafios para a análise estatística. A censura do Tipo II é, em princípio, mais tratável que os outros tipos, mas para situações simples, que raramente ocorrem em estudos clínicos (Lawless, 1982). Na prática, utiliza-se resultados assintóticos para a análise dos dados de sobrevivência.”",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Conceitos Básicos e Exemplos</span>"
+    ]
+  },
+  {
+    "objectID": "CI_ConceitosBasicos.html#dados-truncados",
+    "href": "CI_ConceitosBasicos.html#dados-truncados",
+    "title": "1  Conceitos Básicos e Exemplos",
+    "section": "1.4 Dados Truncados",
+    "text": "1.4 Dados Truncados\nTruncamento é uma característica de alguns estudos de sobrevivência que, muitas vezes, é confundida com censura. Ele ocorre quando certos indivíduos são excluídos do estudo devido a uma condição específica. Nesses casos, os pacientes só são incluídos no acompanhamento após passarem por um determinado evento, em vez de serem acompanhados desde o início.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Conceitos Básicos e Exemplos</span>"
+    ]
+  },
+  {
+    "objectID": "CI_ConceitosBasicos.html#representação-dos-dados-de-sobrevivência",
+    "href": "CI_ConceitosBasicos.html#representação-dos-dados-de-sobrevivência",
+    "title": "1  Conceitos Básicos e Exemplos",
+    "section": "1.5 Representação dos Dados de Sobrevivência",
+    "text": "1.5 Representação dos Dados de Sobrevivência\nSeja uma amostra aleatória de tamanho \\(n\\), o \\(i\\)-ésimo indivíduo no estudo é representado, em geral, pelo par \\((t_{i}, \\delta_{i})\\), onde \\(t_{i}\\) é o tempo de falha ou censura, indicado pela variável binária \\(\\delta_{i}\\), definida como:\n\\[\n\\delta_{i} = \\begin{cases}\n1, & \\text{se } t_{i} \\text{ é um tempo de falha} \\\\\n0, & \\text{se } t_{i} \\text{ é um tempo de censura}.\n\\end{cases}\n\\]\nPortanto, a variável resposta em análise de sobrevivência é representada por duas colunas no conjunto de dados.\nSe o estudo também incluiu covariáveis, os dados são representados por \\((t_{i}, \\delta_{i}, \\mathbf{x}_i)\\). Caso a censura seja intervalar, a representação é \\((l_{i}, u_{i}, \\delta_{i}, \\mathbf{x}_i)\\).\n\nNota: A Seção 1.5 do livro apresenta exemplos de Dados de Sobrevivência.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Conceitos Básicos e Exemplos</span>"
+    ]
+  },
+  {
+    "objectID": "CI_ConceitosBasicos.html#especificando-o-tempo-de-sobrevivência",
+    "href": "CI_ConceitosBasicos.html#especificando-o-tempo-de-sobrevivência",
+    "title": "1  Conceitos Básicos e Exemplos",
+    "section": "1.6 Especificando o Tempo de Sobrevivência",
+    "text": "1.6 Especificando o Tempo de Sobrevivência\nSeja \\(T\\), uma variável aleatória (va) que, na maioria dos casos é contínua, representa o tempo de falha, assim, \\(T &gt; 0\\). Tal variável é geralmente pela sua função risco ou pela função de taxa de falha (ou risco). Tais funções, e outras relacionadas, são usados ao decorrer do processo de análise de dados de sobrevivência. A seguir, algumas definições.\n\n1.6.1 Função de Sobrevivência\nEsta é uma das principais funções probabilísticas usadas em análise de sobrevivência. A função sobrevivência é definida como a probabilidade de uma observação não falhar até certo ponto \\(t\\), ou seja a probabilidade de uma observação sobreviver ao tempo \\(t\\). Em probabilidade, isso pode ser escrito como:\n\\[\\begin{equation}\n    S(t) = P(T &gt; t),\n\\end{equation}\\]\numa conclusão a qual podemos chegar, é que a probabilidade de uma observação não sobreviver até o tempo \\(t\\), é a acumulada até o ponto \\(t\\), logo,\n\\[\\begin{equation}\n    F(t) = 1 - S(t).\n\\end{equation}\\]\n\n\n1.6.2 Função de Taxa de Falha ou de Risco\nA probabilidade da falha ocorrer em um intervalo de tempo \\([t_{1}, t_{2})\\) pode ser expressa em termos da função de sobrevivência como: \\[S(t_{1}) - S(t_{2}).\\]\nA taxa de falha no intervalo \\([t_{1}, t_{2})\\) é definida como a probabilidade de que a falha ocorra neste intervalo, dado que não ocorreu antes de \\(t_{1}\\), dividida pelo comprimento do intervalo. Assim, a taxa de falha no intervalo \\([t_{1}, t_{2})\\) é expressa por \\[\\dfrac{S(t_{1}) - S(t_{2})}{(t_{2} - t_{1})S(t_{1})}.\\]\nDe forma geral, redefinindo o intervalo como \\([t, t + \\Delta t)\\) a expressão assume a seguinte forma:\n\\[\\begin{equation}\n    \\lambda(t) = \\dfrac{S(t) - S(t + \\Delta_{t})}{\\Delta t \\text{ } S(t)}\n\\end{equation}\\]\nAssumindo \\(\\Delta t\\) bem pequeno, \\(\\lambda(t)\\) representa a taxa de falha instantânea no tempo \\(t\\) condicional à sobrevivência até o tempo \\(t\\). Observe que as taxas de falha são números positivos, mas sem limite superior. A função de taxa de falha \\(\\lambda(t)\\) é bastante útil para descrever a distribuição do tempo de vida de pacientes. Ela descreve a forma em que a taxa instantânea de falha muda com o tempo. A função de taxa de falha de \\(T\\) é, então, definida como:\n\\[\\begin{equation}\n    \\lambda(t) = \\lim_{\\Delta t \\to 0} \\dfrac{P(t \\leq T \\leq t + \\Delta t | T \\geq t)}{\\Delta t}\n\\end{equation}\\]\nA Figura 1.3, do livro, mostra três funções de taxa de falha. A função crescente indica que a taxa de falha do paciente aumenta com o transcorrer do tempo. Este comportamento mostra um efeito gradual de envelhecimento. A função constante indica que a taxa de falha não se altera com o passar do tempo. A função decrescente mostra que a taxa de falha diminui à medida que o tempo passa.\nSabe-se, ainda, que a taxa de falha para o tempo de vida de seres humanos é uma combinação das curvas apresentadas na Figura 1.3 em diferentes períodos de tempo. Ela é conhecida como curva da banheira e tem uma taxa de falha decrescente no período inicial, representando a mortalidade infantil, constante na faixa intermediária e crescente na porção final. Uma representação desta curva é mostrada na Figura 1.4, do livro.\nA função de taxa de falha é mais informativa do que a função de sobrevivência. Diferentes funções de sobrevivência podem ter formas semelhantes, enquanto as respectivas funções de taxa de falha podem diferir drasticamente. Desta forma, a modelagem da função de taxa de falha é um importante método para dados de sobrevivência.\n\n\n1.6.3 Função de Taxa de Falha Acumulada\nOutra função útil em análise de dados de sobrevivência é a função taxa de falha acumulada. Esta função, como o próprio nome sugere, fornece a taxa de falha acumulada do indivíduo e é definida por:\n\\[\\begin{equation}\n    \\Lambda(t) = \\int_{0}^{t} \\lambda(u) du.\n\\end{equation}\\]\nA função de taxa de falha acumulada, \\(\\Lambda(t)\\), não têm uma interpretação direta, mas pode ser útil na avaliação da função de maior interesse que é a função de taxa de falha, \\(\\lambda(t)\\). Isto acontece essencialmente na estimação não-paramétrica em que \\(\\Lambda(t)\\) apresenta um estimador com propriedades ótimas e \\(\\lambda(t)\\) é difícil de ser estimada.\n\n\n1.6.4 Tempo Médio e Vida Média Residual\nOutras duas quantidades de interesse em análise de sobrevivência são: o tempo médio de via e a vida média residual. A primeira é obtida pela área sob a função de sobrevivência. Isto é,\n\\[\\begin{equation}\n    t_{m} = \\int_{0}^{\\infty} S(t) dt.\n\\end{equation}\\]\nJá a vida média residual é definida condicional a um certo tempo de vida \\(t\\). Ou seja, para indivíduos com idade \\(t\\) está quantidade mede o tempo médio restante de vida e é, então, a área sob a curva de sobrevivência à direita do tempo \\(t\\) dividida por \\(S(t)\\). Isto é,\n\\[\\begin{equation}\n    \\text{vmr}(t) = \\dfrac{\\int_{0}^{\\infty} (u - t) f(u) du}{S(t)} = \\dfrac{\\int_{0}^{\\infty} S(u) du}{S(t)},\n\\end{equation}\\]\nsendo \\(f(\\cdot)\\) a função densidade de \\(T\\). Observe que \\(\\text{vmr}(0) = t_{m}\\).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Conceitos Básicos e Exemplos</span>"
+    ]
+  },
+  {
+    "objectID": "CI_ConceitosBasicos.html#relações-entre-as-funções",
+    "href": "CI_ConceitosBasicos.html#relações-entre-as-funções",
+    "title": "1  Conceitos Básicos e Exemplos",
+    "section": "1.7 Relações entre as Funções",
+    "text": "1.7 Relações entre as Funções\nPara \\(T\\) uma variável aleatória contínua e não-negativa, tem-se, em termos das funções definidas anteriormente, algumas relações matemáticas importantes entre elas, a saber: \\[\\lambda(t) = \\dfrac{f(t)}{S(t)} = - \\dfrac{d}{dt} \\left[ \\log S(t) \\right],\\]\n\\[\\Lambda(t) = \\int_0^{t} \\lambda(u) du = - \\log S(t)\\] e \\[S(t) = \\exp \\left\\{ - \\Lambda(t) \\right\\} = \\exp \\left\\{ - \\int_0^{t} \\lambda(u) du \\right\\}\\]\nTais relações mostram que o conhecimento de uma das funções, por exemplo \\(S(t)\\), implica no conhecimento das demais, isto é, \\(F(t)\\), \\(f(t)\\), \\(\\lambda(t)\\) e \\(\\Lambda(t)\\). Outras relações envolvendo estas funções são as seguintes: \\[ S(t) = \\dfrac{\\text{vmr}(0)}{\\text{vmr}(t)} \\exp \\left\\{ - \\int_{0}^{t} \\dfrac{du}{\\text{vmr}(u)} \\right\\} \\] e \\[\\lambda(t) = \\left( \\dfrac{d \\text{ } [\\text{vmr}(t)]}{dt} + 1 \\right) / \\text{vmr}(t).\\]",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Conceitos Básicos e Exemplos</span>"
+    ]
+  },
+  {
+    "objectID": "CII_EstimNaoParam.html",
+    "href": "CII_EstimNaoParam.html",
+    "title": "2  Técnicas Não Paramétricas",
+    "section": "",
+    "text": "2.1 Introdução\nO segundo capítulo do livro que está sendo usado como um dos livros-base, apresenta as técnicas não-paramétricas utilizadas para a análise de dados de sobrevivência. Essas técnicas são empregadas quando não se faz suposições sobre a forma específica da distribuição dos tempos de falha, sendo particularmente úteis para dados censurados.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Técnicas Não Paramétricas</span>"
+    ]
+  },
+  {
+    "objectID": "CII_EstimNaoParam.html#o-estimador-de-kaplan-meier",
+    "href": "CII_EstimNaoParam.html#o-estimador-de-kaplan-meier",
+    "title": "2  Técnicas Não Paramétricas",
+    "section": "2.2 O Estimador de Kaplan-Meier",
+    "text": "2.2 O Estimador de Kaplan-Meier\nProposto em 1958 por Edward L. Kaplan e Paul Meier. É um estimador não-paramétrico utilizado para estimar a função de sobrevivência, \\(S(t)\\). Tal estimador também é chamado de de . O Estimador de Kaplan-Meier é uma adaptação a \\(S(t)\\) empiríca que, na ausência de censura nos dados, é definida como:\n\\[\\hat{S}(t) = \\dfrac{\\text{nº de observações que não falharam até o tempo } t}{\\text{nº total de observações no estudo}}.\\]\n\\(\\hat{S}(t)\\) é uma função que tem uma formato gráfico de escada com degraus nos tempos observados de falha de tamanho \\(1/n\\), onde \\(n\\) é o tamanho amostral.\nO processo utilizado até se obter a estimativa de Kaplan-Meier é um processo passo a passo, em que o próximo passo depende do anterior. De forma suscetível, para qualquer \\(t\\), \\(S(t)\\) pode ser escrito em termos de probabilidades condicionais. Suponha que existam \\(n\\) pacientes no estudo e \\(k (\\leq n)\\) falhas distintas nos tempos \\(t_{1} \\leq t_{2} \\leq \\cdots \\leq t_{k}\\). Considerando \\(S(t)\\) uma função discreta com probabilidade maior que zero somente nos tempos de falha \\(t_{j}\\), \\(j = 1, \\cdots, k\\), tem-se que:\n\\[\nS(t_{j}) = (1 - q_{1}) (1 - q_{2}) \\cdots (1 - q_{j}),\n\\tag{2.1}\\]\nem que \\(q_{j}\\) é a probabilidade de um indivíduo morrer no intervalo \\([t_{j-1}, t{j})\\) sabendo que ele não morreu até \\(t_{j-1}\\) e considerando \\(t_{0} = 0\\). Ou seja, pode se escrever \\(q_{j}\\) como:\n\\[\nq_{j} = P(T \\in [t_{j-1}, t{j}) | T \\geq t_{j-1}),\n\\tag{2.2}\\]\npara \\(j = 1, \\cdots, k\\).\nA expressão geral do estimador de Kaplan-Meier pode ser apresentada após estas considerações preliminares, Formalmente, considere:\n\n\\(t_{1} \\leq t_{2} \\leq \\cdots \\leq t_{k}\\), os \\(k\\) tempos distintos e ordenados de falha;\n\\(d_{j}\\) o número de falhas em \\(t_{j}\\), \\(j = 1, \\cdots, k\\);\n\\(n_{j}\\) o número de indivíduos sob risco em \\(t_{j}\\), ou seja, os indivíduos que não falharam e não foram censurados até o instante imediatamente anterior a \\(t_{j}\\).\n\nCom isso, pode-se definir o estimador de Kaplan-Meier como:\n\\[\n\\hat{S}_{KM}(t) = \\prod_{j \\text{ : } t_{j} &lt; t} \\left( \\dfrac{n_{j} - d_{j}}{n_{j}} \\right) = \\prod_{j \\text{ : } t_{j} &lt; t} \\left( 1 - \\dfrac{d_{j}}{n_{j}} \\right)\n\\tag{2.3}\\]\nDe forma intuitiva, por assim dizer, a Equação 2.3 é proveniente da Equação 2.1, sendo está, uma decomposição de \\(S(t)\\) em termos \\(q_{j}\\)’s. Assim, a Equação 2.3 é justificada se os \\(q_{j}\\)’s forem estimados por \\(d_{j}/n_{j}\\), que em palavras está expresso na Equação 2.2. No artigo original de 1958, Kaplan e Meier provam que a Equação 2.3 é um estimador de máxima verossimilhança para \\(S(t)\\). Seguindo certos passos, é possível provar que que \\(\\hat{S}_{KM}(t)\\) é um estimador de máxima verossimilhança de \\(S(t)\\). Supondo que \\(d_{j}\\) observações falham no tempo tempo \\(t_{j}\\), para \\(j = 1, \\cdots, k\\), e \\(m_{j}\\) observações são censuradas no intervalo \\([t{j}, t_{j+1})\\), nos tempos \\(t_{j1}, \\cdots, t_{jm_{j}}\\). A probabilidade de falha no tempo \\(t_{j}\\) é, então,\n\\[S(t_{j}) - S(t_{j}+),\\]\ncom \\(S(t_{j}+) = \\lim_{\\Delta t \\to 0+} S(t_{j} + \\Delta t)\\), \\(j = 1, \\cdots, k\\). Por outro lado, a contribuição para a função de verossimilhança de um tempo de sobrevivência censurado em \\(t_{jl}\\) para \\(l = 1, \\cdots, m_{j}\\), é:\n\\[P(T &gt; t_{jl}) = S(t_{jl}+).\\]\nA função de verossimilhança pode, então, ser escrita como:\n\\[L(S(\\cdot)) = \\prod_{j = 0}^{k} \\left\\{ [ S(t_{j}) - S(t_{j}+) ]^{d_{j}} \\prod_{l = 1}^{m_{j}} S(t_{jl}+) \\right\\}.\\]\nCom isso, é possível provar que \\(S(t)\\) que maximiza \\(L(S(\\cdot))\\) é exatamente a expressão dada pela Equação 2.3.\n\n2.2.1 Propriedades do Estimador de Kaplan-Meier\nComo um estimador de máxima verossimilhança, o estimador de Kaplan-Meier têm interessantes propriedades. As principais são:\n\nÉ não-viciado para grandes amostras;\nÉ fracamente consistente;\nConverge assintoticamente para um processo gaussiano.\n\nA consistência e normalidade assintótica de \\(\\hat{S}_{KM}(t)\\) foram provadas sob certas condições de regularidade, por Breslow e Crowley (1974) e Meier (1975) e, no artigo original Kaplan e Meier (1958) mostram que \\(\\hat{S}_{KM}(t)\\) é o estimador de máxima verossimilhança, como já dito.\n\n\n2.2.2 Variância do Estimador de Kaplan-Meier\nPara que se possa construir intervalos de confiança e testar hipóteses para \\(S(t)\\), se faz necessário ter conhecimento quanto variabilidade e precisão do estimador de Kaplan-Meier. Este estimador, assim como outros, está sujeito a variações que devem ser descritas em termos de estimações intervalares. A expressão assintótica do estimador de Kaplan-Meier é dada pela Equação 2.4.\n\\[\n\\hat{Var}[\\hat{S}_{KM}(t)] = [\\hat{S}_{KM}(t)]^{2} \\sum_{j \\text{ : } t_{j} &lt; t} \\dfrac{d_{j}}{n_{j} (n_{j} - d_{j})}\n\\tag{2.4}\\]\nA expressão dada na Equação 2.4, é conhecida como fórmula de Greenwood e pode ser obtida a partir de propriedades do estimador de máxima verossimilhança. Os detalhes da obtenção da (Equação 2.4 estão disponíveis em Kalbfleisch e Prentice (1980, pag. 12-14).\nComo \\(\\hat{S}_{KM}(t)\\), para um \\(t\\) fixo, tem distribuição assintóticamente Normal. O intervalo de confiança com \\(100(1 - \\alpha)\\)% de confiança para \\(\\hat{S}_{KM}(t)\\) é expresso por:\n\\[\\hat{S}_{KM}(t) \\pm z_{\\alpha/2} \\sqrt{\\hat{Var}[\\hat{S}_{KM}(t)]}.\\]\nVale salientar que para valores extremos de \\(t\\), este intervalo de confiança pode apresentar limites que não condizem com a teoria de probabilidades. Para solucionar tal problema, aplica-se uma transformação em \\(S(t)\\) como, por exemplo, \\(\\hat{U}(t) = \\log{[-\\log{(\\hat{S}_{KM}(t)})]}\\). Esta transformação foi sugerida por Kalbfleisch e Prentice (1980), tendo sua variância estimada por:\n\\[\n\\hat{Var}[\\hat{U}(t)] = \\dfrac{ \\sum_{j \\text{ : } t_{j} &lt; t} \\dfrac{d_{j}}{n_{j} (n_{j} - d_{j})} }{ \\left[\\sum_{j \\text{ : } t_{j} &lt; t} \\log{\\left( \\dfrac{n_{j} - d_{j}}{n_{j}} \\right)}\\right]^{2}} = \\dfrac{ \\sum_{j \\text{ : } t_{j} &lt; t} \\dfrac{d_{j}}{n_{j} (n_{j} - d_{j})} }{ \\left[ \\log{\\hat{S}_{KM}(t)} \\right]^{2} }\n\\]",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Técnicas Não Paramétricas</span>"
+    ]
+  },
+  {
+    "objectID": "CII_EstimNaoParam.html#outros-estimadores-não-parâmetricos",
+    "href": "CII_EstimNaoParam.html#outros-estimadores-não-parâmetricos",
+    "title": "2  Técnicas Não Paramétricas",
+    "section": "2.3 Outros Estimadores Não Parâmetricos",
+    "text": "2.3 Outros Estimadores Não Parâmetricos\nTexto a ser preenchido…\n\n2.3.1 Estimador de Nelson-Aalen\nTexto a ser preenchido…\n\n\n2.3.2 Estimador da Tabela de Vida ou Atuarial\nTexto a ser preenchido…",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Técnicas Não Paramétricas</span>"
+    ]
+  },
+  {
+    "objectID": "CIII_ModelProb.html",
+    "href": "CIII_ModelProb.html",
+    "title": "3  Técnicas Paramétricas - Modelos Probabilísticos",
+    "section": "",
+    "text": "3.1 Introdução",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Técnicas Paramétricas - Modelos Probabilísticos</span>"
+    ]
+  },
+  {
+    "objectID": "CIII_ModelProb.html#modelo-exponencial",
+    "href": "CIII_ModelProb.html#modelo-exponencial",
+    "title": "3  Técnicas Paramétricas - Modelos Probabilísticos",
+    "section": "3.2 Modelo Exponencial",
+    "text": "3.2 Modelo Exponencial\n\n3.2.1 Distribuição Exponencial\n\n\n3.2.2 Simulações\nSimularemos uma amostra aleatória proveniente de uma distribuição exponencial.\n\n\nCódigo\n# -------------\n# [1] Simulação\n# -------------\n\n# Lambda verdadeiro\nlambda &lt;- 0.5\n\n# Definindo semente para reprodutibilidade\nset.seed(123)\n\n# Definindo o tamanho da amostra\nn &lt;- 1000\n\n# Simulando\nsurvival_times &lt;- rexp(n, rate = lambda)\n\n\nApós simulação, é exibido o histogrma dos dados na Figura 3.1\n\n\nCódigo\n# -------------------------\n# [2] Visualização do dados\n# -------------------------\n\nlibrary(ggplot2)\n\ndf &lt;- data.frame(TIME = survival_times)\n\nggplot(data = df, aes(x = TIME)) +\n  geom_histogram(bins = 20, fill = \"gray\", color = \"black\") +\n  labs(x = \"Dados Simulados\", y = \"Frequência\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\nFigura 3.1: Histograma dos dados simulados a partir de uma Distribuição Exponecial",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Técnicas Paramétricas - Modelos Probabilísticos</span>"
+    ]
+  },
+  {
+    "objectID": "CIII_ModelProb.html#modelo-weibull",
+    "href": "CIII_ModelProb.html#modelo-weibull",
+    "title": "3  Técnicas Paramétricas - Modelos Probabilísticos",
+    "section": "3.3 Modelo Weibull",
+    "text": "3.3 Modelo Weibull\n\n3.3.1 Distribuição Weibull",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Técnicas Paramétricas - Modelos Probabilísticos</span>"
+    ]
+  }
+]
