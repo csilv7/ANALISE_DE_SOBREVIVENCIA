@@ -99,7 +99,7 @@ St <- function(t, alpha) {
 }
 
 # Função de Risco (constante)
-ht <- function(alpha) {
+ht <- function(t, alpha) {
   return(alpha * t^0)
 }
 
@@ -109,9 +109,10 @@ Lt <- function(t, alpha) {
 }
 ```
 
+Veja a seguir a @fig-SobrExp. Tal Figura mostra as curvas de sobrevivência para diferentes valores do parâmetro $\alpha$.
 
 ```{r, warning=FALSE}
-#| fig-cap: "Funções de Sobrevivências para diferentes valores de 	α"
+#| fig-cap: "Função de Sobrevivência para diferentes valores de α"
 #| label: fig-SobrExp
 #| fig-cap-location: top
 
@@ -136,13 +137,119 @@ ggplot(dados, aes(x = tempo, y = St, color = alpha)) +
     color = expression(alpha)) +
   scale_color_manual(
     values = c("red", "blue", "green"),
-    labels = c(expression(alpha == 1), expression(alpha == 1.5), expression(alpha == 2))) +
+    labels = c(
+      expression(alpha == 1), 
+      expression(alpha == 1.5), 
+      expression(alpha == 2))
+    ) +
   theme_minimal()
-
 ```
 
+Veja a seguir a @fig-RiscExp. Tal Figura mostra a função de risco para diferentes valores do parâmetro $\alpha$.
+
+```{r, warning=FALSE}
+#| fig-cap: "Função de Risco para diferentes valores de α"
+#| label: fig-RiscExp
+#| fig-cap-location: top
+
+library(ggplot2)
+
+# Simulando dados de sobrevivência (exponencial)
+set.seed(123)
+n <- 1000
+tempo <- rexp(n, rate = 1)
+
+# Criando um data frame com valores de S(t) para diferentes alphas
+dados <- data.frame(
+  tempo = rep(tempo, 3),
+  ht = c(ht(tempo, alpha = 1), ht(tempo, alpha = 1.5), ht(tempo, alpha = 2)),
+  alpha = factor(rep(c(1, 1.5, 2), each = n))
+)
+
+# Plotando as curvas de sobrevivência com LaTeX nas legendas
+ggplot(dados, aes(x = tempo, y = ht, color = alpha)) +
+  geom_line(stat = "summary", fun = mean, size = 1) +
+  labs(x = "Tempo", y = expression(lambda(t)), 
+    color = expression(alpha)) +
+  scale_color_manual(
+    values = c("red", "blue", "green"),
+    labels = c(
+      expression(alpha == 1), 
+      expression(alpha == 1.5), 
+      expression(alpha == 2))
+    ) +
+  theme_minimal()
+```
+
+Veja a seguir a @fig-RiscAcumulExp. Tal Figura mostra a função de risco acumulado para diferentes valores do parâmetro $\alpha$.
+
+```{r, warning=FALSE}
+#| fig-cap: "Função de Risco Acumulado para diferentes valores de α"
+#| label: fig-RiscAcumulExp
+#| fig-cap-location: top
+
+library(ggplot2)
+
+# Simulando dados de sobrevivência (exponencial)
+set.seed(123)
+n <- 1000
+tempo <- rexp(n, rate = 1)
+
+# Criando um data frame com valores de S(t) para diferentes alphas
+dados <- data.frame(
+  tempo = rep(tempo, 3),
+  Lt = c(Lt(tempo, alpha = 1), Lt(tempo, alpha = 1.5), Lt(tempo, alpha = 2)),
+  alpha = factor(rep(c(1, 1.5, 2), each = n))
+)
+
+# Plotando as curvas de sobrevivência com LaTeX nas legendas
+ggplot(dados, aes(x = tempo, y = Lt, color = alpha)) +
+  geom_line(stat = "summary", fun = mean, size = 1) +
+  labs(x = "Tempo", y = expression(Lambda(t)), 
+    color = expression(alpha)) +
+  scale_color_manual(
+    values = c("red", "blue", "green"),
+    labels = c(
+      expression(alpha == 1), 
+      expression(alpha == 1.5), 
+      expression(alpha == 2))
+    ) +
+  theme_minimal()
+```
+Ao afirmar que o tempo de sobrevivência $T$ segue uma distribuição de exponencial equivale a dizer que na @eq-TempVidaAcel, $W$ segue uma distribuição valor extremo padrão, $\sigma = 1$. Assim para cada tempo $t$, a @eq-TempVidaAcel é escrita da seguinte forma: $\ln(T) = \mu + w$, como a $E[T] = \frac{1}{\alpha}$ na distribuição exponencial, tem-se que: $$\mu = - \ln(\alpha).$$
+
+> Essa é uma forma de parametrização dos modelos parâmetricos utilizada no R, isto é, o parâmetro, o parâmetro $\alpha = e^{-\mu}$.
+
+Como a distribuição de $T$ é assimétrica, se torna mais usual utilizar o *tempo mediano de sobrevivência* ao invés de tempo médio. Pode-se obter o tempo mediano de sobrevivência a partir de um tempo $t$, tal que, $S(t) = 0,5$, logo
+
+```{=latex}
+\begin{align*}
+    S(t) & = 0,5 \Leftrightarrow e^{-\alpha t} = 0,5 \Leftrightarrow -\alpha t = \ln(1/2) \\
+    \alpha t & = - \ln(2^{-1}) \Leftrightarrow \alpha t = \ln((2^{-1})^{-1}) \\
+    \alpha t & = - \ln(2).
+\end{align*}
+```
+
+Desta forma, o tempo mediano de sobrevivência:
+
+$$
+T_{mediano} = \dfrac{\ln(2)}{\alpha}
+$$ {#eq-TempMd}
+
+Em suma, o modelo exponecial se torna adequado quando o período do experimento é curto para que a supocisão de risco constante possa ser antendida.
 
 ### Distribuição Weibull
+
+Na maioria do casos de análise de sobrevivência na área da saúde, se torna mais lógico supor que o risco não é constante ao longo do tempo.
+
+Atualmente, a *Distribuição Weibull* é mais utilizada, pois permite a variação do risco ao longo do tempo. Será possível ver que a distribuição exponencial é um caso particular da distribuição weibull.
+
+Se o tempo de sobrevivência $T$ segue uma distribuição weibull, isto é, $T \sim Weibull(\alpha, \gamma)$, sua função densidade de probabilidade é expressa por:
+
+$$
+f(t) = \gamma \alpha^{\gamma} t^{\gamma - 1} e^{(-\alpha t)^{\gamma}}
+$$ {#eq-densitWei}
+
 
 :::: progress
 ::: {.progress-bar style="width: 100%;"}
