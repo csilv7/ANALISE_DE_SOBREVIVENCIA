@@ -83,53 +83,62 @@ O seu uso em análise de sobrevivência tem certa analogia com a presuposição 
 Quando $\alpha = 1$, diz-se que a **distribuição exponecial padrão**. A média ($E[t]$) e variância ($Var[T]$) do tempo de sobrevivência, quando este seguir uma distribuição em Exponecial, são obtidas a partir da inversa do risco ($\alpha$). Quanto maior o risco, menor o tempo médio de sobrevivência e menor variabilidade deste em torno na média.
 
 $$
-E[T] = \dfrac{1}{\alpha} \\
+E[T] = \dfrac{1}{\alpha}
+$$
+
+$$
 Var[T] = \dfrac{1}{\alpha^2}
 $$
 
 Afim de ilustrar para visualização e melhor aprendizado do autor e de quem for ler tal material forma simuladas as funções de sobrevivência, risco e risco acumulado variando o parâmetro $\alpha$.
 
-### Simulações
-
-Simularemos uma amostra aleatória proveniente de uma distribuição exponencial.
-
 ```{r}
-# -------------
-# [1] Simulação
-# -------------
+# Função de Sobrevivência
+St <- function(t, alpha) {
+  return(exp(- alpha * t))
+}
 
-# Lambda verdadeiro
-lambda <- 0.5
+# Função de Risco (constante)
+ht <- function(alpha) {
+  return(alpha * t^0)
+}
 
-# Definindo semente para reprodutibilidade
-set.seed(123)
-
-# Definindo o tamanho da amostra
-n <- 1000
-
-# Simulando
-survival_times <- rexp(n, rate = lambda)
+# Função de Risco Acumulado
+Lt <- function(t, alpha) {
+  return(alpha * t)
+}
 ```
 
-Após simulação, é exibido o histogrma dos dados na @fig-histExp.
 
-```{r}
-#| fig-cap: "Histograma dos dados simulados a partir de uma Distribuição Exponecial."
-#| label: fig-histExp
+```{r, warning=FALSE}
+#| fig-cap: "Funções de Sobrevivências para diferentes valores de 	α"
+#| label: fig-SobrExp
 #| fig-cap-location: top
-
-# -------------------------
-# [2] Visualização do dados
-# -------------------------
 
 library(ggplot2)
 
-df <- data.frame(TIME = survival_times)
+# Simulando dados de sobrevivência (exponencial)
+set.seed(123)
+n <- 1000
+tempo <- rexp(n, rate = 1)
 
-ggplot(data = df, aes(x = TIME)) +
-  geom_histogram(bins = 20, fill = "gray", color = "black") +
-  labs(x = "Dados Simulados", y = "Frequência") +
+# Criando um data frame com valores de S(t) para diferentes alphas
+dados <- data.frame(
+  tempo = rep(tempo, 3),
+  St = c(St(tempo, alpha = 1), St(tempo, alpha = 1.5), St(tempo, alpha = 2)),
+  alpha = factor(rep(c(1, 1.5, 2), each = n))
+)
+
+# Plotando as curvas de sobrevivência com LaTeX nas legendas
+ggplot(dados, aes(x = tempo, y = St, color = alpha)) +
+  geom_line(stat = "summary", fun = mean, size = 1) +
+  labs(x = "Tempo", y = "S(t)", 
+    color = expression(alpha)) +
+  scale_color_manual(
+    values = c("red", "blue", "green"),
+    labels = c(expression(alpha == 1), expression(alpha == 1.5), expression(alpha == 2))) +
   theme_minimal()
+
 ```
 
 
