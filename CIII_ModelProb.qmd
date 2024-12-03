@@ -13,9 +13,81 @@
 
 ## Introdução
 
-## Modelo Exponencial
+No Capítulo anteriror, foi vista uma abordagem não paramétrica, onde, a estimação é feita sem se referir a uma distribuição de probabilidade específica para o tempo de sobrevivência.
+
+Obtendo os estimadores não paramétricos diretamente do conjunto de dados. Supondo que o mecanismo gerador dessas informações opere de forma distinta em diferentes momentos no tempo. Funcionando de forma quase que independente, desta forma, conclui-se que a estimação não paramétrica têm tantos parâmetros quanto intervalos no tempo. Ao incluir covariáveis, o modelo de *Kaplan-Meier* não permite estimar o "efeito" das cováriaveis, mas apenas comparar e testar a igualdade entre duas curvas de sobrevivência.
+
+De acordo com a distribuição de probabilidade que acredita-se descrever a variável resposta $Y$, e de acordo com a função escolhida para a relação de $Y$ com as covariáveis $x_{1}, x_{2}, \cdots, x_{p}$, identifica-se o modelo de regressão como: *Linear*, *Poisson*, *Logísitico*, entre outros. Aplica-se a ideia em análise de sobrevivência, de forma que o tempo de ocorrência até um evento de interesse é a variável resposta.
+
+Nesse contexto, neste Capítulo é vista uma abordagem paramétrica para estimar as funções básicas de sobrevivência. Onde se assume como conhecida a distribuição de probabilidade do tempo de evento e, desta forma, os parâmetros seram estimados.
+
+## Distribuições do Tempo de Sobrevivência
+
+Seja $T$ uma variável aleatória que representa "tempo de sobrevivênvia", qual a distribuição de probabilidade poderia representa-lá?
+
+Como uma característica da variável aleatória $T$ é contínua e não negativa, pode-se a partir dessa caracater´sitica, remover algumas distribuições da lista de possíveis distribuições de probabilidades de $T$. Desta forma, a distribuição normal já não se torna adequada, pois tal distribuição permite valores negativos. Além disso, o tempo de sobrevivência contém, frequentemente, uma forte assimetria à direita.
+
+Entre os modelos paramétricos, utiliza-se muito a classe **tempo de vida acelerado**. Em tal classe, o tempo de sobrevivência $T$, obdesce a seguinte relação:
+
+$$
+\ln(T) = \mu + \sigma W,
+$$ {#eq-TempVidaAcel}
+
+onde $\mu$ é o parâmetro que representa a média de $\ln(T)$ e $\sigma$ sua dispersão, mas usualmente denominados, respectivamnete, parâmetros de locação e escala. $W$ é uma variável aleatória que possa representar $\ln(T)$ a partir de uma distribuição de probabilidade. 
 
 ### Distribuição Exponencial
+
+Se $T \sim Exp(\alpha)$, a sua função densidade de probabilidade é expressa da seguinte forma:
+
+$$
+f(t) = \alpha e^{-\alpha t}, \ t \geq 0 \ \text{e} \ \alpha > 0.
+$$ {#eq-densitExp}
+
+Desta forma, para obtermos, por exemplo, a função de sobrevivência basta integrarmos a função densidade de probabilidade, veja:
+
+```{=latex}
+\begin{align*}
+    S(t) & = P(T \geq t) = \int_{t}^{\infty} \alpha e^{-\alpha t} \ dt \\
+         & = \alpha \int_{t}^{\infty} e^{-\alpha t} \ dt = \alpha \int_{t}^{\infty} e^{u} \ \dfrac{du}{- \alpha} \\
+         & = \dfrac{\alpha}{-\alpha} \int_{t}^{\infty} e^{u} \ du = - \left[ e^{u} \right]_{t}^{\infty} = - \left[ e^{- \alpha t} \right]_{t}^{\infty} \\
+         & = - [ e^{\alpha \infty} - e^{\alpha t}] = - [0 - e^{\alpha t}] = e^{\alpha t}.
+\end{align*}
+```
+
+Assim, foramalmente, a função de sobrevivência é expressa por:
+
+$$
+S(t) = e^{- \alpha t}.
+$$ {#eq-StExp}
+
+Note que o parâmetro $\alpha$ é a velocidade de queda da função sobrevivência. Através das relações entre as funções em análise de sobrevivência, temos a função risco ou taxa de falha. Obtida pela razão entre a densidade de probabilidade e a função de sobrevivência:
+
+$$
+\lambda(t) = \dfrac{f(t)}{S(t)} = \dfrac{\alpha e^{-\alpha t}}{e^{-\alpha t}} = \alpha = \text{constante}.
+$$ {#eq-RiscoExp}
+
+Sendo a função risco constante para todo tempo observado $t$, o risco acumulado é função linear no tempo com uma inclinação na reta dado por $alpha$:
+
+$$
+\Lambda = - \ln[S(t)] = - \ln[e^{-\alpha t}] = - (- \alpha t) = \alpha t
+$$ {#eq-RiscoAcumExp}
+
+#### Algumas Considerações
+
+Note que quanto maior o valor de $\alpha$ (risco), mas abruptamente a função de sobrevivência $S(t)$ decresce e maior é a inclinação que representa o risco acumulado.
+
+Como a distribuição exponencial possui um único parâmetro se torna matematicamente simples além de possuir um formato assimétrico. 
+
+O seu uso em análise de sobrevivência tem certa analogia com a presuposição de normalidade em outras técnicas e áreas da estatísticas. Porém, seu presuposto de risco constante é uma afirmação muuito forte a se fazer a respeito do risco. Por exemplo, está sendo realizado um estudo sobre o cancêr, o tempo de evento de tal experimento é o tempo até que ocorra a morte ou cura do paciente. Para aplicar a distribuição exponecial para modelar esse problema seria necessário pensar que o tempo desde o diagnóstico da doênça não afeta o tempo de ocorrência do evento. O que é delicado de se aceitar, tendo em vista que o prórprio passar do tempo afeta a probabilidade de sobrevivência, o risco, risco acumulado, etc. Tendo em vista que, isso pode ser simplismente por causas naturais como aumento da idade ao passar do tempo (envelhecimento), por exemplo. Desta forma, está consequência da distribuição exponencial, isso é denominado de **falta de memória da distribuição normal**.
+
+Quando $\alpha = 1$, diz-se que a **distribuição exponecial padrão**. A média ($E[t]$) e variância ($Var[T]$) do tempo de sobrevivência, quando este seguir uma distribuição em Exponecial, são obtidas a partir da inversa do risco ($\alpha$). Quanto maior o risco, menor o tempo médio de sobrevivência e menor variabilidade deste em torno na média.
+
+$$
+E[T] = \dfrac{1}{\alpha} \\
+Var[T] = \dfrac{1}{\alpha^2}
+$$
+
+Afim de ilustrar para visualização e melhor aprendizado do autor e de quem for ler tal material forma simuladas as funções de sobrevivência, risco e risco acumulado variando o parâmetro $\alpha$.
 
 ### Simulações
 
@@ -39,11 +111,12 @@ n <- 1000
 survival_times <- rexp(n, rate = lambda)
 ```
 
-Após simulação, é exibido o histogrma dos dados na @fig-histExp
+Após simulação, é exibido o histogrma dos dados na @fig-histExp.
 
 ```{r}
-#| fig-cap: "Histograma dos dados simulados a partir de uma Distribuição Exponecial"
+#| fig-cap: "Histograma dos dados simulados a partir de uma Distribuição Exponecial."
 #| label: fig-histExp
+#| fig-cap-location: top
 
 # -------------------------
 # [2] Visualização do dados
@@ -59,8 +132,6 @@ ggplot(data = df, aes(x = TIME)) +
   theme_minimal()
 ```
 
-
-## Modelo Weibull
 
 ### Distribuição Weibull
 
