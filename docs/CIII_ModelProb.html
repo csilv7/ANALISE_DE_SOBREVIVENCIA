@@ -172,7 +172,7 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Análise de Sobrevivência</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA/tree/main/book/" title="Código fonte" class="quarto-navigation-tool px-1" aria-label="Código fonte"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA" title="Código fonte" class="quarto-navigation-tool px-1" aria-label="Código fonte"><i class="bi bi-github"></i></a>
     <div class="dropdown">
       <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -259,7 +259,7 @@ window.Quarto = {
   <li><a href="#distribuição-weibull" id="toc-distribuição-weibull" class="nav-link" data-scroll-target="#distribuição-weibull"><span class="header-section-number">3.2.2</span> Distribuição Weibull</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA/edit/main/book/CIII_ModelProb.qmd" class="toc-action"><i class="bi bi-github"></i>Editar essa página</a></li><li><a href="https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li><li><a href="https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA/blob/main/book/CIII_ModelProb.qmd" class="toc-action"><i class="bi empty"></i>Ver o código fonte</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -332,18 +332,6 @@ S(t) = e^{- \alpha t}.
 <p><span id="eq-RiscoAcumExp"><span class="math display">\[
 \Lambda = - \ln[S(t)] = - \ln[e^{-\alpha t}] = - (- \alpha t) = \alpha t
 \tag{3.5}\]</span></span></p>
-<section id="algumas-considerações" class="level4" data-number="3.2.1.1">
-<h4 data-number="3.2.1.1" class="anchored" data-anchor-id="algumas-considerações"><span class="header-section-number">3.2.1.1</span> Algumas Considerações</h4>
-<p>Note que quanto maior o valor de <span class="math inline">\(\alpha\)</span> (risco), mas abruptamente a função de sobrevivência <span class="math inline">\(S(t)\)</span> decresce e maior é a inclinação que representa o risco acumulado.</p>
-<p>Como a distribuição exponencial possui um único parâmetro se torna matematicamente simples além de possuir um formato assimétrico.</p>
-<p>O seu uso em análise de sobrevivência tem certa analogia com a presuposição de normalidade em outras técnicas e áreas da estatísticas. Porém, seu presuposto de risco constante é uma afirmação muuito forte a se fazer a respeito do risco. Por exemplo, está sendo realizado um estudo sobre o cancêr, o tempo de evento de tal experimento é o tempo até que ocorra a morte ou cura do paciente. Para aplicar a distribuição exponecial para modelar esse problema seria necessário pensar que o tempo desde o diagnóstico da doênça não afeta o tempo de ocorrência do evento. O que é delicado de se aceitar, tendo em vista que o prórprio passar do tempo afeta a probabilidade de sobrevivência, o risco, risco acumulado, etc. Tendo em vista que, isso pode ser simplismente por causas naturais como aumento da idade ao passar do tempo (envelhecimento), por exemplo. Desta forma, está consequência da distribuição exponencial, isso é denominado de <strong>falta de memória da distribuição normal</strong>.</p>
-<p>Quando <span class="math inline">\(\alpha = 1\)</span>, diz-se que a <strong>distribuição exponecial padrão</strong>. A média (<span class="math inline">\(E[t]\)</span>) e variância (<span class="math inline">\(Var[T]\)</span>) do tempo de sobrevivência, quando este seguir uma distribuição em Exponecial, são obtidas a partir da inversa do risco (<span class="math inline">\(\alpha\)</span>). Quanto maior o risco, menor o tempo médio de sobrevivência e menor variabilidade deste em torno na média.</p>
-<p><span class="math display">\[
-E[T] = \dfrac{1}{\alpha}
-\]</span></p>
-<p><span class="math display">\[
-Var[T] = \dfrac{1}{\alpha^2}
-\]</span></p>
 <p>Afim de ilustrar para visualização e melhor aprendizado do autor e de quem for ler tal material forma simuladas as funções de sobrevivência, risco e risco acumulado variando o parâmetro <span class="math inline">\(\alpha\)</span>.</p>
 <div class="cell">
 <details class="code-fold">
@@ -499,6 +487,18 @@ Figura&nbsp;3.3: Função de Risco Acumulado para diferentes valores de α
 </div>
 </div>
 </div>
+<section id="algumas-considerações" class="level4" data-number="3.2.1.1">
+<h4 data-number="3.2.1.1" class="anchored" data-anchor-id="algumas-considerações"><span class="header-section-number">3.2.1.1</span> Algumas Considerações</h4>
+<p>Note que quanto maior o valor de <span class="math inline">\(\alpha\)</span> (risco), mas abruptamente a função de sobrevivência <span class="math inline">\(S(t)\)</span> decresce e maior é a inclinação que representa o risco acumulado.</p>
+<p>Como a distribuição exponencial possui um único parâmetro se torna matematicamente simples além de possuir um formato assimétrico.</p>
+<p>O seu uso em análise de sobrevivência tem certa analogia com a presuposição de normalidade em outras técnicas e áreas da estatísticas. Porém, seu presuposto de risco constante é uma afirmação muuito forte a se fazer a respeito do risco. Por exemplo, está sendo realizado um estudo sobre o cancêr, o tempo de evento de tal experimento é o tempo até que ocorra a morte ou cura do paciente. Para aplicar a distribuição exponecial para modelar esse problema seria necessário pensar que o tempo desde o diagnóstico da doênça não afeta o tempo de ocorrência do evento. O que é delicado de se aceitar, tendo em vista que o prórprio passar do tempo afeta a probabilidade de sobrevivência, o risco, risco acumulado, etc. Tendo em vista que, isso pode ser simplismente por causas naturais como aumento da idade ao passar do tempo (envelhecimento), por exemplo. Desta forma, está consequência da distribuição exponencial, isso é denominado de <strong>falta de memória da distribuição normal</strong>.</p>
+<p>Quando <span class="math inline">\(\alpha = 1\)</span>, diz-se que a <strong>distribuição exponecial padrão</strong>. A média <span class="math inline">\(\left( E[t] \right)\)</span> e variância <span class="math inline">\(\left( Var[T] \right)\)</span> do tempo de sobrevivência, quando este seguir uma distribuição em Exponecial, são obtidas a partir da inversa do risco (<span class="math inline">\(\alpha\)</span>). Quanto maior o risco, menor o tempo médio de sobrevivência e menor variabilidade deste em torno na média.</p>
+<p><span class="math display">\[
+E[T] = \dfrac{1}{\alpha}
+\]</span></p>
+<p><span class="math display">\[
+Var[T] = \dfrac{1}{\alpha^2}
+\]</span></p>
 <p>Ao afirmar que o tempo de sobrevivência <span class="math inline">\(T\)</span> segue uma distribuição de exponencial equivale a dizer que na <a href="#eq-TempVidaAcel" class="quarto-xref">Equação&nbsp;<span>3.1</span></a>, <span class="math inline">\(W\)</span> segue uma distribuição valor extremo padrão, <span class="math inline">\(\sigma = 1\)</span>. Assim para cada tempo <span class="math inline">\(t\)</span>, a <a href="#eq-TempVidaAcel" class="quarto-xref">Equação&nbsp;<span>3.1</span></a> é escrita da seguinte forma: <span class="math inline">\(\ln(T) = \mu + w\)</span>, como a <span class="math inline">\(E[T] = \frac{1}{\alpha}\)</span> na distribuição exponencial, tem-se que: <span class="math display">\[\mu = - \ln(\alpha).\]</span></p>
 <blockquote class="blockquote">
 <p>Essa é uma forma de parametrização dos modelos parâmetricos utilizada no R, isto é, o parâmetro, o parâmetro <span class="math inline">\(\alpha = e^{-\mu}\)</span>.</p>
@@ -509,9 +509,9 @@ Figura&nbsp;3.3: Função de Risco Acumulado para diferentes valores de α
     \alpha t &amp; = - \ln(2^{-1}) \Leftrightarrow \alpha t = \ln((2^{-1})^{-1}) \\
     \alpha t &amp; = - \ln(2).
 \end{align*}\]</span>
-<p>Desta forma, o tempo mediano de sobrevivência:</p>
+<p>Desta forma, o tempo mediano de sobrevivência é definido como:</p>
 <p><span id="eq-TempMd"><span class="math display">\[
-T_{mediano} = \dfrac{\ln(2)}{\alpha}
+T_{mediano} = \dfrac{\ln(2)}{\alpha}.
 \tag{3.6}\]</span></span></p>
 <p>Em suma, o modelo exponecial se torna adequado quando o período do experimento é curto para que a supocisão de risco constante possa ser antendida.</p>
 </section>
@@ -1235,189 +1235,190 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>\Lambda = - \ln<span class="co">[</span><span class="ot">S(t)</span><span class="co">]</span> = - \ln<span class="co">[</span><span class="ot">e^{-\alpha t}</span><span class="co">]</span> = - (- \alpha t) = \alpha t</span>
 <span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>$$ {#eq-RiscoAcumExp}</span>
 <span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Algumas Considerações</span></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>Afim de ilustrar para visualização e melhor aprendizado do autor e de quem for ler tal material forma simuladas as funções de sobrevivência, risco e risco acumulado variando o parâmetro $\alpha$.</span>
 <span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>Note que quanto maior o valor de $\alpha$ (risco), mas abruptamente a função de sobrevivência $S(t)$ decresce e maior é a inclinação que representa o risco acumulado.</span>
-<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>Como a distribuição exponencial possui um único parâmetro se torna matematicamente simples além de possuir um formato assimétrico. </span>
-<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>O seu uso em análise de sobrevivência tem certa analogia com a presuposição de normalidade em outras técnicas e áreas da estatísticas. Porém, seu presuposto de risco constante é uma afirmação muuito forte a se fazer a respeito do risco. Por exemplo, está sendo realizado um estudo sobre o cancêr, o tempo de evento de tal experimento é o tempo até que ocorra a morte ou cura do paciente. Para aplicar a distribuição exponecial para modelar esse problema seria necessário pensar que o tempo desde o diagnóstico da doênça não afeta o tempo de ocorrência do evento. O que é delicado de se aceitar, tendo em vista que o prórprio passar do tempo afeta a probabilidade de sobrevivência, o risco, risco acumulado, etc. Tendo em vista que, isso pode ser simplismente por causas naturais como aumento da idade ao passar do tempo (envelhecimento), por exemplo. Desta forma, está consequência da distribuição exponencial, isso é denominado de **falta de memória da distribuição normal**.</span>
-<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>Quando $\alpha = 1$, diz-se que a **distribuição exponecial padrão**. A média ($E<span class="co">[</span><span class="ot">t</span><span class="co">]</span>$) e variância ($Var<span class="co">[</span><span class="ot">T</span><span class="co">]</span>$) do tempo de sobrevivência, quando este seguir uma distribuição em Exponecial, são obtidas a partir da inversa do risco ($\alpha$). Quanto maior o risco, menor o tempo médio de sobrevivência e menor variabilidade deste em torno na média.</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a><span class="co"># Função de Sobrevivência</span></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>St <span class="ot">&lt;-</span> <span class="cf">function</span>(t, alpha) {</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">exp</span>(<span class="sc">-</span> alpha <span class="sc">*</span> t))</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>E<span class="co">[</span><span class="ot">T</span><span class="co">]</span> = \dfrac{1}{\alpha}</span>
-<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>Var<span class="co">[</span><span class="ot">T</span><span class="co">]</span> = \dfrac{1}{\alpha^2}</span>
-<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>Afim de ilustrar para visualização e melhor aprendizado do autor e de quem for ler tal material forma simuladas as funções de sobrevivência, risco e risco acumulado variando o parâmetro $\alpha$.</span>
-<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Função de Sobrevivência</span></span>
-<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>St <span class="ot">&lt;-</span> <span class="cf">function</span>(t, alpha) {</span>
-<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">exp</span>(<span class="sc">-</span> alpha <span class="sc">*</span> t))</span>
-<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a><span class="co"># Função de Risco (constante)</span></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="cf">function</span>(t, alpha) {</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(alpha <span class="sc">*</span> t<span class="sc">^</span><span class="dv">0</span>)</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a><span class="co"># Função de Risco Acumulado</span></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>Lt <span class="ot">&lt;-</span> <span class="cf">function</span>(t, alpha) {</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(alpha <span class="sc">*</span> t)</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>Veja a seguir a @fig-SobrExp. Tal Figura mostra as curvas de sobrevivência para diferentes valores do parâmetro $\alpha$.</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE}</span></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Função de Sobrevivência para diferentes valores de α"</span></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-SobrExp</span></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap-location: top</span></span>
 <span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Função de Risco (constante)</span></span>
-<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="cf">function</span>(t, alpha) {</span>
-<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(alpha <span class="sc">*</span> t<span class="sc">^</span><span class="dv">0</span>)</span>
-<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a><span class="co"># Função de Risco Acumulado</span></span>
-<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>Lt <span class="ot">&lt;-</span> <span class="cf">function</span>(t, alpha) {</span>
-<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(alpha <span class="sc">*</span> t)</span>
-<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>Veja a seguir a @fig-SobrExp. Tal Figura mostra as curvas de sobrevivência para diferentes valores do parâmetro $\alpha$.</span>
-<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE}</span></span>
-<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Função de Sobrevivência para diferentes valores de α"</span></span>
-<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-SobrExp</span></span>
-<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap-location: top</span></span>
-<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
-<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a><span class="in"># Simulando dados de sobrevivência (exponencial)</span></span>
-<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(123)</span></span>
-<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a><span class="in">n &lt;- 1000</span></span>
-<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a><span class="in">tempo &lt;- rexp(n, rate = 1)</span></span>
-<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a><span class="in"># Criando um data frame com valores de S(t) para diferentes alphas</span></span>
-<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a><span class="in">dados &lt;- data.frame(</span></span>
-<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a><span class="in">  tempo = rep(tempo, 3),</span></span>
-<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a><span class="in">  St = c(St(tempo, alpha = 1), St(tempo, alpha = 1.5), St(tempo, alpha = 2)),</span></span>
-<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a><span class="in">  alpha = factor(rep(c(1, 1.5, 2), each = n))</span></span>
-<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a><span class="in"># Plotando as curvas de sobrevivência com LaTeX nas legendas</span></span>
-<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(dados, aes(x = tempo, y = St, color = alpha)) +</span></span>
-<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(stat = "summary", fun = mean, size = 1) +</span></span>
-<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Tempo", y = "S(t)", </span></span>
-<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a><span class="in">    color = expression(alpha)) +</span></span>
-<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(</span></span>
-<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a><span class="in">    values = c("red", "blue", "green"),</span></span>
-<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a><span class="in">    labels = c(</span></span>
-<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 1), </span></span>
-<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 1.5), </span></span>
-<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 2))</span></span>
-<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a><span class="in">    ) +</span></span>
-<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
-<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a>Veja a seguir a @fig-RiscExp. Tal Figura mostra a função de risco para diferentes valores do parâmetro $\alpha$.</span>
-<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE}</span></span>
-<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Função de Risco para diferentes valores de α"</span></span>
-<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-RiscExp</span></span>
-<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap-location: top</span></span>
-<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
-<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a><span class="in"># Simulando dados de sobrevivência (exponencial)</span></span>
-<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(123)</span></span>
-<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a><span class="in">n &lt;- 1000</span></span>
-<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a><span class="in">tempo &lt;- rexp(n, rate = 1)</span></span>
-<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a><span class="in"># Criando um data frame com valores de S(t) para diferentes alphas</span></span>
-<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a><span class="in">dados &lt;- data.frame(</span></span>
-<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a><span class="in">  tempo = rep(tempo, 3),</span></span>
-<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a><span class="in">  ht = c(ht(tempo, alpha = 1), ht(tempo, alpha = 1.5), ht(tempo, alpha = 2)),</span></span>
-<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a><span class="in">  alpha = factor(rep(c(1, 1.5, 2), each = n))</span></span>
-<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a><span class="in"># Plotando as curvas de sobrevivência com LaTeX nas legendas</span></span>
-<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(dados, aes(x = tempo, y = ht, color = alpha)) +</span></span>
-<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(stat = "summary", fun = mean, size = 1) +</span></span>
-<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Tempo", y = expression(lambda(t)), </span></span>
-<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a><span class="in">    color = expression(alpha)) +</span></span>
-<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(</span></span>
-<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a><span class="in">    values = c("red", "blue", "green"),</span></span>
-<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a><span class="in">    labels = c(</span></span>
-<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 1), </span></span>
-<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 1.5), </span></span>
-<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 2))</span></span>
-<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a><span class="in">    ) +</span></span>
-<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
-<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a>Veja a seguir a @fig-RiscAcumulExp. Tal Figura mostra a função de risco acumulado para diferentes valores do parâmetro $\alpha$.</span>
-<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE}</span></span>
-<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Função de Risco Acumulado para diferentes valores de α"</span></span>
-<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-RiscAcumulExp</span></span>
-<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap-location: top</span></span>
-<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
-<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a><span class="in"># Simulando dados de sobrevivência (exponencial)</span></span>
-<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(123)</span></span>
-<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a><span class="in">n &lt;- 1000</span></span>
-<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a><span class="in">tempo &lt;- rexp(n, rate = 1)</span></span>
-<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a><span class="in"># Criando um data frame com valores de S(t) para diferentes alphas</span></span>
-<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a><span class="in">dados &lt;- data.frame(</span></span>
-<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a><span class="in">  tempo = rep(tempo, 3),</span></span>
-<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a><span class="in">  Lt = c(Lt(tempo, alpha = 1), Lt(tempo, alpha = 1.5), Lt(tempo, alpha = 2)),</span></span>
-<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a><span class="in">  alpha = factor(rep(c(1, 1.5, 2), each = n))</span></span>
-<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a><span class="in"># Plotando as curvas de sobrevivência com LaTeX nas legendas</span></span>
-<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(dados, aes(x = tempo, y = Lt, color = alpha)) +</span></span>
-<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(stat = "summary", fun = mean, size = 1) +</span></span>
-<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Tempo", y = expression(Lambda(t)), </span></span>
-<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a><span class="in">    color = expression(alpha)) +</span></span>
-<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(</span></span>
-<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a><span class="in">    values = c("red", "blue", "green"),</span></span>
-<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a><span class="in">    labels = c(</span></span>
-<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 1), </span></span>
-<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 1.5), </span></span>
-<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 2))</span></span>
-<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a><span class="in">    ) +</span></span>
-<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
-<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a>Ao afirmar que o tempo de sobrevivência $T$ segue uma distribuição de exponencial equivale a dizer que na @eq-TempVidaAcel, $W$ segue uma distribuição valor extremo padrão, $\sigma = 1$. Assim para cada tempo $t$, a @eq-TempVidaAcel é escrita da seguinte forma: $\ln(T) = \mu + w$, como a $E<span class="co">[</span><span class="ot">T</span><span class="co">]</span> = \frac{1}{\alpha}$ na distribuição exponencial, tem-se que: $$\mu = - \ln(\alpha).$$</span>
-<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Essa é uma forma de parametrização dos modelos parâmetricos utilizada no R, isto é, o parâmetro, o parâmetro $\alpha = e^{-\mu}$.</span></span>
-<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a>Como a distribuição de $T$ é assimétrica, se torna mais usual utilizar o *tempo mediano de sobrevivência* ao invés de tempo médio. Pode-se obter o tempo mediano de sobrevivência a partir de um tempo $t$, tal que, $S(t) = 0,5$, logo</span>
-<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a><span class="in">```{=latex}</span></span>
-<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a><span class="in">\begin{align*}</span></span>
-<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a><span class="in">    S(t) &amp; = 0,5 \Leftrightarrow e^{-\alpha t} = 0,5 \Leftrightarrow -\alpha t = \ln(1/2) \\</span></span>
-<span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a><span class="in">    \alpha t &amp; = - \ln(2^{-1}) \Leftrightarrow \alpha t = \ln((2^{-1})^{-1}) \\</span></span>
-<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a><span class="in">    \alpha t &amp; = - \ln(2).</span></span>
-<span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a><span class="in">\end{align*}</span></span>
-<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a>Desta forma, o tempo mediano de sobrevivência:</span>
-<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a>T_{mediano} = \dfrac{\ln(2)}{\alpha}</span>
-<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a>$$ {#eq-TempMd}</span>
-<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a>Em suma, o modelo exponecial se torna adequado quando o período do experimento é curto para que a supocisão de risco constante possa ser antendida.</span>
-<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a><span class="fu">### Distribuição Weibull</span></span>
-<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a>Na maioria do casos de análise de sobrevivência na área da saúde, se torna mais lógico supor que o risco não é constante ao longo do tempo.</span>
-<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a>Atualmente, a *Distribuição Weibull* é mais utilizada, pois permite a variação do risco ao longo do tempo. Será possível ver que a distribuição exponencial é um caso particular da distribuição weibull.</span>
-<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a>Se o tempo de sobrevivência $T$ segue uma distribuição weibull, isto é, $T \sim Weibull(\alpha, \gamma)$, sua função densidade de probabilidade é expressa por:</span>
-<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a>f(t) = \gamma \alpha^{\gamma} t^{\gamma - 1} e^{(-\alpha t)^{\gamma}}</span>
-<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a>$$ {#eq-densitWei}</span>
-<span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a><span class="in"># Simulando dados de sobrevivência (exponencial)</span></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(123)</span></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a><span class="in">n &lt;- 1000</span></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a><span class="in">tempo &lt;- rexp(n, rate = 1)</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a><span class="in"># Criando um data frame com valores de S(t) para diferentes alphas</span></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a><span class="in">dados &lt;- data.frame(</span></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a><span class="in">  tempo = rep(tempo, 3),</span></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a><span class="in">  St = c(St(tempo, alpha = 1), St(tempo, alpha = 1.5), St(tempo, alpha = 2)),</span></span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a><span class="in">  alpha = factor(rep(c(1, 1.5, 2), each = n))</span></span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a><span class="in"># Plotando as curvas de sobrevivência com LaTeX nas legendas</span></span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(dados, aes(x = tempo, y = St, color = alpha)) +</span></span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(stat = "summary", fun = mean, size = 1) +</span></span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Tempo", y = "S(t)", </span></span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a><span class="in">    color = expression(alpha)) +</span></span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(</span></span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a><span class="in">    values = c("red", "blue", "green"),</span></span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a><span class="in">    labels = c(</span></span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 1), </span></span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 1.5), </span></span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 2))</span></span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a><span class="in">    ) +</span></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a>Veja a seguir a @fig-RiscExp. Tal Figura mostra a função de risco para diferentes valores do parâmetro $\alpha$.</span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE}</span></span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Função de Risco para diferentes valores de α"</span></span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-RiscExp</span></span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap-location: top</span></span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a><span class="in"># Simulando dados de sobrevivência (exponencial)</span></span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(123)</span></span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a><span class="in">n &lt;- 1000</span></span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a><span class="in">tempo &lt;- rexp(n, rate = 1)</span></span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a><span class="in"># Criando um data frame com valores de S(t) para diferentes alphas</span></span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a><span class="in">dados &lt;- data.frame(</span></span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a><span class="in">  tempo = rep(tempo, 3),</span></span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a><span class="in">  ht = c(ht(tempo, alpha = 1), ht(tempo, alpha = 1.5), ht(tempo, alpha = 2)),</span></span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a><span class="in">  alpha = factor(rep(c(1, 1.5, 2), each = n))</span></span>
+<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a><span class="in"># Plotando as curvas de sobrevivência com LaTeX nas legendas</span></span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(dados, aes(x = tempo, y = ht, color = alpha)) +</span></span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(stat = "summary", fun = mean, size = 1) +</span></span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Tempo", y = expression(lambda(t)), </span></span>
+<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a><span class="in">    color = expression(alpha)) +</span></span>
+<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(</span></span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a><span class="in">    values = c("red", "blue", "green"),</span></span>
+<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a><span class="in">    labels = c(</span></span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 1), </span></span>
+<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 1.5), </span></span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 2))</span></span>
+<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a><span class="in">    ) +</span></span>
+<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a>Veja a seguir a @fig-RiscAcumulExp. Tal Figura mostra a função de risco acumulado para diferentes valores do parâmetro $\alpha$.</span>
+<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE}</span></span>
+<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Função de Risco Acumulado para diferentes valores de α"</span></span>
+<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-RiscAcumulExp</span></span>
+<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap-location: top</span></span>
+<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
+<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a><span class="in"># Simulando dados de sobrevivência (exponencial)</span></span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(123)</span></span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a><span class="in">n &lt;- 1000</span></span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a><span class="in">tempo &lt;- rexp(n, rate = 1)</span></span>
+<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a><span class="in"># Criando um data frame com valores de S(t) para diferentes alphas</span></span>
+<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a><span class="in">dados &lt;- data.frame(</span></span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a><span class="in">  tempo = rep(tempo, 3),</span></span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a><span class="in">  Lt = c(Lt(tempo, alpha = 1), Lt(tempo, alpha = 1.5), Lt(tempo, alpha = 2)),</span></span>
+<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a><span class="in">  alpha = factor(rep(c(1, 1.5, 2), each = n))</span></span>
+<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a><span class="in"># Plotando as curvas de sobrevivência com LaTeX nas legendas</span></span>
+<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(dados, aes(x = tempo, y = Lt, color = alpha)) +</span></span>
+<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(stat = "summary", fun = mean, size = 1) +</span></span>
+<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Tempo", y = expression(Lambda(t)), </span></span>
+<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a><span class="in">    color = expression(alpha)) +</span></span>
+<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(</span></span>
+<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a><span class="in">    values = c("red", "blue", "green"),</span></span>
+<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a><span class="in">    labels = c(</span></span>
+<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 1), </span></span>
+<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 1.5), </span></span>
+<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a><span class="in">      expression(alpha == 2))</span></span>
+<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a><span class="in">    ) +</span></span>
+<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Algumas Considerações</span></span>
+<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a>Note que quanto maior o valor de $\alpha$ (risco), mas abruptamente a função de sobrevivência $S(t)$ decresce e maior é a inclinação que representa o risco acumulado.</span>
+<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a>Como a distribuição exponencial possui um único parâmetro se torna matematicamente simples além de possuir um formato assimétrico. </span>
+<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a>O seu uso em análise de sobrevivência tem certa analogia com a presuposição de normalidade em outras técnicas e áreas da estatísticas. Porém, seu presuposto de risco constante é uma afirmação muuito forte a se fazer a respeito do risco. Por exemplo, está sendo realizado um estudo sobre o cancêr, o tempo de evento de tal experimento é o tempo até que ocorra a morte ou cura do paciente. Para aplicar a distribuição exponecial para modelar esse problema seria necessário pensar que o tempo desde o diagnóstico da doênça não afeta o tempo de ocorrência do evento. O que é delicado de se aceitar, tendo em vista que o prórprio passar do tempo afeta a probabilidade de sobrevivência, o risco, risco acumulado, etc. Tendo em vista que, isso pode ser simplismente por causas naturais como aumento da idade ao passar do tempo (envelhecimento), por exemplo. Desta forma, está consequência da distribuição exponencial, isso é denominado de **falta de memória da distribuição normal**.</span>
+<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a>Quando $\alpha = 1$, diz-se que a **distribuição exponecial padrão**. A média $\left( E<span class="co">[</span><span class="ot">t</span><span class="co">]</span> \right)$ e variância $\left( Var<span class="co">[</span><span class="ot">T</span><span class="co">]</span> \right)$ do tempo de sobrevivência, quando este seguir uma distribuição em Exponecial, são obtidas a partir da inversa do risco ($\alpha$). Quanto maior o risco, menor o tempo médio de sobrevivência e menor variabilidade deste em torno na média.</span>
+<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a>E<span class="co">[</span><span class="ot">T</span><span class="co">]</span> = \dfrac{1}{\alpha}</span>
+<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a>Var<span class="co">[</span><span class="ot">T</span><span class="co">]</span> = \dfrac{1}{\alpha^2}</span>
+<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a>Ao afirmar que o tempo de sobrevivência $T$ segue uma distribuição de exponencial equivale a dizer que na @eq-TempVidaAcel, $W$ segue uma distribuição valor extremo padrão, $\sigma = 1$. Assim para cada tempo $t$, a @eq-TempVidaAcel é escrita da seguinte forma: $\ln(T) = \mu + w$, como a $E<span class="co">[</span><span class="ot">T</span><span class="co">]</span> = \frac{1}{\alpha}$ na distribuição exponencial, tem-se que: $$\mu = - \ln(\alpha).$$</span>
+<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Essa é uma forma de parametrização dos modelos parâmetricos utilizada no R, isto é, o parâmetro, o parâmetro $\alpha = e^{-\mu}$.</span></span>
+<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a>Como a distribuição de $T$ é assimétrica, se torna mais usual utilizar o *tempo mediano de sobrevivência* ao invés de tempo médio. Pode-se obter o tempo mediano de sobrevivência a partir de um tempo $t$, tal que, $S(t) = 0,5$, logo</span>
+<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{=latex}</span></span>
+<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a><span class="in">\begin{align*}</span></span>
+<span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a><span class="in">    S(t) &amp; = 0,5 \Leftrightarrow e^{-\alpha t} = 0,5 \Leftrightarrow -\alpha t = \ln(1/2) \\</span></span>
+<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a><span class="in">    \alpha t &amp; = - \ln(2^{-1}) \Leftrightarrow \alpha t = \ln((2^{-1})^{-1}) \\</span></span>
+<span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a><span class="in">    \alpha t &amp; = - \ln(2).</span></span>
+<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a><span class="in">\end{align*}</span></span>
+<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a>Desta forma, o tempo mediano de sobrevivência é definido como:</span>
+<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a>T_{mediano} = \dfrac{\ln(2)}{\alpha}.</span>
+<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a>$$ {#eq-TempMd}</span>
+<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a>Em suma, o modelo exponecial se torna adequado quando o período do experimento é curto para que a supocisão de risco constante possa ser antendida.</span>
+<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a><span class="fu">### Distribuição Weibull</span></span>
+<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a>Na maioria do casos de análise de sobrevivência na área da saúde, se torna mais lógico supor que o risco não é constante ao longo do tempo.</span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a>Atualmente, a *Distribuição Weibull* é mais utilizada, pois permite a variação do risco ao longo do tempo. Será possível ver que a distribuição exponencial é um caso particular da distribuição weibull.</span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a>Se o tempo de sobrevivência $T$ segue uma distribuição weibull, isto é, $T \sim Weibull(\alpha, \gamma)$, sua função densidade de probabilidade é expressa por:</span>
+<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a>f(t) = \gamma \alpha^{\gamma} t^{\gamma - 1} e^{(-\alpha t)^{\gamma}}</span>
+<span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a>$$ {#eq-densitWei}</span>
 <span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a>:::: progress</span>
-<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a>::: {.progress-bar style="width: 100%;"}</span>
-<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a>:::: progress</span>
+<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a>::: {.progress-bar style="width: 100%;"}</span>
+<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a>::::</span>
 </code><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
@@ -1428,7 +1429,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA/edit/main/book/CIII_ModelProb.qmd" class="toc-action"><i class="bi bi-github"></i>Editar essa página</a></li><li><a href="https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li><li><a href="https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA/blob/main/book/CIII_ModelProb.qmd" class="toc-action"><i class="bi empty"></i>Ver o código fonte</a></li></ul></div></div>
+    </div>
     <div class="nav-footer-right">
 <p>Construído <a href="https://quarto.org/"> Pacote Quarto no R4.3</a>.</p>
 </div>

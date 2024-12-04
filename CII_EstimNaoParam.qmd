@@ -101,9 +101,7 @@ Texto a ser preenchido...
 
 Texto a ser preenchido...
 
-### Estimador da Tabela de Vida ou Atuarial
-
-Texto a ser preenchido...
+## Testes de Hipóteses para Comparação de Curvas de Sobrevivência
 
 :::: progress
 ::: {.progress-bar style="width: 100%;"}

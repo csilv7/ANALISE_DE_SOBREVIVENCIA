@@ -8,6 +8,7 @@ book:
   date: "03/12/2024"
   
   author:
+    
     name: "Breno Cauã Rodrigues da Silva"
     orcid: 0009-0005-9740-2069
     corresponding: true
@@ -22,9 +23,6 @@ book:
     right: |
       Construído <a href="https://quarto.org/"> Pacote Quarto no R4.3</a>.
   repo-url : https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA
-  repo-subdir: book
-  repo-branch: main
-  repo-actions: [edit, issue, source]
   downloads: [pdf, docx]
   sharing: [twitter, facebook]
   page-navigation: true

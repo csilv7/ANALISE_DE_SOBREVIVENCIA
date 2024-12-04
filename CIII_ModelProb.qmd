@@ -72,24 +72,6 @@ $$
 \Lambda = - \ln[S(t)] = - \ln[e^{-\alpha t}] = - (- \alpha t) = \alpha t
 $$ {#eq-RiscoAcumExp}
 
-#### Algumas Considerações
-
-Note que quanto maior o valor de $\alpha$ (risco), mas abruptamente a função de sobrevivência $S(t)$ decresce e maior é a inclinação que representa o risco acumulado.
-
-Como a distribuição exponencial possui um único parâmetro se torna matematicamente simples além de possuir um formato assimétrico. 
-
-O seu uso em análise de sobrevivência tem certa analogia com a presuposição de normalidade em outras técnicas e áreas da estatísticas. Porém, seu presuposto de risco constante é uma afirmação muuito forte a se fazer a respeito do risco. Por exemplo, está sendo realizado um estudo sobre o cancêr, o tempo de evento de tal experimento é o tempo até que ocorra a morte ou cura do paciente. Para aplicar a distribuição exponecial para modelar esse problema seria necessário pensar que o tempo desde o diagnóstico da doênça não afeta o tempo de ocorrência do evento. O que é delicado de se aceitar, tendo em vista que o prórprio passar do tempo afeta a probabilidade de sobrevivência, o risco, risco acumulado, etc. Tendo em vista que, isso pode ser simplismente por causas naturais como aumento da idade ao passar do tempo (envelhecimento), por exemplo. Desta forma, está consequência da distribuição exponencial, isso é denominado de **falta de memória da distribuição normal**.
-
-Quando $\alpha = 1$, diz-se que a **distribuição exponecial padrão**. A média ($E[t]$) e variância ($Var[T]$) do tempo de sobrevivência, quando este seguir uma distribuição em Exponecial, são obtidas a partir da inversa do risco ($\alpha$). Quanto maior o risco, menor o tempo médio de sobrevivência e menor variabilidade deste em torno na média.
-
-$$
-E[T] = \dfrac{1}{\alpha}
-$$
-
-$$
-Var[T] = \dfrac{1}{\alpha^2}
-$$
-
 Afim de ilustrar para visualização e melhor aprendizado do autor e de quem for ler tal material forma simuladas as funções de sobrevivência, risco e risco acumulado variando o parâmetro $\alpha$.
 
 ```{r}
@@ -216,6 +198,25 @@ ggplot(dados, aes(x = tempo, y = Lt, color = alpha)) +
     ) +
   theme_minimal()
 ```
+
+#### Algumas Considerações
+
+Note que quanto maior o valor de $\alpha$ (risco), mas abruptamente a função de sobrevivência $S(t)$ decresce e maior é a inclinação que representa o risco acumulado.
+
+Como a distribuição exponencial possui um único parâmetro se torna matematicamente simples além de possuir um formato assimétrico. 
+
+O seu uso em análise de sobrevivência tem certa analogia com a presuposição de normalidade em outras técnicas e áreas da estatísticas. Porém, seu presuposto de risco constante é uma afirmação muuito forte a se fazer a respeito do risco. Por exemplo, está sendo realizado um estudo sobre o cancêr, o tempo de evento de tal experimento é o tempo até que ocorra a morte ou cura do paciente. Para aplicar a distribuição exponecial para modelar esse problema seria necessário pensar que o tempo desde o diagnóstico da doênça não afeta o tempo de ocorrência do evento. O que é delicado de se aceitar, tendo em vista que o prórprio passar do tempo afeta a probabilidade de sobrevivência, o risco, risco acumulado, etc. Tendo em vista que, isso pode ser simplismente por causas naturais como aumento da idade ao passar do tempo (envelhecimento), por exemplo. Desta forma, está consequência da distribuição exponencial, isso é denominado de **falta de memória da distribuição normal**.
+
+Quando $\alpha = 1$, diz-se que a **distribuição exponecial padrão**. A média $\left( E[t] \right)$ e variância $\left( Var[T] \right)$ do tempo de sobrevivência, quando este seguir uma distribuição em Exponecial, são obtidas a partir da inversa do risco ($\alpha$). Quanto maior o risco, menor o tempo médio de sobrevivência e menor variabilidade deste em torno na média.
+
+$$
+E[T] = \dfrac{1}{\alpha}
+$$
+
+$$
+Var[T] = \dfrac{1}{\alpha^2}
+$$
+
 Ao afirmar que o tempo de sobrevivência $T$ segue uma distribuição de exponencial equivale a dizer que na @eq-TempVidaAcel, $W$ segue uma distribuição valor extremo padrão, $\sigma = 1$. Assim para cada tempo $t$, a @eq-TempVidaAcel é escrita da seguinte forma: $\ln(T) = \mu + w$, como a $E[T] = \frac{1}{\alpha}$ na distribuição exponencial, tem-se que: $$\mu = - \ln(\alpha).$$
 
 > Essa é uma forma de parametrização dos modelos parâmetricos utilizada no R, isto é, o parâmetro, o parâmetro $\alpha = e^{-\mu}$.
@@ -230,10 +231,10 @@ Como a distribuição de $T$ é assimétrica, se torna mais usual utilizar o *te
 \end{align*}
 ```
 
-Desta forma, o tempo mediano de sobrevivência:
+Desta forma, o tempo mediano de sobrevivência é definido como:
 
 $$
-T_{mediano} = \dfrac{\ln(2)}{\alpha}
+T_{mediano} = \dfrac{\ln(2)}{\alpha}.
 $$ {#eq-TempMd}
 
 Em suma, o modelo exponecial se torna adequado quando o período do experimento é curto para que a supocisão de risco constante possa ser antendida.

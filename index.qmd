@@ -11,9 +11,7 @@
 
 # Prefácio {.unnumbered}
 
-## Resumo {.unnumbered}
-
-## Abstract {.unnumbered}
+Este é um projeto desenvolvido...
 
 :::: progress
 ::: {.progress-bar style="width: 100%;"}
