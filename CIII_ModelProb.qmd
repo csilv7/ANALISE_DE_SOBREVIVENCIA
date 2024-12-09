@@ -72,22 +72,56 @@ $$
 \Lambda = - \ln[S(t)] = - \ln[e^{-\alpha t}] = - (- \alpha t) = \alpha t
 $$ {#eq-RiscoAcumExp}
 
-Afim de ilustrar para visualização e melhor aprendizado do autor e de quem for ler tal material forma simuladas as funções de sobrevivência, risco e risco acumulado variando o parâmetro $\alpha$.
+Afim de ilustrar para visualização e melhor aprendizado do autor e de quem for ler tal material foram simuladas as funções de sobrevivência, risco e risco acumulado variando o parâmetro $\alpha$.
 
 ```{r}
-# Função de Sobrevivência
-St <- function(t, alpha) {
-  return(exp(- alpha * t))
-}
+library(ggplot2)
+set.seed(123)
+n <- 1000
+```
 
-# Função de Risco (constante)
-ht <- function(t, alpha) {
-  return(alpha * t^0)
-}
+```{r}
+# ---------------------------
+# [1] DISTRIBUIÇÃO EXPONENCIAL
+# ---------------------------
 
-# Função de Risco Acumulado
-Lt <- function(t, alpha) {
-  return(alpha * t)
+# -------------
+# [1.1] FUNÇÕES
+# -------------
+# As funções de sobrevivência, risco e risco acumulado são simplificadas
+Stexp <- function(t, alpha) exp(-alpha * t)
+htexp <- function(alpha) rep(alpha, length(t))
+Ltexp <- function(t, alpha) alpha * t
+
+# ----------------------------------------
+# [1.2] SIMULAÇÃO E VARIAÇÃO DE PARÂMETROS
+# ----------------------------------------
+tempo <- rexp(n, rate = 1) # Simulando dados de uma exponencial
+alphas <- c(1, 1.5, 2)     # Valores de alpha a serem avaliados
+
+# Criando um Data Frame com valores das funções
+dados <- do.call(rbind, lapply(alphas, function(alpha) {
+  data.frame(
+    tempo = tempo,
+    St = Stexp(tempo, alpha),
+    ht = htexp(alpha),
+    Lt = Ltexp(tempo, alpha),
+    alpha = factor(alpha)
+  )
+}))
+
+# -------------
+# [1.3] GRÁFICOS
+# -------------
+
+# Criando uma função para gerar gráficos
+plot_func <- function(data, y_var, y_label, color_values, y_expression) {
+  ggplot(data, aes(x = tempo, y = !!sym(y_var), color = alpha)) +
+    geom_line(stat = "summary", fun = mean, size = 1) +
+    labs(x = "Tempo", y = y_expression, color = expression(alpha)) +
+    scale_color_manual(values = color_values,
+                       labels = lapply(alphas, function(a) bquote(alpha == .(a)))) +
+    theme_minimal()
 }
 ```
 
@@ -98,33 +132,8 @@ Veja a seguir a @fig-SobrExp. Tal Figura mostra as curvas de sobrevivência para
 #| label: fig-SobrExp
 #| fig-cap-location: top
 
-library(ggplot2)
-
-# Simulando dados de sobrevivência (exponencial)
-set.seed(123)
-n <- 1000
-tempo <- rexp(n, rate = 1)
-
-# Criando um data frame com valores de S(t) para diferentes alphas
-dados <- data.frame(
-  tempo = rep(tempo, 3),
-  St = c(St(tempo, alpha = 1), St(tempo, alpha = 1.5), St(tempo, alpha = 2)),
-  alpha = factor(rep(c(1, 1.5, 2), each = n))
-)
-
-# Plotando as curvas de sobrevivência com LaTeX nas legendas
-ggplot(dados, aes(x = tempo, y = St, color = alpha)) +
-  geom_line(stat = "summary", fun = mean, size = 1) +
-  labs(x = "Tempo", y = "S(t)", 
-    color = expression(alpha)) +
-  scale_color_manual(
-    values = c("red", "blue", "green"),
-    labels = c(
-      expression(alpha == 1), 
-      expression(alpha == 1.5), 
-      expression(alpha == 2))
-    ) +
-  theme_minimal()
+# Função de Sobrevivência
+plot_func(dados, "St", "S(t)", c("red", "blue", "green"), expression(S(t)))
 ```
 
 Veja a seguir a @fig-RiscExp. Tal Figura mostra a função de risco para diferentes valores do parâmetro $\alpha$.
@@ -134,33 +143,8 @@ Veja a seguir a @fig-RiscExp. Tal Figura mostra a função de risco para diferen
 #| label: fig-RiscExp
 #| fig-cap-location: top
 
-library(ggplot2)
-
-# Simulando dados de sobrevivência (exponencial)
-set.seed(123)
-n <- 1000
-tempo <- rexp(n, rate = 1)
-
-# Criando um data frame com valores de S(t) para diferentes alphas
-dados <- data.frame(
-  tempo = rep(tempo, 3),
-  ht = c(ht(tempo, alpha = 1), ht(tempo, alpha = 1.5), ht(tempo, alpha = 2)),
-  alpha = factor(rep(c(1, 1.5, 2), each = n))
-)
-
-# Plotando as curvas de sobrevivência com LaTeX nas legendas
-ggplot(dados, aes(x = tempo, y = ht, color = alpha)) +
-  geom_line(stat = "summary", fun = mean, size = 1) +
-  labs(x = "Tempo", y = expression(lambda(t)), 
-    color = expression(alpha)) +
-  scale_color_manual(
-    values = c("red", "blue", "green"),
-    labels = c(
-      expression(alpha == 1), 
-      expression(alpha == 1.5), 
-      expression(alpha == 2))
-    ) +
-  theme_minimal()
+# Função de Risco
+plot_func(dados, "ht", expression(lambda(t)), c("red", "blue", "green"), expression(lambda(t)))
 ```
 
 Veja a seguir a @fig-RiscAcumulExp. Tal Figura mostra a função de risco acumulado para diferentes valores do parâmetro $\alpha$.
@@ -170,33 +154,8 @@ Veja a seguir a @fig-RiscAcumulExp. Tal Figura mostra a função de risco acumul
 #| label: fig-RiscAcumulExp
 #| fig-cap-location: top
 
-library(ggplot2)
-
-# Simulando dados de sobrevivência (exponencial)
-set.seed(123)
-n <- 1000
-tempo <- rexp(n, rate = 1)
-
-# Criando um data frame com valores de S(t) para diferentes alphas
-dados <- data.frame(
-  tempo = rep(tempo, 3),
-  Lt = c(Lt(tempo, alpha = 1), Lt(tempo, alpha = 1.5), Lt(tempo, alpha = 2)),
-  alpha = factor(rep(c(1, 1.5, 2), each = n))
-)
-
-# Plotando as curvas de sobrevivência com LaTeX nas legendas
-ggplot(dados, aes(x = tempo, y = Lt, color = alpha)) +
-  geom_line(stat = "summary", fun = mean, size = 1) +
-  labs(x = "Tempo", y = expression(Lambda(t)), 
-    color = expression(alpha)) +
-  scale_color_manual(
-    values = c("red", "blue", "green"),
-    labels = c(
-      expression(alpha == 1), 
-      expression(alpha == 1.5), 
-      expression(alpha == 2))
-    ) +
-  theme_minimal()
+# Função de Risco Acumulado
+plot_func(dados, "Lt", expression(Lambda(t)), c("red", "blue", "green"), expression(Lambda(t)))
 ```
 
 #### Algumas Considerações
@@ -235,7 +194,7 @@ Desta forma, o tempo mediano de sobrevivência é definido como:
 
 $$
 T_{mediano} = \dfrac{\ln(2)}{\alpha}.
-$$ {#eq-TempMd}
+$$
 
 Em suma, o modelo exponecial se torna adequado quando o período do experimento é curto para que a supocisão de risco constante possa ser antendida.
 
@@ -245,11 +204,160 @@ Na maioria do casos de análise de sobrevivência na área da saúde, se torna m
 
 Atualmente, a *Distribuição Weibull* é mais utilizada, pois permite a variação do risco ao longo do tempo. Será possível ver que a distribuição exponencial é um caso particular da distribuição weibull.
 
-Se o tempo de sobrevivência $T$ segue uma distribuição weibull, isto é, $T \sim Weibull(\alpha, \gamma)$, sua função densidade de probabilidade é expressa por:
+Se o tempo de sobrevivência $T$ segue uma distribuição Weibull, isto é, $T \sim Weibull(\alpha, \gamma)$, sua função densidade de probabilidade é expressa por:
 
 $$
 f(t) = \gamma \alpha^{\gamma} t^{\gamma - 1} e^{(-\alpha t)^{\gamma}}
 $$ {#eq-densitWei}
+
+A partir da @eq-densitWei é possível chegar a função de sobrevivência da distribuição Weibull sendo está função definida como:
+
+$$
+S (t) = e^{(-\alpha t)^{\gamma}}
+$$ {#eq-StWeibull}
+
+onde $t \geq 0$, $\alpha$ o parâmetro taxa e $\gamma$ parâmetro de forma. Ambos os parâmetros sempre positivos.
+
+A função de risco, $\lambda(t)$, depende do tempo de sobrevivência. Apresentando variação no tempo conforme a expressão:
+
+$$
+\lambda (t) = \gamma \alpha^{\gamma} t^{\gamma - 1}
+$$ {#eq-RiscoWeibull}
+
+e a função de risco acumulado da distribuição Weibull é dada por:
+
+$$
+\Lambda (t) = - \ln S (t) = (\alpha t)^{\gamma - 1}.
+$$ {#eq-RiscAcumWeibull}
+
+Note que, o parâmetro $\gamma$ determina a forma função de risco da seguinte maneira:
+
+* $\gamma < 1 \rightarrow$ função de risco decresce;
+* $\gamma > 1 \rightarrow$ função de risco cresce;
+* $\gamma > 1 \rightarrow$ a função de risco se torna constante, caindo no caso particular da distribuição exponencial.
+
+Afim de ilustrar para visualização e melhor aprendizado do autor e de quem for ler tal material foram simuladas as funções de sobrevivência, risco e risco acumulado variando o parâmetro $\gamma$.
+
+```{r}
+# ------------------------
+# [2] DISTRIBUIÇÃO WEIBULL
+# ------------------------
+
+# -------------
+# [2.1] FUNÇÕES
+# -------------
+
+# Funções para Weibull
+StWei <- function(t, alpha, gamma) exp(-(alpha * t)^gamma)
+htWei <- function(t, alpha, gamma) gamma * (alpha^gamma) * t^(gamma - 1)
+LtWei <- function(t, alpha, gamma) (alpha * t)^gamma
+
+# ----------------------------------------
+# [2.2] SIMULAÇÃO E VARIAÇÃO DE PARÂMETROS
+# ----------------------------------------
+
+# Simulando dados de uma Weibull
+tempo <- rweibull(n, shape = 2, scale = 1)
+alpha <- 1   # Fixo para simplificar
+gammas <- c(0.5, 1.0, 1.5, 2.0, 2.5, 3.0) # Valores de gamma
+
+# Criando um Data Frame com valores das funções
+dados <- do.call(rbind, lapply(gammas, function(gamma) {
+  data.frame(
+    tempo = tempo,
+    St = StWei(tempo, alpha, gamma),
+    ht = htWei(tempo, alpha, gamma),
+    Lt = LtWei(tempo, alpha, gamma),
+    gamma = factor(gamma)
+  )
+}))
+
+# --------------
+# [2.3] GRÁFICOS
+# --------------
+
+# Função genérica para gráficos
+plot_func <- function(data, y_var, y_label, color_values, y_expression) {
+  ggplot(data, aes(x = tempo, y = !!sym(y_var), color = gamma)) +
+    geom_line(stat = "summary", fun = mean, size = 1) +
+    labs(x = "Tempo", y = y_expression, color = expression(gamma)) +
+    scale_color_manual(values = color_values,
+                       labels = lapply(gammas, function(g) bquote(gamma == .(g)))) +
+    theme_minimal()
+}
+
+# Paleta de cores
+color_values <- c("red", "blue", "green", "purple", "orange", "brown")
+```
+
+Veja a seguir a @fig-SobrExp. Tal Figura mostra as curvas de sobrevivência para diferentes valores do parâmetro $\alpha$.
+
+```{r, warning=FALSE}
+#| fig-cap: "Função de Sobrevivência para diferentes valores de γ"
+#| label: fig-SobrWei
+#| fig-cap-location: top
+
+# Função de Sobrevivência
+plot_func(dados, "St", expression(S(t)), color_values, expression(S(t)))
+```
+
+Veja a seguir a @fig-RiscExp. Tal Figura mostra a função de risco para diferentes valores do parâmetro $\alpha$.
+
+```{r, warning=FALSE}
+#| fig-cap: "Função de Risco para diferentes valores de γ"
+#| label: fig-RiscWei
+#| fig-cap-location: top
+
+# Função de Risco
+plot_func(dados, "ht", expression(lambda(t)), color_values, expression(lambda(t)))
+```
+
+Veja a seguir a @fig-RiscAcumulExp. Tal Figura mostra a função de risco acumulado para diferentes valores do parâmetro $\alpha$.
+
+```{r, warning=FALSE}
+#| fig-cap: "Função de Risco Acumulado para diferentes valores de γ"
+#| label: fig-RiscAcumWei
+#| fig-cap-location: top
+
+# Função de Risco Acumulado
+plot_func(dados, "Lt", expression(Lambda(t)), color_values, expression(Lambda(t)))
+```
+ 
+#### Algumas Considerações
+
+É incluso a função gama na média e variância da distribuição Weibull, assim,
+
+$$
+E[T] = \alpha \Gamma[1 + (1/\gamma)]
+$$
+$$
+Var[T] = a^{2} \left[ \Gamma [1 + (2/\gamma)] - \Gamma [1 + (1/\gamma)]^{2} \right]
+$$
+
+sendo a função gama $\Gamma [k]$, expressa por $\Gamma [k] = \int_{0}^{\infty} x^{k -1} e^{- x} dx$.
+
+Afim de se obter o tempo mediano de sobrevivência, igualamos a probabilidade de sobrevivência a 0,5. Desta forma:
+
+```{=latex}
+\begin{align*}
+    S(t) & = 0,5 \Leftrightarrow e^{(-\alpha t)^{\gamma}} = 1/2 \\
+    - (\alpha t)^{\gamma} & = - \ln(2^{-1}) \Leftrightarrow \alpha t = \ln(2) \\
+    (\alpha t)^{\gamma} & = \ln(2).
+\end{align*}
+```
+
+Logo, 
+
+$$
+T_{mediano} = \dfrac{\ln(2)^{1/\gamma}}{\alpha}.
+$$
+
+### Distribuição lognormal
+
+#### Algumas Considerações
+
+
+
 
 
 :::: progress
