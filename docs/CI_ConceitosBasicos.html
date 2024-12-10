@@ -253,7 +253,7 @@ window.Quarto = {
   <li><a href="#tempo-de-falha" id="toc-tempo-de-falha" class="nav-link" data-scroll-target="#tempo-de-falha"><span class="header-section-number">1.2</span> Tempo de Falha</a></li>
   <li><a href="#censura" id="toc-censura" class="nav-link" data-scroll-target="#censura"><span class="header-section-number">1.3</span> Censura</a></li>
   <li><a href="#dados-truncados" id="toc-dados-truncados" class="nav-link" data-scroll-target="#dados-truncados"><span class="header-section-number">1.4</span> Dados Truncados</a></li>
-  <li><a href="#representação-dos-dados-de-sobrevivência" id="toc-representação-dos-dados-de-sobrevivência" class="nav-link" data-scroll-target="#representação-dos-dados-de-sobrevivência"><span class="header-section-number">1.5</span> Representação dos Dados de Sobrevivência</a></li>
+  <li><a href="#sec-ReprDados" id="toc-sec-ReprDados" class="nav-link" data-scroll-target="#sec-ReprDados"><span class="header-section-number">1.5</span> Representação dos Dados de Sobrevivência</a></li>
   <li><a href="#especificando-o-tempo-de-sobrevivência" id="toc-especificando-o-tempo-de-sobrevivência" class="nav-link" data-scroll-target="#especificando-o-tempo-de-sobrevivência"><span class="header-section-number">1.6</span> Especificando o Tempo de Sobrevivência</a>
   <ul class="collapse">
   <li><a href="#função-de-sobrevivência" id="toc-função-de-sobrevivência" class="nav-link" data-scroll-target="#função-de-sobrevivência"><span class="header-section-number">1.6.1</span> Função de Sobrevivência</a></li>
@@ -337,8 +337,8 @@ window.Quarto = {
 <h2 data-number="1.4" class="anchored" data-anchor-id="dados-truncados"><span class="header-section-number">1.4</span> Dados Truncados</h2>
 <p>Truncamento é uma característica de alguns estudos de sobrevivência que, muitas vezes, é confundida com censura. Ele ocorre quando certos indivíduos são excluídos do estudo devido a uma condição específica. Nesses casos, os pacientes só são incluídos no acompanhamento após passarem por um determinado evento, em vez de serem acompanhados desde o início.</p>
 </section>
-<section id="representação-dos-dados-de-sobrevivência" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="representação-dos-dados-de-sobrevivência"><span class="header-section-number">1.5</span> Representação dos Dados de Sobrevivência</h2>
+<section id="sec-ReprDados" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="sec-ReprDados"><span class="header-section-number">1.5</span> Representação dos Dados de Sobrevivência</h2>
 <p>Seja uma amostra aleatória de tamanho <span class="math inline">\(n\)</span>, o <span class="math inline">\(i\)</span>-ésimo indivíduo no estudo é representado, em geral, pelo par <span class="math inline">\((t_{i}, \delta_{i})\)</span>, onde <span class="math inline">\(t_{i}\)</span> é o tempo de falha ou censura, indicado pela variável binária <span class="math inline">\(\delta_{i}\)</span>, definida como:</p>
 <p><span class="math display">\[
 \delta_{i} = \begin{cases}
@@ -1106,7 +1106,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>Truncamento é uma característica de alguns estudos de sobrevivência que, muitas vezes, é confundida com censura. Ele ocorre quando certos indivíduos são excluídos do estudo devido a uma condição específica. Nesses casos, os pacientes só são incluídos no acompanhamento após passarem por um determinado evento, em vez de serem acompanhados desde o início.</span>
 <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Representação dos Dados de Sobrevivência</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Representação dos Dados de Sobrevivência {#sec-ReprDados}</span></span>
 <span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>Seja uma amostra aleatória de tamanho $n$, o $i$-ésimo indivíduo no estudo é representado, em geral, pelo par $(t_{i}, \delta_{i})$, onde $t_{i}$ é o tempo de falha ou censura, indicado pela variável binária $\delta_{i}$, definida como:</span>
 <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>

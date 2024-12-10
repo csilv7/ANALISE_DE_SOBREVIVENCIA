@@ -57,7 +57,7 @@ De forma geral, a censura intervalar ocorre em estudos com visitas periódicas e
 
 Truncamento é uma característica de alguns estudos de sobrevivência que, muitas vezes, é confundida com censura. Ele ocorre quando certos indivíduos são excluídos do estudo devido a uma condição específica. Nesses casos, os pacientes só são incluídos no acompanhamento após passarem por um determinado evento, em vez de serem acompanhados desde o início.
 
-## Representação dos Dados de Sobrevivência
+## Representação dos Dados de Sobrevivência {#sec-ReprDados}
 
 Seja uma amostra aleatória de tamanho $n$, o $i$-ésimo indivíduo no estudo é representado, em geral, pelo par $(t_{i}, \delta_{i})$, onde $t_{i}$ é o tempo de falha ou censura, indicado pela variável binária $\delta_{i}$, definida como:
 

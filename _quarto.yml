@@ -5,7 +5,7 @@ project:
 book:
   title: "Análise de Sobrevivência"
   subtitle: "Iniciação Ciêntifica - PIBIC 2024/2025 (UFPA)"
-  date: "03/12/2024"
+  date: "11/12/2024"
   
   author:
     
@@ -36,6 +36,7 @@ comments:
   hypothesis: true
 
 bibliography: references.bib
+
 
 format:
   html:
