@@ -198,7 +198,7 @@ $$
 
 Em suma, o modelo exponecial se torna adequado quando o período do experimento é curto para que a supocisão de risco constante possa ser antendida.
 
-### Distribuição Weibull
+### Distribuição Weibull {#sec-DistWeibull}
 
 Na maioria do casos de análise de sobrevivência na área da saúde, se torna mais lógico supor que o risco não é constante ao longo do tempo.
 
@@ -528,7 +528,7 @@ $$
 L (\theta) = \prod_{i = 1}^{n} \ [f (t_{i}, \theta)]^{\delta_{i}} \ [S(t_{i})]^{1 - \delta_{i}}
 $$ {#eq-verossilGeneric}
 
-A partir da deriva do log da verossimilhança igualada a zero, $$\dfrac{\partial \ln L (\theta)}{\partial \theta} = 0,$$ é possível encontrar um valor para $\theta$ que maximize $\ln L (\theta)$, portanto, $L (\theta)$.
+A partir da deriva do log da verossimilhança igualada a zero, $$\dfrac{\partial \ln L (\theta)}{\partial \theta} = 0,$$ é possível encontrar um valor para $\theta$ que maximize $\ln L (\theta)$, portanto, maximize $L (\theta)$.
 
 #### Aplicações
 
@@ -536,7 +536,7 @@ Será mostrado nessa seção como encontrar o estimador ou estimadores de máxim
 
 ##### Distribuição Exponecial
 
-Para uma distribuição exponecial conforme descrita na @sec-DistExp. O *Estimador de Máxima Verossimilhança* do parâmetro $\alpha$ pode ser obtido de acordo com os seguintes passos:
+Para uma distribuição exponencial conforme descrita na @sec-DistExp. O *Estimador de Máxima Verossimilhança* do parâmetro $\alpha$ pode ser obtido de acordo com os seguintes passos:
 
 1.  Determinar a função verossimilhança $L (\alpha)$:
 
@@ -642,6 +642,279 @@ ggplot(dados, aes(x = Tempo)) +
     color = "Parâmetro") + 
   theme_minimal()
 ```
+
+##### Distribuição Weibull
+
+Para uma distribuição Weibull, descrita na @sec-DistWeibull não há uma forma análitica para $\gamma$ e $\alpha$. Logo, para obter a sua estimativa de máxima verossimilhança se usa um método de aproximação numérica, será introduzido aqui o *Método Iterativo de Newton-Raphson*.
+
+O **Método de Newton-Raphson** é uma abordagem iterativa eficiente para resolver equações não lineares, sendo amplamente utilizado na estimação de parâmetros de distribuições estatísticas. Quando aplicado ao ajuste de distribuições, como a **Weibull** no contexto de análise de sobrevivência, o método busca maximizar a função de verossimilhança, resolvendo o sistema de equações derivado das condições de otimalidade (gradiente nulo).
+
+A fórmula iterativa é:
+
+$$
+\theta_{n+1} = \theta_n - \mathbf{H}^{-1}(\theta_n) \nabla L(\theta_n),
+$$
+
+onde:
+
+- $\theta_{n}$ é o vetor de parâmetros estimados na iteração $n$;
+- $L(\theta)$ é a função log-verossimilhança;
+- $\nabla L(\theta)$ é o vetor gradiente (derivadas parciais de $L(\theta)$);
+- $\mathbf{H}(\theta)$ é a matriz Hessiana (segunda derivada de $L(\theta)$).
+
+**Vantagens no ajuste de distribuições:**
+
+- **Eficiência**: O método converge rapidamente quando o ponto inicial $\theta_{0}$ está próximo dos valores reais dos parâmetros.
+- **Flexibilidade**: Adequa-se a diferentes modelos, como a distribuição Weibull, usada para modelar tempos de vida ou sobrevivência.
+
+**Cuidados na aplicação:**
+
+- **Convergência**: Garantida apenas se o ponto inicial estiver próximo da solução e as condições de regularidade forem atendidas.
+- **Cálculo da Hessiana**: Pode ser computacionalmente intensivo para distribuições complexas.
+
+No caso da distribuição Weibull, a aplicação do método Newton-Raphson envolve derivadas em relação aos parâmetros de forma ($\gamma$) e escala ($\alpha$), permitindo ajustar o modelo aos dados observados de tempos de sobrevivência de forma precisa e eficiente.
+
+Para utilizar o Método Iterativo de Newton-Raphson, pode-se escrever o algoritmo passo a passo. Outra forma, é usar a função do R `optim`. Será aprensatado as duas formas e seus detalhes serão comentados.
+
+Começando pela construção do algoritmo passo a passo, precisamos definir algumas funções. A primeira é a função de verossimilhança da distribuição Weibull, que pode ser obtida a partir da @eq-verossilGeneric ao substituir respectivamente a função densidade e sobrevivência da distribuição Weibull respectivamente. Assim:
+
+```{=latex}
+\begin{align*}
+    L (\gamma, \alpha) & = \prod_{i = 1}^{n} \left[\gamma \alpha^{\gamma} t_{i}^{\gamma - 1} \exp \{- (\alpha t_{i})^{\gamma}\} \right]^{\delta_{i}} \left[ \exp \{- (\alpha t_{i})^{\gamma}\} \right]^{1 - \delta_{i}} \\
+    & = \prod_{i = 1}^{n} \gamma^{\delta_{i}} \alpha^{\gamma \delta_{i}} t_{i}^{(\gamma - 1) \delta_{i}} \exp \{- (\alpha t_{i})^{\gamma}\}.
+\end{align*}
+```
+
+Toma-se o logaritmo de $L (\gamma, \alpha)$, logo:
+
+```{=latex}
+\begin{align*}
+    \ln L (\gamma, \alpha) & = \sum_{i = 1}^{n} \ln{\gamma^{\delta_{i}}} + \sum_{i = 1}^{n} \ln{\alpha^{\gamma \delta_{i}}} + \sum_{i = 1}^{n} \ln{t_{i}^{(\gamma - 1) \delta_{i}}} + \sum_{i = 1}^{n} \ln{\exp \{- (\alpha t_{i})^{\gamma}\}} \\
+    & = \sum_{i = 1}^{n} \delta_{i} \ln{\gamma} + \sum_{i = 1}^{n} \gamma \delta_{i} \ln{\alpha} + \sum_{i = 1}^{n} (\gamma - 1) \delta_{i} \ln{t_{i}} + \sum_{i = 1}^{n} - (\alpha t_{i})^{\gamma} \\
+    & = n \ln{\gamma} + n \gamma \ln{\alpha} + (\gamma - 1) \sum_{i = 1}^{n} \delta_{i} \ln{t_{i}} + \sum_{i = 1}^{n} - (\alpha t_{i})^{\gamma}
+\end{align*}
+```
+
+Agora, aplica-se as derivadas de primeira ordem em relação a $\gamma$ e $\alpha$.
+
+$$
+\dfrac{\partial \ln L (\gamma, \alpha)}{\partial \gamma} = \dfrac{n}{\gamma} + n \ln{\alpha} + \sum_{i = 1}^{n} \delta_{i} \ln{t_{i}} - \sum_{i = 1}^{n} (\alpha t_{i})^{\gamma} \ln{\alpha t_{i}}
+$$
+
+$$
+\dfrac{\partial \ln L (\gamma, \alpha)}{\partial \alpha} = \dfrac{n \gamma}{\alpha} - \gamma \alpha^{\gamma - 1} \sum_{i = 1}^{n} t_{i}^{\gamma}
+$$
+
+Toma-se agora as derivadas de segunda ordem.
+
+$$
+\dfrac{\partial^{2} \ln L (\gamma, \alpha)}{\partial \gamma^{2}} = - \dfrac{n}{\gamma^2} - \sum_{i = 1}^{n} (\alpha t_{i})^{\gamma} \ln^{2}{\alpha t_{i}}
+$$
+
+$$
+\dfrac{\partial^{2} \ln L (\gamma, \alpha)}{\partial \alpha^{2}} = - \dfrac{n \gamma}{\alpha^{2}} - \gamma (\gamma - 1) \alpha^{\gamma - 2} \sum_{i = 1}^{n} t_{i}^{\gamma}
+$$
+
+$$
+\dfrac{\partial^{2} \ln L (\gamma, \alpha)}{\partial \gamma \partial \alpha} = \dfrac{n}{\alpha} - \sum_{i = 1}^{n} \gamma (\alpha t)^{\gamma - 1} t \ln{\alpha t} + \dfrac{(\alpha t)^{\gamma}}{\alpha}
+$$
+
+Com todas as derivadas definidas, é possível definirmos algumas funções e variáveis que iremos precisar para utilizar o algoritmo de Newton-Raphson.
+
+```{r}
+# ------------------------
+# [2] Distribuição Weibull
+# ------------------------
+
+# Semente
+set.seed(123)
+
+# ---------------------------------------
+# [2.1] Simulação e Visualização do Dados
+# ---------------------------------------
+# Tamanho da amostra
+n <- 1000
+
+# Parâmetros da distribuição
+wShape <- 2
+wScale <- 1.5
+
+# Simulação
+dadosWeibull <- rweibull(n, shape = wShape, scale = wScale)
+
+# -------------
+# [2.2] Funções
+# -------------
+# --------------------
+# [2.2.1] Vetor Escore
+# --------------------
+score <- function(theta, dados) {
+  gamma <- theta[1] # Parâmetro de Forma
+  alpha <- theta[2] # Parâmetro de Escala
+  
+  n <- length(dados) # Tamanho da amostra
+  t <- dados         # Dados observados
+  
+  # Derivadas Parciais
+  # Em relação ao parâmetro de FORMA
+  dGamma <- (n / gamma) + n * log(alpha) + sum(log(t)) - sum(((alpha * t)^2) * log(alpha * t))
+
+  # Em relação ao parâmetro de ESCALA
+  dAlpha <- (n * gamma / alpha) - gamma * alpha^(gamma - 1) * sum(t^gamma)
+  
+  # Retornar
+  return(c(dGamma, dAlpha))
+}
+
+# -----------------------
+# [2.2.2] Matriz Hessiana
+# -----------------------
+Hessian <- function(theta, dados) {
+  gamma <- theta[1] # Parâmetro de Forma
+  alpha <- theta[2] # Parâmetro de Escala
+  
+  n <- length(dados) # Tamanho da amostra
+  t <- dados         # Dados observados
+  
+  dGamma2 <- -(n / gamma^2) - (alpha^gamma) * (log(alpha)^2) * sum((t^gamma) * (log(t)^2))
+  dAlpha2 <- -(n*gamma / alpha^2) - (gamma*(gamma - 1)) * (alpha^(gamma - 2)) * sum(t^gamma)
+  
+  derivada <- (n/alpha) - sum(gamma * (alpha*t)^(gamma - 1) * t * log(alpha * t) + (((alpha*t)^gamma)/alpha))
+  
+  return(matrix(c(dGamma2, derivada, derivada, dAlpha2), nrow = 2, ncol = 2))
+}
+```
+
+O bloco de código abaixo contém o algoritmo de Newton-Raphson.
+
+```{r}
+# --------------------------------------
+# [3] Método Iterativo de Newton-Raphson
+# --------------------------------------
+# Definindo algumas grnadezas
+theta0 <- c(1.5, 1)     # Chute Inicial
+differ <- 1             # Diferença entre o passo atual e passo anterior
+error <- 10^(-6)        # Erro tolerável
+id <- 1                 # Contador (índice da iteração)
+
+while(differ > error) {
+  ESC <- score(theta = theta0, dados = dadosWeibull)   # Vetor Escore
+  HES <- Hessian(theta = theta0, dados = dadosWeibull) # Matriz Hessiana
+  
+  soluc <- solve(HES, ESC)
+  theta1 <- theta0 - soluc # Atulização do Algoritmo
+  
+  differ <- max(abs(theta1 - theta0))
+  
+  theta0 <- theta1
+  id <- id + 1
+  
+  cat("Iteração:", id, " ;  Estimativa = (Forma:", theta1[1], ", Escala:", theta1[2], ") \n")
+}
+```
+O bloco abaixo mostra o uso da função `optim` para otimização.
+
+```{r, warning=FALSE, message=FALSE}
+# ----------
+# Otimização
+# ----------
+# --------------------------
+# Função Log-verossimilhança
+# --------------------------
+
+logWeibull <- function(theta, dados){
+  a <- theta[1] # Parâmetro de forma
+  s <- theta[2] # Parâmetro de escala
+  n <- length(dados)
+  x <- dados
+
+logverossimil <- (n * log(a)) + (n * a * log(s)) + ((a - 1) * sum(log(dados))) + sum(- (s * dados)^a)
+return(-logverossimil)
+}
+
+# ------------------------
+# Aplicando a função optim
+# ------------------------
+
+theta0 <- c(1, 1.5) # Chute inicial
+estimate <- optim(par = theta0, fn = logWeibull, gr = NULL , method = "BFGS" ,
+             hessian = TRUE, dados=dadosWeibull)
+estimate
+```
+Assim como na distribuição exponencial, será feita uma comparação entre o real e estimado.
+
+```{r}
+set.seed(123)
+n <- 1000
+
+# -------------
+# [2.1] FUNÇÕES
+# -------------
+# Função de Sobrevivência
+StWeibull <- function(t, gamma, alpha) exp(-(alpha * t)^gamma)
+
+# ----------------------------------------
+# [2.2] SIMULAÇÃO E VARIAÇÃO DE PARÂMETROS
+# ----------------------------------------
+gamma <- 1.5
+alpha <- 1
+tempo <- rweibull(n, shape = gamma, scale = alpha)
+
+dfWeibull <- data.frame(
+  Tempo = dadosWeibull,
+  St = StWeibull(tempo, gamma, alpha),
+  EMVSt = StWeibull(tempo, theta1[1], theta1[2])
+)
+
+```
+
+Veja a @tbl-EMVweibullSt que mostra as dez primeiras observações e suas respectivas funções de sobrevivência, sobrevivência real e sobrevivência estimada.
+
+```{r, message=FALSE, warning=FALSE}
+#| tbl-cap: "Real e Estimado para as Funções de Sobrevivência da Distribuição Weibull"
+#| label: tbl-EMVweibullSt
+#| tbl-cap-location: top
+
+library(knitr)
+
+knitr::kable(head(dfWeibull), 
+             col.names = c("Tempo", "S(t)", "S(t) EMV"),
+             escape = FALSE,
+             align = 'c',
+             booktabs = TRUE)
+```
+
+Temos também a comparação dessas duas curvas de sobrevivência, ilustradas na @fig-CompEMVWeibull.
+
+```{r, warning=FALSE}
+#| fig-cap: "Comparação do verdadeiro valor dos parâmetros γ e α com suas estimativas de máxima verossimilhança."
+#| label: fig-CompEMVWeibull
+#| fig-cap-location: top
+
+library(ggplot2)
+
+ggplot(dfWeibull, aes(x = Tempo)) +
+  # Curva baseada nos parâmetros verdadeiros
+  geom_line(aes(y = St, color = "Verdadeiro"), lwd = 1.5) +
+  # Curva baseada nas estimativas de máxima verossimilhança
+  geom_line(aes(y = EMVSt, color = "EMV"), lwd = 1) +
+  # Personalização das cores e legendas
+  scale_color_manual(
+    values = c("Verdadeiro" = "red", "EMV" = "blue"),
+    labels = c(
+      "Verdadeiro" = expression(paste("Verdadeiro: ", gamma, ", ", alpha)),
+      "EMV" = expression(paste("EMV: ", hat(gamma), ", ", hat(alpha)))
+    )) +
+  # Rótulos dos eixos e legenda
+  labs(
+    x = "Tempo",
+    y = expression(S(t)), 
+    color = "Parâmetros") + 
+  theme_minimal()
+
+```
+
+
 
 :::: progress
 ::: {.progress-bar style="width: 100%;"}
