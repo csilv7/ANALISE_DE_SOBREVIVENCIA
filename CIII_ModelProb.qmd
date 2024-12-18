@@ -207,13 +207,13 @@ Atualmente, a *Distribuição Weibull* é mais utilizada, pois permite a variaç
 Se o tempo de sobrevivência $T$ segue uma distribuição Weibull, isto é, $T \sim Weibull(\alpha, \gamma)$, sua função densidade de probabilidade é expressa por:
 
 $$
-f(t) = \gamma \alpha^{\gamma} t^{\gamma - 1} e^{(-\alpha t)^{\gamma}}
+f(t) = \gamma \alpha^{\gamma} t^{\gamma - 1} \exp \left\{ -\left( \dfrac{t}{\alpha} \right)^{\gamma} \right\}.
 $$ {#eq-densitWei}
 
 A partir da @eq-densitWei é possível chegar a função de sobrevivência da distribuição Weibull sendo está função definida como:
 
 $$
-S (t) = e^{(-\alpha t)^{\gamma}}
+S (t) = \exp \left\{ -\left( \dfrac{t}{\alpha} \right)^{\gamma} \right\},
 $$ {#eq-StWeibull}
 
 onde $t \geq 0$, $\alpha$ o parâmetro taxa e $\gamma$ parâmetro de forma. Ambos os parâmetros sempre positivos.
@@ -227,7 +227,7 @@ $$ {#eq-RiscoWeibull}
 e a função de risco acumulado da distribuição Weibull é dada por:
 
 $$
-\Lambda (t) = - \ln S (t) = (\alpha t)^{\gamma}.
+\Lambda (t) = - \ln S (t) = -\left( \dfrac{t}{\alpha} \right)^{\gamma}.
 $$ {#eq-RiscAcumWeibull}
 
 Note que, o parâmetro $\gamma$ determina a forma função de risco da seguinte maneira:
@@ -254,9 +254,9 @@ n <- 1000
 # -------------
 
 # Funções para Weibull
-StWei <- function(t, alpha, gamma) exp(-(alpha * t)^gamma)
+StWei <- function(t, alpha, gamma) exp(-(t/alpha)^gamma)
 htWei <- function(t, alpha, gamma) gamma * (alpha^gamma) * t^(gamma - 1)
-LtWei <- function(t, alpha, gamma) (alpha * t)^gamma
+LtWei <- function(t, alpha, gamma) (t/alpha)^gamma
 
 # ----------------------------------------
 # [2.2] SIMULAÇÃO E VARIAÇÃO DE PARÂMETROS
@@ -632,9 +632,9 @@ Temos também a comparação dessas duas curvas de sobrevivência, ilustradas na
 
 ggplot(dados, aes(x = Tempo)) +
   geom_line(aes(y = St, color = "alpha"), lwd = 1.5) +
-  geom_line(aes(y = emvSt, color = "emvAlpha"), lwd = 1) +
+  geom_line(aes(y = emvSt, color = "emvAlpha"), lwd = 1, lty = 4) +
   scale_color_manual(
-    values = c("alpha" = "red", "emvAlpha" = "blue"),
+    values = c("alpha" = "black", "emvAlpha" = "red"),
     labels = c(expression(alpha), expression(hat(alpha)))) +
   labs(
     x = "Tempo",
@@ -680,8 +680,8 @@ Começando pela construção do algoritmo passo a passo, precisamos definir algu
 
 ```{=latex}
 \begin{align*}
-    L (\gamma, \alpha) & = \prod_{i = 1}^{n} \left[\gamma \alpha^{\gamma} t_{i}^{\gamma - 1} \exp \{- (\alpha t_{i})^{\gamma}\} \right]^{\delta_{i}} \left[ \exp \{- (\alpha t_{i})^{\gamma}\} \right]^{1 - \delta_{i}} \\
-    & = \prod_{i = 1}^{n} \gamma^{\delta_{i}} \alpha^{\gamma \delta_{i}} t_{i}^{(\gamma - 1) \delta_{i}} \exp \{- (\alpha t_{i})^{\gamma}\}.
+    L (\gamma, \alpha) & = \prod_{i = 1}^{n} \left[ \gamma \alpha^{\gamma} t_{i}^{\gamma - 1} \exp \left\{ - \left(\dfrac{t_{i}}{\alpha}\right)^{\gamma} \right\} \right]^{\delta_{i}} \left[ \exp \left\{ - \left(\dfrac{t_{i}}{\alpha}\right)^{\gamma} \right\} \right]^{1 - \delta_{i}} \\
+    & = \prod_{i = 1}^{n} \left[ \dfrac{\gamma}{\alpha^{\gamma}} t^{\gamma - 1} \right]^{\delta_{i}}  \exp \left\{ - \left(\dfrac{t_{i}}{\alpha}\right)^{\gamma} \right\}
 \end{align*}
 ```
 
@@ -689,49 +689,60 @@ Toma-se o logaritmo de $L (\gamma, \alpha)$, logo:
 
 ```{=latex}
 \begin{align*}
-    \ln L (\gamma, \alpha) & = \sum_{i = 1}^{n} \ln{\gamma^{\delta_{i}}} + \sum_{i = 1}^{n} \ln{\alpha^{\gamma \delta_{i}}} + \sum_{i = 1}^{n} \ln{t_{i}^{(\gamma - 1) \delta_{i}}} + \sum_{i = 1}^{n} \ln{\exp \{- (\alpha t_{i})^{\gamma}\}} \\
-    & = \sum_{i = 1}^{n} \delta_{i} \ln{\gamma} + \sum_{i = 1}^{n} \gamma \delta_{i} \ln{\alpha} + \sum_{i = 1}^{n} (\gamma - 1) \delta_{i} \ln{t_{i}} + \sum_{i = 1}^{n} - (\alpha t_{i})^{\gamma} \\
-    & = n \ln{\gamma} + n \gamma \ln{\alpha} + (\gamma - 1) \sum_{i = 1}^{n} \delta_{i} \ln{t_{i}} + \sum_{i = 1}^{n} - (\alpha t_{i})^{\gamma}
+    \ln L (\gamma, \alpha) & = \sum_{i = 1}^{n} \delta_{i} \ln\{ \gamma \} - \sum_{i = 1}^{n} \delta_{i} \gamma \ln\{ \alpha \} + \sum_{i = 1}^{n} \delta_{i} (\gamma - 1) \ln \{ t_{i} \} + \sum_{i = 1}^{n} - (\alpha^{-1} t_{i})^{\gamma} \\
+    & = \ln\{ \gamma \} \sum_{i = 1}^{n} \delta_{i} - \gamma \ln\{ \alpha \} \sum_{i = 1}^{n} \delta_{i} + (\gamma - 1) \sum_{i = 1}^{n} \delta_{i} \ln \{ t_{i} \} + \sum_{i = 1}^{n} - (\alpha^{-1} t_{i})^{\gamma}
 \end{align*}
 ```
 
 Agora, aplica-se as derivadas de primeira ordem em relação a $\gamma$ e $\alpha$.
 
 $$
-\dfrac{\partial \ln L (\gamma, \alpha)}{\partial \gamma} = \dfrac{n}{\gamma} + n \ln{\alpha} + \sum_{i = 1}^{n} \delta_{i} \ln{t_{i}} - \sum_{i = 1}^{n} (\alpha t_{i})^{\gamma} \ln{\alpha t_{i}}
+\dfrac{\partial \ln L (\gamma, \alpha)}{\partial \gamma} = \dfrac{\sum_{i = 1}^{n} \delta_{i}}{\gamma} - \ln\{\alpha\} \sum_{i = 1}^{n} \delta_{i} + \sum_{i = 1}^{n} \delta_{i} \ln\{t_{i}\} - \sum_{i = 1}^{n} (\alpha^{-1} t_{i})^{\gamma} \ln\{ (\alpha^{-1} t_{i})^{\gamma} \}
 $$
 
 $$
-\dfrac{\partial \ln L (\gamma, \alpha)}{\partial \alpha} = \dfrac{n \gamma}{\alpha} - \gamma \alpha^{\gamma - 1} \sum_{i = 1}^{n} t_{i}^{\gamma}
+\dfrac{\partial \ln L (\gamma, \alpha)}{\partial \alpha} = - \dfrac{\gamma \sum_{i = 1}^{n} \delta_{i}}{\alpha} + \gamma \alpha^{- \gamma - 1}\sum_{i = 1}^{n} t_{i}^{\gamma}
 $$
 
 Toma-se agora as derivadas de segunda ordem.
 
 $$
-\dfrac{\partial^{2} \ln L (\gamma, \alpha)}{\partial \gamma^{2}} = - \dfrac{n}{\gamma^2} - \sum_{i = 1}^{n} (\alpha t_{i})^{\gamma} \ln^{2}{\alpha t_{i}}
+\dfrac{\partial^{2} \ln L (\gamma, \alpha)}{\partial \gamma^{2}} = \dfrac{\sum_{i = 1}^{n} \delta_{i}}{\gamma^{2}} - \sum_{i = 1}^{n} (\alpha^{-1} t_{i})^{\gamma} [ \ln\{ (\alpha^{-1} t_{i})^{\gamma} \} ]^2
 $$
 
 $$
-\dfrac{\partial^{2} \ln L (\gamma, \alpha)}{\partial \alpha^{2}} = - \dfrac{n \gamma}{\alpha^{2}} - \gamma (\gamma - 1) \alpha^{\gamma - 2} \sum_{i = 1}^{n} t_{i}^{\gamma}
+\dfrac{\partial^{2} \ln L (\gamma, \alpha)}{\partial \alpha^{2}} = \dfrac{\gamma \sum_{i = 1}^{n} \delta_{i}}{\alpha^{2}} - \gamma (\gamma + 1) \alpha^{- \gamma - 2} \sum_{i = 1}^{n} t_{i}^{\gamma}
 $$
 
 $$
-\dfrac{\partial^{2} \ln L (\gamma, \alpha)}{\partial \gamma \partial \alpha} = \dfrac{n}{\alpha} - \sum_{i = 1}^{n} \gamma (\alpha t)^{\gamma - 1} t \ln{\alpha t} + \dfrac{(\alpha t)^{\gamma}}{\alpha}
+\dfrac{\partial^{2} \ln L (\gamma, \alpha)}{\partial \gamma \partial \alpha} = - \dfrac{\sum_{i = 1}^{n} \delta_{i}}{\alpha} + \sum_{i = 1}^{n} \dfrac{t_{i}^{\gamma}}{\alpha^{\gamma + 1}} \left( \gamma \ln \left\{ \dfrac{t_{i}}{\alpha} \right\} + 1 \right)
 $$
 
 Com todas as derivadas definidas, é possível definirmos algumas funções e variáveis que iremos precisar para utilizar o algoritmo de Newton-Raphson.
 
 ```{r}
-# ------------------------
-# [2] Distribuição Weibull
-# ------------------------
+cat("Era para ser um bloco de código. Porém, tal código está em manutenção")
+```
+
+O bloco de código abaixo contém o algoritmo de Newton-Raphson.
+
+```{r}
+cat("Era para ser um bloco de código. Porém, tal código está em manutenção")
+```
+
+O bloco abaixo mostra o uso da função `optim` para otimização.
+
+```{r, warning=FALSE, message=FALSE}
+# ----------
+# Otimização
+# ----------
 
 # Semente
 set.seed(123)
 
-# ---------------------------------------
-# [2.1] Simulação e Visualização do Dados
-# ---------------------------------------
+# ---------------------------------
+# Simulação e Visualização do Dados
+# ---------------------------------
 # Tamanho da amostra
 n <- 1000
 
@@ -742,93 +753,17 @@ wScale <- 1.5
 # Simulação
 dadosWeibull <- rweibull(n, shape = wShape, scale = wScale)
 
-# -------------
-# [2.2] Funções
-# -------------
-# --------------------
-# [2.2.1] Vetor Escore
-# --------------------
-score <- function(theta, dados) {
-  gamma <- theta[1] # Parâmetro de Forma
-  alpha <- theta[2] # Parâmetro de Escala
-  
-  n <- length(dados) # Tamanho da amostra
-  t <- dados         # Dados observados
-  
-  # Derivadas Parciais
-  # Em relação ao parâmetro de FORMA
-  dGamma <- (n / gamma) + n * log(alpha) + sum(log(t)) - sum(((alpha * t)^2) * log(alpha * t))
-
-  # Em relação ao parâmetro de ESCALA
-  dAlpha <- (n * gamma / alpha) - gamma * alpha^(gamma - 1) * sum(t^gamma)
-  
-  # Retornar
-  return(c(dGamma, dAlpha))
-}
-
-# -----------------------
-# [2.2.2] Matriz Hessiana
-# -----------------------
-Hessian <- function(theta, dados) {
-  gamma <- theta[1] # Parâmetro de Forma
-  alpha <- theta[2] # Parâmetro de Escala
-  
-  n <- length(dados) # Tamanho da amostra
-  t <- dados         # Dados observados
-  
-  dGamma2 <- -(n / gamma^2) - (alpha^gamma) * (log(alpha)^2) * sum((t^gamma) * (log(t)^2))
-  dAlpha2 <- -(n*gamma / alpha^2) - (gamma*(gamma - 1)) * (alpha^(gamma - 2)) * sum(t^gamma)
-  
-  derivada <- (n/alpha) - sum(gamma * (alpha*t)^(gamma - 1) * t * log(alpha * t) + (((alpha*t)^gamma)/alpha))
-  
-  return(matrix(c(dGamma2, derivada, derivada, dAlpha2), nrow = 2, ncol = 2))
-}
-```
-
-O bloco de código abaixo contém o algoritmo de Newton-Raphson.
-
-```{r}
-# --------------------------------------
-# [3] Método Iterativo de Newton-Raphson
-# --------------------------------------
-# Definindo algumas grnadezas
-theta0 <- c(1.5, 1)     # Chute Inicial
-differ <- 1             # Diferença entre o passo atual e passo anterior
-error <- 10^(-6)        # Erro tolerável
-id <- 1                 # Contador (índice da iteração)
-
-while(differ > error) {
-  ESC <- score(theta = theta0, dados = dadosWeibull)   # Vetor Escore
-  HES <- Hessian(theta = theta0, dados = dadosWeibull) # Matriz Hessiana
-  
-  soluc <- solve(HES, ESC)
-  theta1 <- theta0 - soluc # Atulização do Algoritmo
-  
-  differ <- max(abs(theta1 - theta0))
-  
-  theta0 <- theta1
-  id <- id + 1
-  
-  cat("Iteração:", id, " ;  Estimativa = (Forma:", theta1[1], ", Escala:", theta1[2], ") \n")
-}
-```
-O bloco abaixo mostra o uso da função `optim` para otimização.
-
-```{r, warning=FALSE, message=FALSE}
-# ----------
-# Otimização
-# ----------
 # --------------------------
 # Função Log-verossimilhança
 # --------------------------
 
 logWeibull <- function(theta, dados){
-  a <- theta[1] # Parâmetro de forma
-  s <- theta[2] # Parâmetro de escala
+  gamma <- theta[1] # Parâmetro de forma
+  alpha <- theta[2] # Parâmetro de escala
   n <- length(dados)
-  x <- dados
+  t <- dados
 
-logverossimil <- (n * log(a)) + (n * a * log(s)) + ((a - 1) * sum(log(dados))) + sum(- (s * dados)^a)
+logverossimil <- (n * log(gamma)) - (gamma * log(alpha) * n) + (gamma - 1) * sum(log(t)) - sum((t/alpha)^gamma)
 return(-logverossimil)
 }
 
@@ -836,34 +771,27 @@ return(-logverossimil)
 # Aplicando a função optim
 # ------------------------
 
-theta0 <- c(1, 1.5) # Chute inicial
+theta0 <- c(1.5, 1) # Chute inicial
 estimate <- optim(par = theta0, fn = logWeibull, gr = NULL , method = "BFGS" ,
              hessian = TRUE, dados=dadosWeibull)
 estimate
 ```
+
 Assim como na distribuição exponencial, será feita uma comparação entre o real e estimado.
 
 ```{r}
-set.seed(123)
-n <- 1000
+# ---------------------
+# AJUSTES DE FORMATAÇÃO
+# ---------------------
 
-# -------------
-# [2.1] FUNÇÕES
-# -------------
 # Função de Sobrevivência
-StWeibull <- function(t, gamma, alpha) exp(-(alpha * t)^gamma)
+StWeibull <- function(t, gamma, alpha) exp(-(t/alpha)^gamma)
 
-# ----------------------------------------
-# [2.2] SIMULAÇÃO E VARIAÇÃO DE PARÂMETROS
-# ----------------------------------------
-gamma <- 1.5
-alpha <- 1
-tempo <- rweibull(n, shape = gamma, scale = alpha)
-
+# Data Frame
 dfWeibull <- data.frame(
   Tempo = dadosWeibull,
-  St = StWeibull(tempo, gamma, alpha),
-  EMVSt = StWeibull(tempo, theta1[1], theta1[2])
+  St = StWeibull(dadosWeibull, wShape, wScale),
+  EMVSt = StWeibull(dadosWeibull, estimate$par[1], estimate$par[2])
 )
 
 ```
@@ -894,18 +822,14 @@ Temos também a comparação dessas duas curvas de sobrevivência, ilustradas na
 library(ggplot2)
 
 ggplot(dfWeibull, aes(x = Tempo)) +
-  # Curva baseada nos parâmetros verdadeiros
-  geom_line(aes(y = St, color = "Verdadeiro"), lwd = 1.5) +
-  # Curva baseada nas estimativas de máxima verossimilhança
-  geom_line(aes(y = EMVSt, color = "EMV"), lwd = 1) +
-  # Personalização das cores e legendas
+  geom_line(aes(y = St, color = "Verdadeiro"), lwd = 2) +
+  geom_line(aes(y = EMVSt, color = "EMV"), lwd = 1, lty = 4) +
   scale_color_manual(
-    values = c("Verdadeiro" = "red", "EMV" = "blue"),
+    values = c("Verdadeiro" = "black", "EMV" = "red"),
     labels = c(
       "Verdadeiro" = expression(paste("Verdadeiro: ", gamma, ", ", alpha)),
       "EMV" = expression(paste("EMV: ", hat(gamma), ", ", hat(alpha)))
     )) +
-  # Rótulos dos eixos e legenda
   labs(
     x = "Tempo",
     y = expression(S(t)), 
@@ -913,6 +837,11 @@ ggplot(dfWeibull, aes(x = Tempo)) +
   theme_minimal()
 
 ```
+
+##### Distribuição Log-Normal
+
+#### Aplicações com Censura
+
 
 
 

@@ -18,9 +18,6 @@ wScale <- 1.5
 # Simulação
 dadosWeibull <- rweibull(n, shape = wShape, scale = wScale)
 
-# Histograma
-hist(x = dadosWeibull, xlab = "Dados Simulados", ylab = "Frequência")
-
 # -------------
 # [2.2] Funções
 # -------------
@@ -36,10 +33,10 @@ score <- function(theta, dados) {
   
   # Derivadas Parciais
   # Em relação ao parâmetro de FORMA
-  dGamma <- (n / gamma) + (n * log(alpha)) + sum(log(dados)) - (alpha^gamma) * log(alpha) * sum((t^gamma) * log(dados))
-
+  dGamma <- (n / gamma) - n * log(alpha) + sum(log(t)) - sum( (t/alpha)^gamma * log(t/alpha) )
+  
   # Em relação ao parâmetro de ESCALA
-  dAlpha <- (n / alpha) + (gamma * alpha^(gamma - 1)) * sum(t^gamma)
+  dAlpha <- - (n * gamma/alpha) + gamma*alpha^(- gamma - 1) * sum(t^gamma)
   
   # Retornar
   return(c(dGamma, dAlpha))
@@ -55,10 +52,10 @@ Hessian <- function(theta, dados) {
   n <- length(dados) # Tamanho da amostra
   t <- dados         # Dados observados
   
-  dGamma2 <- -(n / gamma^2) - (alpha^gamma) * (log(alpha)^2) * sum((t^gamma) * (log(t)^2))
-  dAlpha2 <- -(n / alpha^2) * gamma - (gamma*(gamma - 1)) * (alpha^(gamma - 2)) * sum((t^gamma) * (log(t)^2))
+  dGamma2 <- - (n/gamma^2) - sum( (t/alpha)^gamma * log(t/alpha)^2 )
+  dAlpha2 <- (n * gamma/alpha^2) - (gamma*(gamma + 1)) * (alpha^(- gamma - 2)) * sum(t^gamma)
   
-  derivada <- (n/alpha) - alpha^(gamma - 1) * (gamma*log(alpha) + 1) * sum((t^gamma) * log(t))
+  derivada <- - (n/alpha) - sum( (t^gamma / alpha^(gamma + 1)) * (gamma * log(t/alpha) + 1) )
   
   return(matrix(c(dGamma2, derivada, derivada, dAlpha2), nrow = 2, ncol = 2))
 }
@@ -82,8 +79,8 @@ while(differ > error) {
   differ <- max(abs(theta1 - theta0))
   
   theta0 <- theta1
-  id <- id + 1
   
   cat("Iteração:", id, " ;  Estimativa = (Forma:", theta1[1], ", Escala:", theta1[2], ") \n")
+  
+  id <- id + 1
 }
-

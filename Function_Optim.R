@@ -30,20 +30,21 @@ hist(x = dadosWeibull, xlab = "Dados Simulados", ylab = "Frequência",
 # --------------------------------
 
 logWeibull <- function(theta, dados){
-  a <- theta[1] # Parâmetro de forma
-  s <- theta[2] # Parâmetro de escala
+  gamma <- theta[1] # Parâmetro de forma
+  alpha <- theta[2] # Parâmetro de escala
   n <- length(dados)
-  x <- dados
-
-logverossimil <- (n * log(a)) + (n * a * log(s)) + ((a - 1) * sum(log(dados))) + sum(- (s * dados)^a)
-return(-logverossimil)
+  t <- dados
+  
+  logverossimil <- (n * log(gamma)) - (gamma * log(alpha) * n) + (gamma - 1) * sum(log(t)) - sum((t/alpha)^gamma)
+  return(-logverossimil)
 }
 
 # ------------------------------
 # [3.2] Aplicando a função optim
 # ------------------------------
 
-theta0 <- c(1, 1.5) # Chute inicial
+theta0 <- c(1.5, 1) # Chute inicial
 estimate <- optim(par = theta0, fn = logWeibull, gr = NULL , method = "BFGS" ,
-             hessian = TRUE, dados=dadosWeibull)
+                  hessian = TRUE, dados=dadosWeibull)
 estimate
+
