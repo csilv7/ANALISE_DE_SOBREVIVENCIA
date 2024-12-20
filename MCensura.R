@@ -12,9 +12,6 @@
 # [1] Ativação de Pacotes
 # -----------------------
 
-if (!require("survival")) install.packages("survival")
-if (!require("ggplot2")) install.packages("ggplot2")
-
 library(survival)
 library(ggplot2)
 
@@ -25,28 +22,56 @@ library(ggplot2)
 # Definindo Semente
 set.seed(123)
 
-# Tamanho amostral
-n <- 1000
+# Parâmetros
+n <- 1000       # Número total de observações
+gamma <- 2      # Parâmetro shape da Weibull
+alpha <- 1.5    # Parâmetro scale da Weibull
+TaxaExp <- 1    # Taxa da distribuição exponencial
+propCens <- 1/3 # Proporção desejada de censuras
 
-# Parâmetros - Distribuição Weibull
-gamma <- 2
-alpha <- 1.5
+# Vetores para armazenar os resultados
+Tobservado <- numeric(n)
+indCensura <- numeric(n)
 
-# Geração de tempos de falha e censura
-Tfalha <- rweibull(n, shape = gamma, scale = alpha)
-Tcensu <- rexp(n, rate = 1)
+# Contadores
+nFalhas <- 0
+nCensuras <- 0
 
-# Determinação do tempo observado e indicador de censura
-Tobservado <- pmin(Tfalha, Tcensu)
-indCensura <- as.numeric(Tfalha <= Tcensu)
+# Loop para gerar os tempos
+for (i in 1:n) {
+  # Gerar um tempo de falha e um tempo de censura
+  Tfalha <- rweibull(1, shape = gamma, scale = alpha)
+  Tcensu <- rexp(1, rate = TaxaExp)
+  
+  # Verificar qual é o menor tempo
+  if (Tfalha <= Tcensu) {
+    Tobservado[i] <- Tfalha
+    indCensura[i] <- 1 # Falha
+    nFalhas <- nFalhas + 1
+  } else {
+    if (nCensuras < propCens * n) {
+      Tobservado[i] <- Tcensu
+      indCensura[i] <- 0 # Censura
+      nCensuras <- nCensuras + 1
+    } else {
+      Tobservado[i] <- Tfalha
+      indCensura[i] <- 1 # Falha
+      nFalhas <- nFalhas + 1
+    }
+  }
+}
+
+# Verificar as proporções
+cat("Proporção de falhas:", nFalhas / n, "\n")
+cat("Proporção de censuras:", nCensuras / n, "\n")
 
 # Dados simulados
 dados <- data.frame(Tempo = Tobservado, Censura = indCensura)
 
 # Histograma
 ggplot(data = dados, aes(x = Tempo)) +
-  geom_histogram(bins = 15) +
-  labs(title = "Histograma do Tempo de Sobrevivência - Dados Simulados",
+  geom_histogram(bins = 15, fill = "blue") +
+  labs(title = "Histograma do Tempo de Sobrevivência - Simulação",
        x = "Tempo", y = "Frequência") +
   theme_minimal(base_size = 14) +
   theme(plot.title = element_text(hjust = 0.5, face = "bold"))
@@ -140,7 +165,7 @@ DataWeib <- data.frame(Time = dados$Tempo, Survival = EMVSurvWeib, Type = "Weibu
 
 # Visualização da curva
 ggplot(data = DataWeib, aes(x = Time, y = Survival)) +
-  geom_line(color = "red", lwd = 1.5) +
+  geom_line(color = "green", lwd = 1.5) +
   labs(title = "S(t) - Weibull",
        x = "Tempo", y = "Probabilidade de Sobrevivência") +
   theme_minimal(base_size = 14) +
