@@ -92,9 +92,9 @@ Vale salientar que para valores extremos de $t$, este intervalo de confiança po
 $$
 \hat{Var}[\hat{U}(t)] = \dfrac{ \sum_{j \text{ : } t_{j} < t} \dfrac{d_{j}}{n_{j} (n_{j} - d_{j})} }{ \left[\sum_{j \text{ : } t_{j} < t} \log{\left( \dfrac{n_{j} - d_{j}}{n_{j}} \right)}\right]^{2}} = \dfrac{ \sum_{j \text{ : } t_{j} < t} \dfrac{d_{j}}{n_{j} (n_{j} - d_{j})} }{ \left[ \log{\hat{S}_{KM}(t)} \right]^{2} }
 $$
-Veja uma aplicação do Estimador de Kaplan-Meier. Os dados dispostos no Apêndice (*) do livro de Análise de Sobrevivência Aplicado, de Enrico e Giolo.
+Veja uma aplicação do Estimador de Kaplan-Meier. Os dados dispostos no Apêndice (*) do livro de Análise de Sobrevivência Aplicado, de Enrico e Giolo. Primeiramente faremos a leitura dos dados.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 # -----------------------
 # [1] ATIVAÇÃO DE PACOTES
 # -----------------------
@@ -128,6 +128,14 @@ dados <- read.table(url, header = TRUE)
 # [3.1] ESTIMADOR DE KAPLAN-MEIER
 # -------------------------------
 ekm <- survfit(Surv(tempos, cens) ~ 1, data = dados)
+```
+
+De posse do conjunto de dados, pode-se estimar a curva de sobrevivência, tal curva foi ilustrada na @fig-SobrKM.
+
+```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Curva de Sobrevivência Kaplan-Meier"
+#| label: fig-SobrKM
+#| fig-cap-location: top
 
 # -----------------
 # [4] VISUALIZAÇÃO
@@ -146,15 +154,13 @@ ggplot(ekm_data, aes(x = time, y = survival)) +
   geom_step(color = "blue", size = 1.2) +
   geom_ribbon(aes(ymin = lower, ymax = upper), fill = "blue", alpha = 0.2) +
   labs(
-    title = "Curva de Sobrevivência Kaplan-Meier",
     x = "Tempo",
     y = "Probabilidade de Sobrevivência",
-    caption = "Fonte: Dados de leucemia"
+    caption = "Fonte: Dados de Leucemia."
   ) +
   theme_minimal(base_size = 14) +
   theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    plot.caption = element_text(size = 10, hjust = 0.5)
+    plot.caption = element_text(hjust = 1, size = 10)
   )
 ```
 

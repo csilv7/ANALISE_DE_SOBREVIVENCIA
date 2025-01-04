@@ -74,13 +74,11 @@ $$ {#eq-RiscoAcumExp}
 
 Afim de ilustrar para visualização e melhor aprendizado do autor e de quem for ler tal material foram simuladas as funções de sobrevivência, risco e risco acumulado variando o parâmetro $\alpha$.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(ggplot2)
 set.seed(123)
 n <- 1000
-```
 
-```{r}
 # ---------------------------
 # [1] DISTRIBUIÇÃO EXPONENCIAL
 # ---------------------------
@@ -118,44 +116,55 @@ dados <- do.call(rbind, lapply(alphas, function(alpha) {
 plot_func <- function(data, y_var, y_label, color_values, y_expression) {
   ggplot(data, aes(x = tempo, y = !!sym(y_var), color = alpha)) +
     geom_line(stat = "summary", fun = mean, size = 1) +
-    labs(x = "Tempo", y = y_expression, color = expression(alpha)) +
+    labs(x = "Tempo", y = y_expression,
+         caption = "Fonte: Elaborado pelo autor.",
+         color = expression(alpha)) +
     scale_color_manual(values = color_values,
                        labels = lapply(alphas, function(a) bquote(alpha == .(a)))) +
-    theme_minimal()
+    theme_minimal(base_size = 14)
 }
 ```
 
 Veja a seguir a @fig-SobrExp. Tal Figura mostra as curvas de sobrevivência para diferentes valores do parâmetro $\alpha$.
 
-```{r, warning=FALSE}
-#| fig-cap: "Função de Sobrevivência para diferentes valores de α"
+```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Função de Sobrevivência segundo uma Distribuição Exponencial para diferentes valores do parâmetro de taxa."
 #| label: fig-SobrExp
 #| fig-cap-location: top
 
 # Função de Sobrevivência
-plot_func(dados, "St", "S(t)", c("red", "blue", "green"), expression(S(t)))
+plot_func(dados, "St", "S(t)", c("red", "blue", "green"), expression(S(t))) +
+  theme(
+    plot.caption = element_text(hjust = 1, size = 10)
+  )
 ```
 
 Veja a seguir a @fig-RiscExp. Tal Figura mostra a função de risco para diferentes valores do parâmetro $\alpha$.
 
-```{r, warning=FALSE}
-#| fig-cap: "Função de Risco para diferentes valores de α"
+```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Função de Risco segundo uma Distribuição Exponencial para diferentes valores do parâmetro de taxa."
 #| label: fig-RiscExp
 #| fig-cap-location: top
 
 # Função de Risco
-plot_func(dados, "ht", expression(lambda(t)), c("red", "blue", "green"), expression(lambda(t)))
+plot_func(dados, "ht", expression(lambda(t)), c("red", "blue", "green"), expression(lambda(t))) +
+  theme(
+    plot.caption = element_text(hjust = 1, size = 10)
+  )
 ```
 
 Veja a seguir a @fig-RiscAcumulExp. Tal Figura mostra a função de risco acumulado para diferentes valores do parâmetro $\alpha$.
 
-```{r, warning=FALSE}
-#| fig-cap: "Função de Risco Acumulado para diferentes valores de α"
+```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Função de Risco segundo uma Distribuição Exponencial para diferentes valores do parâmetro de taxa."
 #| label: fig-RiscAcumulExp
 #| fig-cap-location: top
 
 # Função de Risco Acumulado
-plot_func(dados, "Lt", expression(Lambda(t)), c("red", "blue", "green"), expression(Lambda(t)))
+plot_func(dados, "Lt", expression(Lambda(t)), c("red", "blue", "green"), expression(Lambda(t))) +
+  theme(
+    plot.caption = element_text(hjust = 1, size = 10)
+  )
 ```
 
 #### Algumas Considerações
@@ -238,13 +247,11 @@ Note que, o parâmetro $\gamma$ determina a forma função de risco da seguinte 
 
 Afim de ilustrar para visualização e melhor aprendizado do autor e de quem for ler tal material foram simuladas as funções de sobrevivência, risco e risco acumulado variando o parâmetro $\gamma$.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(ggplot2)
 set.seed(123)
 n <- 1000
-```
 
-```{r}
 # ------------------------
 # [2] DISTRIBUIÇÃO WEIBULL
 # ------------------------
@@ -286,10 +293,11 @@ dados <- do.call(rbind, lapply(gammas, function(gamma) {
 plot_func <- function(data, y_var, y_label, color_values, y_expression) {
   ggplot(data, aes(x = tempo, y = !!sym(y_var), color = gamma)) +
     geom_line(stat = "summary", fun = mean, size = 1) +
-    labs(x = "Tempo", y = y_expression, color = expression(gamma)) +
+    labs(x = "Tempo", y = y_expression, 
+         caption = "Font: Elaborado pelo autor.", color = expression(gamma)) +
     scale_color_manual(values = color_values,
                        labels = lapply(gammas, function(g) bquote(gamma == .(g)))) +
-    theme_minimal()
+    theme_minimal(base_size = 14)
 }
 
 # Paleta de cores
@@ -298,35 +306,44 @@ color_values <- c("red", "blue", "green", "purple", "orange", "brown")
 
 Veja a seguir a @fig-SobrWei. Tal Figura mostra as curvas de sobrevivência para diferentes valores do parâmetro $\gamma$.
 
-```{r, warning=FALSE}
-#| fig-cap: "Função de Sobrevivência para diferentes valores de γ"
+```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Função de Sobrevivência segundo uma Distribuição Weibull para diferentes valores do parâmetro de forma."
 #| label: fig-SobrWei
 #| fig-cap-location: top
 
 # Função de Sobrevivência
-plot_func(dados, "St", expression(S(t)), color_values, expression(S(t)))
+plot_func(dados, "St", expression(S(t)), color_values, expression(S(t))) +
+  theme(
+    plot.caption = element_text(hjust = 1, size = 10)
+  )
 ```
 
 Veja a seguir a @fig-RiscWei. Tal Figura mostra a função de risco para diferentes valores do parâmetro $\gamma$.
 
-```{r, warning=FALSE}
-#| fig-cap: "Função de Risco para diferentes valores de γ"
+```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Função de Risco segundo uma Distribuição Weibull para diferentes valores do parâmetro de forma."
 #| label: fig-RiscWei
 #| fig-cap-location: top
 
 # Função de Risco
-plot_func(dados, "ht", expression(lambda(t)), color_values, expression(lambda(t)))
+plot_func(dados, "ht", expression(lambda(t)), color_values, expression(lambda(t))) +
+  theme(
+    plot.caption = element_text(hjust = 1, size = 10)
+  )
 ```
 
 Veja a seguir a @fig-RiscAcumWei. Tal Figura mostra a função de risco acumulado para diferentes valores do parâmetro $\gamma$.
 
-```{r, warning=FALSE}
-#| fig-cap: "Função de Risco Acumulado para diferentes valores de γ"
+```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Função de Risco Acumulado segundo uma Distribuição Weibull para diferentes valores do parâmetro de forma."
 #| label: fig-RiscAcumWei
 #| fig-cap-location: top
 
 # Função de Risco Acumulado
-plot_func(dados, "Lt", expression(Lambda(t)), color_values, expression(Lambda(t)))
+plot_func(dados, "Lt", expression(Lambda(t)), color_values, expression(Lambda(t))) +
+  theme(
+    plot.caption = element_text(hjust = 1, size = 10)
+  )
 ```
 
 #### Algumas Considerações
@@ -383,15 +400,13 @@ em que $\Phi (\cdot)$ é a função de distribuição acumulada da normal padrã
 
 Afim de ilustrar para visualização e melhor aprendizado do autor e de quem for ler tal material foram simuladas as funções de sobrevivência, risco e risco acumulado variando o parâmetro $\mu$.
 
-```{r, warning=FALSE, message=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(ggplot2)
 library(dplyr)
 
 set.seed(123)
 n <- 1000
-```
 
-```{r}
 # --------------------------
 # [4] DISTRIBUIÇÃO LOG-NORMAL
 # --------------------------
@@ -449,10 +464,11 @@ dados <- do.call(rbind, lapply(mus, function(mu) {
 plot_func <- function(data, y_var, y_label, color_values, y_expression) {
   ggplot(data, aes(x = tempo, y = !!sym(y_var), color = mu)) +
     geom_line(stat = "summary", fun = mean, size = 1) +
-    labs(x = "Tempo", y = y_expression, color = expression(mu)) +
+    labs(x = "Tempo", y = y_expression, 
+         caption = "Fonte: Elaborado pelo autor", color = expression(mu)) +
     scale_color_manual(values = color_values,
                        labels = lapply(mus, function(m) bquote(mu == .(m)))) +
-    theme_minimal()
+    theme_minimal(base_size = 14)
 }
 
 # Paleta de cores
@@ -461,35 +477,44 @@ color_values <- c("red", "blue", "green")
 
 Veja a seguir a @fig-SobrLognormal. Tal Figura mostra as curvas de sobrevivência para diferentes valores do parâmetro $\mu$.
 
-```{r, warning=FALSE}
-#| fig-cap: "Função de Sobrevivência para diferentes valores de μ"
+```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Função de Sobrevivência segundo uma Distribuição Log-Normal para diferentes valores do parâmetro de locação."
 #| label: fig-SobrLognormal
 #| fig-cap-location: top
 
 # Função de Sobrevivência
-plot_func(dados, "St", expression(S(t)), color_values, expression(S(t)))
+plot_func(dados, "St", expression(S(t)), color_values, expression(S(t))) +
+  theme(
+    plot.caption = element_text(hjust = 1, size = 10)
+  )
 ```
 
 Veja a seguir a @fig-RiscLognormal. Tal Figura mostra a função de risco para diferentes valores do parâmetro $\mu$.
 
-```{r, warning=FALSE}
-#| fig-cap: "Função de Risco para diferentes valores de μ"
+```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Função de Risco segundo uma Distribuição Log-Normal para diferentes valores do parâmetro de locação."
 #| label: fig-RiscLognormal
 #| fig-cap-location: top
 
 # Função de Risco
-plot_func(dados, "ht", expression(lambda(t)), color_values, expression(lambda(t)))
+plot_func(dados, "ht", expression(lambda(t)), color_values, expression(lambda(t))) +
+  theme(
+    plot.caption = element_text(hjust = 1, size = 10)
+  )
 ```
 
 Veja a seguir a @fig-RiscAcumLognormal. Tal Figura mostra a função de risco acumulado para diferentes valores do parâmetro $\mu$.
 
-```{r, warning=FALSE}
-#| fig-cap: "Função de Risco Acumulado para diferentes valores de μ"
+```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Função de Risco Acumulado segundo uma Distribuição Log-Normal para diferentes valores do parâmetro de locação."
 #| label: fig-RiscAcumLognormal
 #| fig-cap-location: top
 
 # Função de Risco Acumulado
-plot_func(dados, "Lt", expression(Lambda(t)), color_values, expression(Lambda(t)))
+plot_func(dados, "Lt", expression(Lambda(t)), color_values, expression(Lambda(t))) +
+  theme(
+    plot.caption = element_text(hjust = 1, size = 10)
+  )
 ```
 
 #### Algumas Considerações
@@ -578,7 +603,7 @@ Note que, para o caso em que não se tem censura o numerador, $\sum_{i = 1}^{n} 
 
 A seguir, temos um exemplo computacional. Simulou-se uma amostra proveniente de uma distribuição exponecial e a partir de tal amostra se obteve a estimativa de máxima verossimilhança do parâmetro $\alpha$ de tal amostra.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 set.seed(123)
 n <- 1000
 
@@ -614,13 +639,15 @@ Veja a @tbl-EMVexpSt que mostra as dez primeiras observações e suas respectiva
 #| label: tbl-EMVexpSt
 #| tbl-cap-location: top
 
-library(knitr)
+library(kableExtra)
 
-knitr::kable(head(dados), 
-             col.names = c("Tempo", "S(t)", "S(t) EMV"),
-             escape = FALSE,
-             align = 'c',
-             booktabs = TRUE)
+knitr::kable(
+  head(dados), 
+  col.names = c("Tempo", "S(t)", "S(t) EMV"),
+  escape = FALSE,
+  align = 'c',
+  booktabs = TRUE
+)
 ```
 
 Temos também a comparação dessas duas curvas de sobrevivência, ilustradas na @fig-CompEMVexp.
