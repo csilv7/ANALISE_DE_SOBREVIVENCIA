@@ -1,11 +1,11 @@
-# ---------------------------------------------------------
-# ---------------------------------------------------------
-# ---------------------------------------------------------
-# Análise de Sobrevivência - Modelos de Tempo de Vida Acele
+# -------------------------------------------------------------
+# -------------------------------------------------------------
+# -------------------------------------------------------------
+# Análise de Sobrevivência - Modelos de Tempo de Vida Acelerado
 # Analista: Breno C R da Silva
-# ---------------------------------------------------------
-# ---------------------------------------------------------
-# ---------------------------------------------------------
+# -------------------------------------------------------------
+# -------------------------------------------------------------
+# -------------------------------------------------------------
 
 # -----------------------
 # [1] Ativação de Pacotes
@@ -18,19 +18,6 @@ set.seed(123456789)
 # ----------------------------
 # [2] Distribuição Exponencial
 # ----------------------------
-
-myRexp <- function(n, taxa, coVariates, vecCoef) {
-  # V.A. com Distribuição Uniforme(0, 1)
-  U <- runif(n, 0, 1)
-  
-  # Combinação linear
-  efeito <- rowSums(coVariates * vecCoef)
-  
-  # Tempo de Sobrevivência para TVA
-  times <- - exp(efeito) * log(1 - U) / taxa
-  return(times)
-}
-
 # ------------------------------
 # [2.2] Simulação de Monte Carlo
 # ------------------------------
@@ -39,9 +26,15 @@ myRexp <- function(n, taxa, coVariates, vecCoef) {
 # ---------------------------
 
 myRexp <- function(n, rate, coVariates, vecCoef) {
-  U <- runif(n, 0, 1) # Uniforme(0, 1)
-  effect <- rowSums(coVariates * vecCoef) # Combinação linear
-  times <- -exp(effect) * log(1 - U) / rate
+  # Uniforme(0, 1)
+  U <- runif(n, 0, 1)
+  
+  # Combinação linear dos preditores lineares
+  effect <- rowSums(coVariates * vecCoef)
+  
+  # Tempos de sobrevivência
+  times <- - exp(effect) * log(1 - U) / rate
+  
   return(times)
 }
 
@@ -50,22 +43,18 @@ myRexp <- function(n, rate, coVariates, vecCoef) {
 # --------------------------
 
 set.seed(123456789)
-n <- 100
-x1 <- rnorm(n, 0, 1)
-x2 <- rbinom(n, 1, 0.5)
-X <- cbind(1, x1, x2)
-vecCoef <- c(1.5, 2/3, 2)
-timesSurv <- myRexp(n, 1.5, X, vecCoef)
+n <- 1000                               # Tamanho Amostral
+x1 <- rnorm(n, 0, 1)                    # Normal(0, 1)
+x2 <- rbinom(n, 1, 0.5)                 # Bernoulli(0.5)
+X <- cbind(1, x1, x2)                   # Vetor de variáveis explicativas
+vecCoef <- c(1.5, 2/3, 2)               # Vetor de coeficientes betas
+timesSurv <- myRexp(n, 1, X, vecCoef) # Simulando o Tempo de Sobrevivência
 
 # Visualização
-dados <- data.frame(Tempo = timesSurv)
-
-ggplot(data = dados, aes(x = Tempo)) +
+ggplot(data = data.frame(Tempo = timesSurv), aes(x = Tempo)) +
   geom_histogram(fill = "blue") +
-  labs(title = "Histograma do Tempo de Sobrevivência - Simulação",
-       x = "Tempo", y = "Frequência") +
-  theme_minimal(base_size = 14) +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+  labs(x = "Tempo", y = "Frequência") +
+  theme_minimal(base_size = 14)
 
 # ---------------------------
 # [3] Estimação de Parâmetros
@@ -80,16 +69,17 @@ logVerossimil <- function(theta, coVariates, times) {
   beta <- theta[-1]
   
   effect <- rowSums(coVariates * beta)
+  
   flv <- n * log(rate) - rate * sum(times / exp(effect))
   
-  return(-flv) # Minimizar
+  return(-flv)
 }
 
 # ---------------------------------
 # [3.2] Algoritmo de Newton-Raphson
 # ---------------------------------
 
-theta0 <- c(1, 1, 0.5, 0.5) # Chute inicial
+theta0 <- c(0.5, 1, 0.5, 0.5) # Chute inicial
 estimate <- optim(
   par = theta0,
   fn = logVerossimil,
@@ -107,23 +97,18 @@ print(estimate)
 # --------------
 
 # Função de Sobrevivência
-Stexp <- function(t, alpha, betas, X) exp(-alpha * (t/exp(rowSums(X * betas))))
-
-
-
-
+Stexp <- function(t, alpha, betas, X) alpha * exp(- alpha * ( t / exp(rowSums(X * betas)) ) )
 
 
 # Formatando como DataFrame
-DataExp <- data.frame(Time = timesSurv, Survival = Stexp(timesSurv, 1.5, vecCoef, X),
-                      EMV_Survival = Stexp(timesSurv, estimate$par[1], estimate$par[-1], X),
-                      Type = "Exponencial")
+DataExp <- data.frame(Time = timesSurv, 
+                      Survival = Stexp(timesSurv, 1.5, vecCoef, X),
+                      EMV_Survival = Stexp(timesSurv, estimate$par[1], estimate$par[-1], X))
 
 # Gráfico com ggplot2
 ggplot(DataExp, aes(x = Time)) +
-  geom_line(aes(y = EMV_Survival)) +
-  geom_line(aes(y = Survival), lwd = 1.5) +
-  labs(title = "S(t) Exponencial",
-       x = "Tempo", y = "Probabilidade de Sobrevivência") +
+  geom_line(aes(y = Survival, color = "Verdadeira")) +
+  geom_line(aes(y = EMV_Survival, color = "Estimada")) +
+  labs(x = "Tempo", y = "Probabilidade de Sobrevivência") +
+  scale_color_manual(name = "Curva", values = c("Verdadeira" = "blue", "Estimada" = "red")) +
   theme_minimal(base_size = 14)
-  
