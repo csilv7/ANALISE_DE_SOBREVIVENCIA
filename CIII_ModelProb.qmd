@@ -121,7 +121,10 @@ plot_func <- function(data, y_var, y_label, color_values, y_expression) {
          color = expression(alpha)) +
     scale_color_manual(values = color_values,
                        labels = lapply(alphas, function(a) bquote(alpha == .(a)))) +
-    theme_minimal(base_size = 14)
+    theme_minimal(base_size = 14) +
+  theme(
+    plot.caption = element_text(hjust = 0.5, size = 10)
+  )
 }
 ```
 
@@ -133,10 +136,7 @@ Veja a seguir a @fig-SobrExp. Tal Figura mostra as curvas de sobrevivência para
 #| fig-cap-location: top
 
 # Função de Sobrevivência
-plot_func(dados, "St", "S(t)", c("red", "blue", "green"), expression(S(t))) +
-  theme(
-    plot.caption = element_text(hjust = 1, size = 10)
-  )
+plot_func(dados, "St", "S(t)", c("red", "blue", "green"), expression(S(t)))
 ```
 
 Veja a seguir a @fig-RiscExp. Tal Figura mostra a função de risco para diferentes valores do parâmetro $\alpha$.
@@ -147,10 +147,7 @@ Veja a seguir a @fig-RiscExp. Tal Figura mostra a função de risco para diferen
 #| fig-cap-location: top
 
 # Função de Risco
-plot_func(dados, "ht", expression(lambda(t)), c("red", "blue", "green"), expression(lambda(t))) +
-  theme(
-    plot.caption = element_text(hjust = 1, size = 10)
-  )
+plot_func(dados, "ht", expression(lambda(t)), c("red", "blue", "green"), expression(lambda(t)))
 ```
 
 Veja a seguir a @fig-RiscAcumulExp. Tal Figura mostra a função de risco acumulado para diferentes valores do parâmetro $\alpha$.
@@ -161,10 +158,7 @@ Veja a seguir a @fig-RiscAcumulExp. Tal Figura mostra a função de risco acumul
 #| fig-cap-location: top
 
 # Função de Risco Acumulado
-plot_func(dados, "Lt", expression(Lambda(t)), c("red", "blue", "green"), expression(Lambda(t))) +
-  theme(
-    plot.caption = element_text(hjust = 1, size = 10)
-  )
+plot_func(dados, "Lt", expression(Lambda(t)), c("red", "blue", "green"), expression(Lambda(t)))
 ```
 
 #### Algumas Considerações
@@ -294,10 +288,13 @@ plot_func <- function(data, y_var, y_label, color_values, y_expression) {
   ggplot(data, aes(x = tempo, y = !!sym(y_var), color = gamma)) +
     geom_line(stat = "summary", fun = mean, size = 1) +
     labs(x = "Tempo", y = y_expression, 
-         caption = "Font: Elaborado pelo autor.", color = expression(gamma)) +
+         caption = "Fonte: Elaborado pelo autor.", color = expression(gamma)) +
     scale_color_manual(values = color_values,
                        labels = lapply(gammas, function(g) bquote(gamma == .(g)))) +
-    theme_minimal(base_size = 14)
+    theme_minimal(base_size = 14) +
+  theme(
+    plot.caption = element_text(hjust = 0.5, size = 10)
+  )
 }
 
 # Paleta de cores
@@ -312,10 +309,7 @@ Veja a seguir a @fig-SobrWei. Tal Figura mostra as curvas de sobrevivência para
 #| fig-cap-location: top
 
 # Função de Sobrevivência
-plot_func(dados, "St", expression(S(t)), color_values, expression(S(t))) +
-  theme(
-    plot.caption = element_text(hjust = 1, size = 10)
-  )
+plot_func(dados, "St", expression(S(t)), color_values, expression(S(t)))
 ```
 
 Veja a seguir a @fig-RiscWei. Tal Figura mostra a função de risco para diferentes valores do parâmetro $\gamma$.
@@ -326,10 +320,7 @@ Veja a seguir a @fig-RiscWei. Tal Figura mostra a função de risco para diferen
 #| fig-cap-location: top
 
 # Função de Risco
-plot_func(dados, "ht", expression(lambda(t)), color_values, expression(lambda(t))) +
-  theme(
-    plot.caption = element_text(hjust = 1, size = 10)
-  )
+plot_func(dados, "ht", expression(lambda(t)), color_values, expression(lambda(t)))
 ```
 
 Veja a seguir a @fig-RiscAcumWei. Tal Figura mostra a função de risco acumulado para diferentes valores do parâmetro $\gamma$.
@@ -340,10 +331,7 @@ Veja a seguir a @fig-RiscAcumWei. Tal Figura mostra a função de risco acumulad
 #| fig-cap-location: top
 
 # Função de Risco Acumulado
-plot_func(dados, "Lt", expression(Lambda(t)), color_values, expression(Lambda(t))) +
-  theme(
-    plot.caption = element_text(hjust = 1, size = 10)
-  )
+plot_func(dados, "Lt", expression(Lambda(t)), color_values, expression(Lambda(t)))
 ```
 
 #### Algumas Considerações
@@ -468,7 +456,10 @@ plot_func <- function(data, y_var, y_label, color_values, y_expression) {
          caption = "Fonte: Elaborado pelo autor", color = expression(mu)) +
     scale_color_manual(values = color_values,
                        labels = lapply(mus, function(m) bquote(mu == .(m)))) +
-    theme_minimal(base_size = 14)
+    theme_minimal(base_size = 14) +
+  theme(
+    plot.caption = element_text(hjust = 0.5, size = 10)
+  )
 }
 
 # Paleta de cores
@@ -483,10 +474,7 @@ Veja a seguir a @fig-SobrLognormal. Tal Figura mostra as curvas de sobrevivênci
 #| fig-cap-location: top
 
 # Função de Sobrevivência
-plot_func(dados, "St", expression(S(t)), color_values, expression(S(t))) +
-  theme(
-    plot.caption = element_text(hjust = 1, size = 10)
-  )
+plot_func(dados, "St", expression(S(t)), color_values, expression(S(t)))
 ```
 
 Veja a seguir a @fig-RiscLognormal. Tal Figura mostra a função de risco para diferentes valores do parâmetro $\mu$.
@@ -497,10 +485,7 @@ Veja a seguir a @fig-RiscLognormal. Tal Figura mostra a função de risco para d
 #| fig-cap-location: top
 
 # Função de Risco
-plot_func(dados, "ht", expression(lambda(t)), color_values, expression(lambda(t))) +
-  theme(
-    plot.caption = element_text(hjust = 1, size = 10)
-  )
+plot_func(dados, "ht", expression(lambda(t)), color_values, expression(lambda(t)))
 ```
 
 Veja a seguir a @fig-RiscAcumLognormal. Tal Figura mostra a função de risco acumulado para diferentes valores do parâmetro $\mu$.
@@ -511,10 +496,7 @@ Veja a seguir a @fig-RiscAcumLognormal. Tal Figura mostra a função de risco ac
 #| fig-cap-location: top
 
 # Função de Risco Acumulado
-plot_func(dados, "Lt", expression(Lambda(t)), color_values, expression(Lambda(t))) +
-  theme(
-    plot.caption = element_text(hjust = 1, size = 10)
-  )
+plot_func(dados, "Lt", expression(Lambda(t)), color_values, expression(Lambda(t)))
 ```
 
 #### Algumas Considerações
@@ -634,7 +616,7 @@ O valor de verdadeiro do parâmetro $\alpha =$ `{r} alpha`. A estimativa de máx
 
 Veja a @tbl-EMVexpSt que mostra as dez primeiras observações e suas respectivas funções de sobrevivência, sobrevivência real e sobrevivência estimada.
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 #| tbl-cap: "Real e Estimado para as Funções de Sobrevivência"
 #| label: tbl-EMVexpSt
 #| tbl-cap-location: top
@@ -649,6 +631,7 @@ knitr::kable(
   booktabs = TRUE
 )
 ```
+
 
 Temos também a comparação dessas duas curvas de sobrevivência, ilustradas na @fig-CompEMVexp.
 
@@ -831,12 +814,15 @@ Veja a @tbl-EMVweibullSt que mostra as dez primeiras observações e suas respec
 #| tbl-cap-location: top
 
 library(knitr)
+library(kableExtra)
 
-knitr::kable(head(dfWeibull), 
-             col.names = c("Tempo", "S(t)", "S(t) EMV"),
-             escape = FALSE,
-             align = 'c',
-             booktabs = TRUE)
+knitr::kable(
+  head(dfWeibull), 
+  col.names = c("Tempo", "S(t)", "S(t) EMV"),
+  escape = FALSE,
+  align = 'c',
+  booktabs = TRUE
+)
 ```
 
 Temos também a comparação dessas duas curvas de sobrevivência, ilustradas na @fig-CompEMVWeibull.
