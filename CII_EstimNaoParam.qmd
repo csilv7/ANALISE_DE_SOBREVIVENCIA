@@ -159,7 +159,7 @@ O estimador de Kaplan-Meier é, indiscutivelmente, o mais utilizado para estimar
 
 O estimador de Nelson-Aalen, mais recente que o de Kaplan-Meier, apresenta propriedades similares às deste último. Já o estimador da tabela de vida possui importância histórica, tendo sido utilizado em informações derivadas de censos demográficos para estimar características associadas ao tempo de vida humano. Este estimador foi inicialmente proposto por demógrafos e atuários no final do século XIX, sendo empregado principalmente em grandes amostras.
 
-Nesta seção será abordado apenas o estimador de Nelson-Aalen. Para conhecer mais sobre o estimador da Tabela de Vida ou Tabela Atuarial, consulte a Seção 2.4.2 do livro *Análise de Sobrevivência Aplicada** de @colosimo2006analise.
+Nesta seção será abordado apenas o estimador de Nelson-Aalen. Para conhecer mais sobre o estimador da Tabela de Vida ou Tabela Atuarial, consulte a Seção 2.4.2 do livro *Análise de Sobrevivência Aplicada* de @colosimo2006analise.
 
 
 ### Estimador de Nelson-Aalen
@@ -208,12 +208,15 @@ Vale destacar que o estimador de Nelson-Aalen aprenseta, na maioria dos casos, e
 
 ## Comparação de Curvas de Sobrevivência
 
-Imagine um problema da área da saúde, onde se desejar comparar dois grupos, um grupo receberá tratamento através do uso de alguma droga e o outro será o grupo controle. Estatísticas mais comumente usadas podem ser vistas como generalizações para dados censurados, de conhecidos testes não-paramétricos. O teste *logrank* [@mantel1966evaluation] é o mais usado em análise de sobrevivência. @gehan1965generalized propôs uma generalização para a estatística de Wilcoxon. Outras generalizações foram propostas por @peto1972asymptotically e @prentice1978linear, entre outros. @latta1981monte fez uso de simulações de Monte Carlo para comparar vários testes não-paramétricos.
+Considere um problema na área da saúde em que se deseja comparar dois grupos: um que receberá tratamento com uma determinada droga e outro que será o grupo controle. Estatísticas amplamente utilizadas para esse fim podem ser vistas como generalizações, para dados censurados, de testes não paramétricos bem conhecidos. Entre esses, o teste *logrank* [@mantel1966evaluation] é o mais empregado em análises de sobrevivência. @gehan1965generalized propôs uma generalização para a estatística de Wilcoxon. Outras generalizações foram introduzidas por autores como @peto1972asymptotically e @prentice1978linear, enquanto @latta1981monte utilizou simulações de Monte Carlo para comparar diversos testes não-paramétricos.
 
-Neste texto, ênfase será dada ao teste *logrank*. Este teste é muito utilizado em análise de sobrevivência e é particularmente apropriado quando a razão das funções de risco dos grupos a serem comparados é aproximadamente constante. Isto é, as populações têm a propriedade de riscos proporcionais. A estatística deste teste é a diferença entre o número observado de falhas em cada grupo e uma quantidade que, para muitos propósitos, pode ser pensada como o correspondente número esperado de falhas sob a hipótese nula. A expressão do teste *logrank* é obtida de forma similar a do conhecido teste de @mantel1959statistical, para combinar tabelas de contigência. O teste *logrank* tem, também, a mesma expressão do teste de escore para o modelo de regressão de Cox que será apresentado no [...]. Outros testes também são apresentados nesta seção.
+Nesta seção, será dada ênfase ao teste *logrank*, amplamente utilizado em análises de sobrevivência e particularmente adequado quando a razão entre as funções de risco dos grupos a serem comparados é aproximadamente constante. Ou seja, quando as populações apresentam a propriedade de riscos proporcionais. 
 
-Considere, inicialmente, o teste de igualdade de duas funções de sobrevivência $S_{1}(t)$ e $S_{2}(t)$. Sejam $t_{1} < t_{2} < \cdots < t_{k}$ os tempos de falha distintos da amostra formada pela combinação das duas amostras individuais. Suponha que em um tempo $t_{j}$ aconteçam $d_{j}$ falhas e que $n_{j}$ indivíduos estejam sob risco em um tempo imediatamente inferior a $t_{j}$ na amostra combinada e, respectivamente, $d_{ij}$ e $n_{ij}$ na amostra $i$; $i = 1, 2$ e $j = 1, \cdots, k$. Em tempo de falha $t_{j}$, os dados podem ser dispostos em forma de uma tabela de contigência 2 x 2 com $d_{ij}$ falhas e $n_{ij} - d_{ij}$ sobreviventes na coluna $i$. Isto é mostrado na @tbl-ExampleTableContig.
+A estatística do teste *logrank* baseia-se na diferença entre o número observado de falhas em cada grupo e o número esperado de falhas sob a hipótese nula. Essa abordagem é semelhante à do teste de @mantel1959statistical, que combina tabelas de contingência. Além disso, o teste *logrank* possui a mesma expressão do teste de escore para o modelo de regressão de Cox, que será apresentado no [...]. Outros testes também serão discutidos nesta seção.
 
+Considere, inicialmente, o teste de igualdade entre duas funções de sobrevivência $S_{1}(t)$ e $S_{2}(t)$. Seja $t_{1} < t_{2} < \ldots < t_{k}$ a sequência dos tempos de falha distintos observados na amostra combinada, formada pela união das duas amostras individuais. Suponha que, no tempo $t_{j}$, ocorram $d_{j}$ falhas e que $n_{j}$ indivíduos estejam sob risco imediatamente antes de $t_{j}$ na amostra combinada. Nas amostras individuais, as quantidades correspondentes são $d_{ij}$ e $n_{ij}$, onde $i = 1, 2$ representa o grupo e $j = 1, \cdots, k$ indica o tempo de falha.
+
+No tempo $t_{j}$, os dados podem ser organizados em uma tabela de contingência $2 \times 2$, onde $d_{ij}$ representa o número de falhas e $n_{ij} - d_{ij}$ o número de sobreviventes em cada grupo $i$. Essa disposição está ilustrada na @tbl-ExampleTableContig.
 
 ```{r, echo=FALSE}
 #| tbl-cap: "Tabela de contingência gerada no tempo $t_{j}$."
@@ -233,33 +236,33 @@ kable(
   escape = FALSE,
   align = "c",
   col.names = c("", "Grupo 1", "Grupo 2", " "),
-  booktabs = TRUE,
-  #linesep = c("", "\\addlinespace", "\\addlinespace")
+  booktabs = TRUE
 )
-
 ```
 
-Condicional à experiência de falha e censura até o tempo $t_{j}$ (fixando as marginais de coluna) e ao número de falhas no tempo $t_{j}$ (fixando as marginais de linha), a distribuição de $d_{2j}$ é, então, uma hipergeométrica:
+Condicionado à ocorrência de falhas e censuras até o tempo $t_{j}$ (fixando as marginais das colunas) e ao número total de falhas no tempo $t_{j}$ (fixando as marginais das linhas), a distribuição de $d_{2j}$ é, então, uma hipergeométrica:
 
 $$
-\dfrac{ \binom{ n_{1j} }{ d_{1j} } \binom{ n_{2j} }{ d_{2j} } }{ \binom{ n_{j} }{ d_{j} } },
+\dfrac{ \binom{ n_{1j} }{ d_{1j} } \binom{ n_{2j} }{ d_{2j} } }{ \binom{ n_{j} }{ d_{j} } }.
 $$
 
-A média de $d_{2j}$ é $w_{2j} = n_{2j} d_{j} n_{j}^{-1}$, o que equivale a dizer que, se não houver diferença entre as duas populações no tempo $t_{j}$, o número total de falhas ($d_{j}$) pode ser dividido entre as duas amostras de acordo com a razão entre o número de indivíduos sob risco em cada amostra e o número total sob risco. A variância de $d_{2j}$ obtida a partir da distribuição hipergeométrica é:
+A média de $d_{2j}$ é dada por $w_{2j} = n_{2j} d_{j} n_{j}^{-1}$. Isso significa que, na ausência de diferenças entre as duas populações no tempo $t_{j}$, o número total de falhas ($d_{j}$) pode ser alocado entre as duas amostras proporcionalmente à razão entre o número de indivíduos sob risco em cada amostra e o número total sob risco.
+
+A variância de $d_{2j}$ obtida a partir da distribuição hipergeométrica é:
 
 $$
 (V_{j})_{2} = n_{2j}(n_{j} - n_{2j})d_{j}(n_{j} - d_{j}) n_{j}^{-2} (n_{j} - 1)^{-1}.
 $$
 
-Então, a estatística $d_{2j} - w_{2j}$ tem média zero e variância $(V_{j})_{2}$. Se as $k$ tabelas de contingência forem independentes, um teste aproximado para a igualdade das duas funções de sobrevivência pode ser baseado na estatística:
+Portanto, a estatística $d_{2j} - w_{2j}$ possui média zero e variância $(V_{j})_{2}$. Se as $k$ tabelas de contingência forem independentes, um teste aproximado para avaliar a igualdade entre as duas funções de sobrevivência pode ser construído com base na seguinte estatística:
 
 $$
-T = \dfrac{ \left[ \sum_{j = 1}^{k} (d_{2j} - w_{2j}) \right]^{2} }{ \sum_{j = 1}^{k} (V_{j})_{2}  } ,
+T = \dfrac{ \left[ \sum_{j = 1}^{k} (d_{2j} - w_{2j}) \right]^{2} }{ \sum_{j = 1}^{k} (V_{j})_{2} },
 $$ {#eq-EstTestelogrank}
 
-que, sob a hipótese nula $H_{0}: S_{1}(t) = S_{2}(t)$ para todo $t$ no período de acompanhamento, tem uma distribuição qui-quadrado com $1$ grau de liberdade para grandes amostras.
+que, sob a hipótese nula $H_{0}: S_{1}(t) = S_{2}(t)$ para todo $t$ no período de acompanhamento, segue aproximadamente uma distribuição qui-quadrado com $1$ grau de liberdade para amostras grandes.
 
-Com o intuito de exemplificar o teste de *logrank* com dados reais aplicou-se o mesmo aos dados de Leucemia Pediátrica dispostos no Apêndice (A) do livro *Análise de Sobrevivência Aplicada* de @colosimo2006analise, os mesmo dados usados para gerar a @fig-SobrKM. No teste executado o obejtivo é testar se a curva de sobrevivência das categorias da covariável `r6` são iguais, sob as hipóteses:
+Para exemplificar a aplicação do teste de *logrank* em dados reais, utilizou-se o conjunto de dados sobre Leucemia Pediátrica, disponível no Apêndice (A) do livro *Análise de Sobrevivência Aplicada* de @colosimo2006analise. Esses mesmos dados foram usados para gerar a @fig-SobrKM. O objetivo do teste realizado foi avaliar se as curvas de sobrevivência das categorias da covariável `r6` são iguais, com as seguintes hipóteses:
 
 $$
 \begin{cases}
@@ -295,13 +298,59 @@ df <- df %>%
 # ----------------------
 
 # Aplicando o Teste de Logrank
-TestLogrank <- survdiff(Surv(tempos, cens)~grupo, data = df, rho = 0)
-print(TestLogrank )
+TestLogrank <- survdiff(Surv(tempos, cens) ~ grupo, data = df, rho = 0)
+print(TestLogrank)
 ```
 
-Se for fixado o nível de significância em 5%, ou seja, $\alpha = 0,05$, rejeitamos a hipótese nula. Chega-se a essa conclusão olhando para o $p-valor$ (probabilidade de significância) do teste, mensurado em $p-valor =$ `r round(TestLogrank$pvalue, 2)`. Como o $p-valor < \alpha$, rejeita-se $H_{0}$, logo, as curvas de sobrevivência dos grupos são diferentes ao longo do tempo, ao nível de significância de 5%.
+Ao fixar o nível de significância em em 5% ($\alpha = 0,05$), rejeitamos a hipótese nula. rejeitamos a hipótese nula. Essa conclusão baseia-se no valor $p$ (probabilidade de significância) obtido no teste, calculado como $p-valor =$ `r TestLogrank$pvalue`. Como o $p-valor < \alpha$, rejeita-se $H_{0}$. Assim, conclui-se que as curvas de sobrevivência dos grupos são diferentes ao longo do tempo, ao nível de significância de 5%.
 
-A generalização do teste *logrank* para a igualdade de $r > 2$ funções de sobrevivência $S_{1}(t), S_{2}(t), ..., S_{r}(t)$ não é complicada. Considere a mesma notação anterior, com o índice $i$ variando, agora, entre $1$ e $r$. Desta forma, os dados podem ser arranjados em forma de uma tabela de contingência 2 x $r$ falhas $d_{ij}$ e $n_{ij} - d_{ij}$ sobreviventes na coluna $i$. Ou seja, a @tbl-ExampleTableContig passaria a ter $r$ colunas em vez de simplesmente duas.
+A generalização do teste *logrank* para a comparação de $r > 2$ funções de sobrevivência, $S_{1}(t), S_{2}(t), \ldots, S_{r}(t)$, é direta. Utilizando a mesma notação anterior, o índice $i$ varia agora de $1$ a $r$. Assim, os dados podem ser organizados em uma tabela de contingência $2 \times r$, onde cada coluna $i$ contém $d_{ij}$ falhas e $n_{ij} - d_{ij}$ sobreviventes. Dessa forma, a @tbl-ExampleTableContig seria estendida para ter $r$ colunas em vez de apenas duas.
+
+Condicionada à experiência de falha e censura até o tempo $t_{j}$ e ao número total de falhas no tempo $t_{j}$, a distribuição conjunta de $d_{2j}, \ldots,d_{rj}$ segue uma hipergeométrica multivariada, dada por:
+
+$$
+\dfrac{ \prod_{i = 1}^{r} \binom{ n_{ij }}{ d_{ij} } }{ \binom{ n_{j }}{ d_{j} } }.
+$$
+
+A média de $d_{ij}$ é $w_{ij} = n_{ij} d_{j} n_{j}^{-1}$, bem como a variância de $d_{ij}$ e a covariância de $d_{ij}$ e $d_{lj}$ são, respectivamente,
+
+$$
+(V_{j})_{ii} = n_{ij} (n_{j} - n_{ij}) d_{j} (n_{j} - d_{j}) n_{j}^{-2} (n_{j} - 1)^{-1}
+$$
+
+e
+
+$$
+(V_{j})_{il} = - n_{ij} n_{lj} d_{j} (n_{j} - d_{j}) n_{j}^{-2} (n_{j} - 1)^{-1}.
+$$
+
+A estatística $v'_{j} = (d_{2j} - w_{2j}, \ldots, d_{rj} - w_{rj})$ possui média zero e matriz de variância-covariância $V_{j}$, com dimensão $r - 1$. A matriz $V_{j}$ contém os termos $(V_{j}){ii}$ na diagonal principal e $(V_{j})_{il}$, $i,l = 2, \ldots,r$, fora da diagonal principal. 
+
+A estatística $v$, que agrega as contribuições de todos os tempos distintos de falha, é definida como:
+
+$$
+v = \sum_{j = 1}^{k} v_{j},
+$$
+
+onde $v$ é um vetor de dimensão $(r - 1) \times 1$, cujos elementos correspondem às diferenças entre os totais observados e esperados de falhas.
+
+Considerando, novamente, a independência das $k$ tabelas de contingência, a variância de $v$ é dada por $V = V_{1} + \ldots + V_{k}$. Um teste aproximado para a igualdade das $r$ funções de sobrevivência pode ser baseado na estatística:
+
+$$
+T = v´V^{-1} v,
+$$ {#eq-EstTestelogrankGeneralizado}
+
+que, sob a hipótese nula $H_{0}$ (igualdade das curvas de sobrevivência), segue uma distribuição qui-quadrado com $r - 1$ graus de liberdade para amostras grandes. Os graus de liberdade são $r - 1$ em vez de $r$, pois os elementos de $v$ somam zero.
+
+Uma aplicação para a comparação de $r$ curvas de sobrevivência [...].
+
+```{r warning=FALSE, message=FALSE}
+cat("Código em R a ser preenchido")
+```
+
+### Outros Testes
+
+[...]
 
 :::: progress
 :::: {.progress-bar style="width: 100%;"}
