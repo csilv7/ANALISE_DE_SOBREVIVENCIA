@@ -5,7 +5,7 @@ project:
 book:
   title: "Análise de Sobrevivência"
   subtitle: "Iniciação Ciêntifica - PIBIC 2024/2025 (UFPA)"
-  date: "11/12/2024"
+  date: "01/25/2024"
   
   author:
     
@@ -31,6 +31,7 @@ book:
     - CI_ConceitosBasicos.qmd
     - CII_EstimNaoParam.qmd
     - CIII_ModelProb.qmd
+    - references.qmd
 
 comments:
   hypothesis: true
@@ -52,6 +53,7 @@ format:
     toc-location: right
   pdf:
     documentclass: scrreprt
+    fig-pos: "H"
     number-sections: true
     pdf-engine: xelatex
     fontsize: 12pt

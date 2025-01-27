@@ -5,61 +5,61 @@
 ```
 
 :::: progress
-::: {.progress-bar style="width: 100%;"}
-:::
+:::: {.progress-bar style="width: 100%;"}
+::::
 ::::
 
 # Conceitos Básicos e Exemplos
 
 ## Introdução
 
-O primeiro capítulo do livro de Enrico Antônio Colosimo e Suely Ruiz Giolo tem como objetivo apresentar alguns *conceitos* e *fundamentos* de uma das áreas da Estatística e Análise de Dados que mais cresceram nas últimas duas décadas do século passado. Esse crescimento foi impulsionado pelo desenvolvimento e avanço de técnicas, juntamente com o progresso computacional.
+O objetivo deste capítulo inicial é apresentar alguns *conceitos* e *fundamentos* de uma das áreas da Estatística e Análise de Dados que mais se desenvolveram nas últimas duas décadas do século XX. Esse avanço foi impulsionado pela evolução das técnicas estatísticas aliada ao progresso computacional.
 
-Na Análise de Sobrevivência, a variável resposta é, geralmente, o tempo até a ocorrência de um determinado evento. De forma mais precisa, trata-se de uma técnica estatística utilizada para modelar e entender o tempo até que ocorra um evento de interesse, denominado **tempo de falha**. Para um entendimento inicial, Colosimo e Giolo dão os seguintes exemplos: tempo até a morte de um paciente, tempo até a cura ou até a recidiva de uma doença.
+Na Análise de Sobrevivência, a variável resposta é, em geral, o *tempo até a ocorrência de um evento de interesse*. Especificamente, essa área se concentra em modelar e compreender o tempo necessário para que um evento significativo ocorra, sendo este denominado **tempo de falha**. Como exemplo, @colosimo2006analise mencionam casos como o tempo até a morte de um paciente, até a cura de uma doença ou até a recidiva de uma condição clínica.
 
-Uma questão que pode surgir é: por que não usar outras técnicas estatísticas? O uso de outras abordagens não é adequado para dados de sobrevivência devido à característica desses dados, que é a presença de **censura**. De forma simples, censura refere-se à observação parcial da resposta, o que ocorre quando o acompanhamento do paciente é interrompido por alguma razão. Sendo um conceito chave na análise de sobrevivência, podemos defini-la como a situação em que o tempo de falha real não é conhecido, apenas que ele excede certo ponto.
+Uma questão frequentemente levantada é: por que não utilizar outras técnicas estatísticas? Métodos tradicionais não são adequados para dados de sobrevivência devido a uma característica única: a **censura**. Esse conceito refere-se à observação parcial do tempo de falha, como ocorre quando o acompanhamento de um paciente é interrompido antes do evento de interesse. A censura, sendo um elemento essencial da Análise de Sobrevivência, caracteriza situações em que o tempo de falha real é desconhecido, sabendo-se apenas que ele excede determinado ponto.
 
 ## Tempo de Falha
 
-Em Análise de Sobrevivência, é essencial definir alguns pontos fundamentais para o estudo. O primeiro deles é o tempo de início do estudo, que deve ser definido com precisão, garantindo que os indivíduos sejam comparáveis na origem do estudo, diferenciando-se apenas nas medidas das covariáveis. Existem muitas alternativas para definir o tempo inicial. Geralmente, esse tempo é o tempo real ou "de relógio". Porém, em outras áreas, como a Engenharia, outras medidas podem ser utilizadas. Colosimo e Giolo fornecem exemplos como número de ciclos, quilometragem de um carro ou qualquer outra medida de carga.
+Na Análise de Sobrevivência, é fundamental estabelecer alguns pontos iniciais para o estudo. O primeiro deles é o **tempo inicial do estudo**, que deve ser claramente definido para garantir que os indivíduos sejam comparáveis no ponto de partida, diferenciando-se apenas pelas covariáveis medidas. Existem diversas maneiras de definir o tempo inicial, sendo o mais comum o **tempo cronológico**. Contudo, em áreas como Engenharia, outras métricas, como número de ciclos ou quilometragem, também podem ser utilizadas. @colosimo2006analise apresentam exemplos práticos, como medidas de carga para equipamentos.
 
-Outro ponto importante relacionado ao Tempo de Falha é a definição do evento de interesse. Normalmente, esses eventos correspondem a situações indesejáveis, por isso são chamados de falhas. A definição da falha deve ser clara e precisa. Destaca-se um trecho do livro:
+Outro aspecto essencial é a **definição do evento de interesse**, frequentemente associado a falhas ou situações indesejáveis. Para garantir resultados consistentes, a definição do evento deve ser clara e objetiva. Um exemplo elucidativo é fornecido por @colosimo2006analise:
 
-> *"Em algumas situações, a definição de falha já é clara, como morte ou recidiva, mas em outras pode assumir termos ambíguos. Por exemplo, fabricantes de produtos alimentícios desejam saber o tempo de vida de seus produtos expostos em balcões frigoríficos de supermercados. O tempo de falha vai do momento de exposição (chegada ao supermercado) até o produto se tornar 'inapropriado para consumo'. Esse evento deve ser claramente definido antes do início do estudo. Por exemplo, o produto é considerado inapropriado para consumo quando atinge uma concentração específica de microrganismos por $mm^{2}$ de área."*
+> *"Em algumas situações, a definição de falha já é clara, como morte ou recidiva, mas em outras pode assumir termos ambíguos. Por exemplo, fabricantes de produtos alimentícios desejam saber o tempo de vida de seus produtos expostos em balcões frigoríficos de supermercados. O tempo de falha vai do momento de exposição (chegada ao supermercado) até o produto se tornar 'inapropriado para consumo'. Esse evento deve ser claramente definido antes do início do estudo. Por exemplo, o produto é considerado inapropriado para consumo quando atinge uma concentração específica de microrganismos por* $mm^{2}$ *de área."*
 
 ## Censura
 
-Frequentemente, estudos clínicos que assumem a resposta como uma variável temporal são prospectivos e de longa duração. Mesmo sendo longos, esses estudos costumam terminar antes que todos os indivíduos venham a falhar.
+Estudos clínicos que tratam a resposta como uma variável temporal geralmente são prospectivos e de longa duração. No entanto, mesmo sendo extensos, esses estudos frequentemente se encerram antes que todos os indivíduos passem pelo evento de interesse.
 
-Uma característica comum a esses estudos é a presença de **censura**, ou seja, observações incompletas ou parciais. É importante ressaltar que, mesmo censuradas, essas observações fornecem informações valiosas sobre o tempo de vida dos pacientes. Colosimo e Giolo destacam a importância de manter os dados censurados na análise:
+Uma característica comum nesses estudos é a **censura**, que corresponde a observações incompletas ou parciais. Apesar disso, tais observações fornecem informações valiosas para a análise. @colosimo2006analise destacam a relevância de incluir dados censurados na análise:
 
 > *"Ressalta-se que, mesmo censurados, todos os resultados provenientes de um estudo de sobrevivência devem ser incluídos na análise estatística. Duas razões justificam esse procedimento: (i) mesmo sendo incompletas, as observações censuradas fornecem informações sobre o tempo de vida dos pacientes; (ii) a exclusão das censuras no cálculo das estatísticas pode levar a conclusões enviesadas."*
 
-São apresentados três tipos principais de censura:
+Existem três tipos principais de censura:
 
--   **Censura Tipo I:** O estudo é encerrado após um período de tempo pré-estabelecido.
--   **Censura Tipo II:** O estudo termina quando o evento de interesse ocorre em um número específico de indivíduos.
--   **Censura Aleatória:** Ocorre quando um paciente é retirado do estudo antes do evento.
+- **Censura Tipo I:** O estudo é encerrado após um período de tempo previamente definido.
+- **Censura Tipo II:** O estudo termina quando um número específico de indivíduos passa pelo evento de interesse.
+- **Censura Aleatória:** Ocorre quando um indivíduo é retirado do estudo antes do evento de interesse.
 
-No livro, a Figura 1.1 ilustra esses tipos de censura, todos conhecidos como censura à direita, pois o evento ocorre após o tempo registrado. Contudo, outros tipos de censura, como à esquerda e intervalar, também são possíveis.
+A censura mais comum é a **censura à direita**, em que o evento ocorre após o tempo registrado. Entretanto, outros tipos de censura, como **à esquerda** e **intervalar**, também são possíveis. 
 
-Censura à esquerda ocorre quando o evento já aconteceu antes da observação. Um exemplo do livro é um estudo sobre a idade em que as crianças aprendem a ler em determinada comunidade:
+Censura à esquerda ocorre quando o evento já aconteceu antes do início da observação. Um exemplo é um estudo sobre a idade em que crianças aprendem a ler:
 
 > *"Quando os pesquisadores começaram a pesquisa, algumas crianças já sabiam ler e não se lembravam com que idade isso ocorreu, caracterizando observações censuradas à esquerda."*
 
-No mesmo estudo, há censura à direita para crianças que não sabiam ler quando os dados foram coletados. Neste caso, os tempos de vida são considerados duplamente censurados (Turnbull, 1974).
+No mesmo estudo, observa-se censura à direita para crianças que ainda não sabiam ler no momento da coleta de dados. Nesse caso, os tempos de vida são classificados como **duplamente censurados** [@turnbull1974nonparametric].
 
-De forma geral, a censura intervalar ocorre em estudos com visitas periódicas espaçadas, onde só se sabe que a falha ocorreu dentro de um intervalo de tempo. Quando o tempo de falha $T$ é impreciso, é dito que ele pertence a um intervalo $T \in (L, U]$. Esses dados são conhecidos como sobrevivência intervalar ou dados de censura intervalar. Note que tempos exatos de falha, sejam censura à direita ou à esquerda, são casos especiais de sobrevivência intervalar com $L = U$. Em particular, $U = 0$ para censura à direita e $L = 0$ para censura à esquerda (Lindsey et al., 1998). veja a nota a seguir, que enfatiza um trecho que merece atenção no livro.
+A censura intervalar ocorre em estudos com visitas periódicas espaçadas, onde só se sabe que o evento ocorreu dentro de um intervalo de tempo. Quando o tempo de falha $T$ é impreciso, considera-se que ele pertence a um intervalo $T \in (L, U]$, conhecido como **sobrevivência intervalar**. Casos especiais incluem tempos de falha exatos, em que $L = U$, sendo $U = 0$ para censura à direita e $L = 0$ para censura à esquerda [@lindsey1998methods]. Destaca-se a seguinte observação de @colosimo2006analise:
 
-> **Nota:** *"A presença de censura traz desafios para a análise estatística. A censura do Tipo II é, em princípio, mais tratável que os outros tipos, mas para situações simples, que raramente ocorrem em estudos clínicos (Lawless, 1982). Na prática, utiliza-se resultados assintóticos para a análise dos dados de sobrevivência."*
+> *"A presença de censura traz desafios para a análise estatística. A censura do Tipo II é, em princípio, mais tratável que os outros tipos, mas para situações simples, que raramente ocorrem em estudos clínicos [@lawless1982statistical]. Na prática, utiliza-se resultados assintóticos para a análise dos dados de sobrevivência."*
 
 ## Dados Truncados
 
-Truncamento é uma característica de alguns estudos de sobrevivência que, muitas vezes, é confundida com censura. Ele ocorre quando certos indivíduos são excluídos do estudo devido a uma condição específica. Nesses casos, os pacientes só são incluídos no acompanhamento após passarem por um determinado evento, em vez de serem acompanhados desde o início.
+O truncamento é uma característica de alguns estudos de sobrevivência que, muitas vezes, é confundida com a censura. Ele ocorre quando certos indivíduos são excluídos do estudo devido a uma condição específica. Nesse caso, os pacientes só são incluídos no acompanhamento após passarem por um determinado evento, em vez de serem acompanhados desde o início do processo.
 
 ## Representação dos Dados de Sobrevivência {#sec-ReprDados}
 
-Seja uma amostra aleatória de tamanho $n$, o $i$-ésimo indivíduo no estudo é representado, em geral, pelo par $(t_{i}, \delta_{i})$, onde $t_{i}$ é o tempo de falha ou censura, indicado pela variável binária $\delta_{i}$, definida como:
+Considere uma amostra aleatória de tamanho $n$. O $i$-ésimo indivíduo no estudo é geralmente representado pelo par $(t_{i}, \delta_{i})$, onde $t_{i}$ é o tempo de falha ou censura, indicado pela variável binária $\delta_{i}$, definida como:
 
 $$
 \delta_{i} = \begin{cases}
@@ -68,33 +68,29 @@ $$
 \end{cases}
 $$
 
-Portanto, a variável resposta em análise de sobrevivência é representada por duas colunas no conjunto de dados.
+Portanto, a variável resposta na análise de sobrevivência é representada por duas colunas no conjunto de dados.
 
-Se o estudo também incluiu covariáveis, os dados são representados por $(t_{i}, \delta_{i}, \mathbf{x}_i)$. Caso a censura seja intervalar, a representação é $(l_{i}, u_{i}, \delta_{i}, \mathbf{x}_i)$.
+Se o estudo também incluir covariáveis, os dados são representados por $(t_{i}, \delta_{i}, \mathbf{x}i)$. Caso a censura seja intervalar, a representação é $(l{i}, u_{i}, \delta_{i}, \mathbf{x}_i)$.
 
-> **Nota:** A Seção 1.5 do livro apresenta exemplos de *Dados de Sobrevivência*.
+Para exemplos de dados de sobrevivência, veja a Seção 1.5 do livro de @colosimo2006analise.
 
 ## Especificando o Tempo de Sobrevivência
 
-Seja $T$, uma variável aleatória (va) que, na maioria dos casos é contínua, representa o tempo de falha, assim, $T > 0$. Tal variável é geralmente pela sua *função risco* ou pela *função de taxa de falha* (ou risco). Tais funções, e outras relacionadas, são usados ao decorrer do processo de análise de dados de sobrevivência. A seguir, algumas definições.
+Seja $T$ uma variável aleatória (v.a.), na maioria dos casos contínua, que representa o tempo de falha. Assim, o suporte de $T$ é definido nos reais positivos $\mathbb{R}^{+}$. Tal variável é geralmente representada pela sua *função risco* ou pela *função de taxa de falha* (ou taxa de risco). Tais funções, e outras relacionadas, são usadas ao longo do processo de análise de dados de sobrevivência. A seguir, algumas dessas funções e as relações entre elas serão definidas.
 
 ### Função de Sobrevivência
 
 Esta é uma das principais funções probabilísticas usadas em análise de sobrevivência. A função sobrevivência é definida como a probabilidade de uma observação não falhar até certo ponto $t$, ou seja a probabilidade de uma observação sobreviver ao tempo $t$. Em probabilidade, isso pode ser escrito como:
 
-```{=latex}
-\begin{equation}
-    S(t) = P(T > t),
-\end{equation}
-```
+$$
+S(t) = P(T > t),
+$$ {#eq-fSobrevida}
 
 uma conclusão a qual podemos chegar, é que a probabilidade de uma observação não sobreviver até o tempo $t$, é a acumulada até o ponto $t$, logo,
 
-```{=latex}
-\begin{equation}
-    F(t) = 1 - S(t).
-\end{equation}
-```
+$$
+F(t) = 1 - S(t).
+$$ {#eq-complfSobrevida}
 
 ### Função de Taxa de Falha ou de Risco
 
@@ -104,35 +100,25 @@ A taxa de falha no intervalo $[t_{1}, t_{2})$ é definida como a probabilidade d
 
 De forma geral, redefinindo o intervalo como $[t, t + \Delta t)$ a expressão assume a seguinte forma:
 
-```{=latex}
-\begin{equation}
-    \lambda(t) = \dfrac{S(t) - S(t + \Delta_{t})}{\Delta t \text{ } S(t)}
-\end{equation}
-```
+$$
+\lambda(t) = \dfrac{S(t) - S(t + \Delta_{t})}{\Delta t \text{ } S(t)}
+$$
 
 Assumindo $\Delta t$ bem pequeno, $\lambda(t)$ representa a taxa de falha instantânea no tempo $t$ condicional à sobrevivência até o tempo $t$. Observe que as taxas de falha são números positivos, mas sem limite superior. A função de taxa de falha $\lambda(t)$ é bastante útil para descrever a distribuição do tempo de vida de pacientes. Ela descreve a forma em que a taxa instantânea de falha muda com o tempo. A função de taxa de falha de $T$ é, então, definida como:
 
-```{=latex}
-\begin{equation}
-    \lambda(t) = \lim_{\Delta t \to 0} \dfrac{P(t \leq T \leq t + \Delta t | T \geq t)}{\Delta t}
-\end{equation}
-```
-
-A Figura 1.3, do livro, mostra três funções de taxa de falha. A função crescente indica que a taxa de falha do paciente aumenta com o transcorrer do tempo. Este comportamento mostra um efeito gradual de envelhecimento. A função constante indica que a taxa de falha não se altera com o passar do tempo. A função decrescente mostra que a taxa de falha diminui à medida que o tempo passa.
-
-Sabe-se, ainda, que a taxa de falha para o tempo de vida de seres humanos é uma combinação das curvas apresentadas na Figura 1.3 em diferentes períodos de tempo. Ela é conhecida como *curva da banheira* e tem uma taxa de falha decrescente no período inicial, representando a mortalidade infantil, constante na faixa intermediária e crescente na porção final. Uma representação desta curva é mostrada na Figura 1.4, do livro.
+$$
+\lambda(t) = \lim_{\Delta t \to 0} \dfrac{P(t \leq T \leq t + \Delta t | T \geq t)}{\Delta t}
+$$ {#eq-fTaxaFalha}
 
 A função de taxa de falha é mais informativa do que a função de sobrevivência. Diferentes funções de sobrevivência podem ter formas semelhantes, enquanto as respectivas funções de taxa de falha podem diferir drasticamente. Desta forma, a modelagem da função de taxa de falha é um importante método para dados de sobrevivência.
 
-### Função de Taxa de Falha Acumulada
+### Função de Taxa de Falha Acumulada {#sec-TaxaAcu}
 
 Outra função útil em análise de dados de sobrevivência é a função taxa de falha acumulada. Esta função, como o próprio nome sugere, fornece a taxa de falha acumulada do indivíduo e é definida por:
 
-```{=latex}
-\begin{equation}
-    \Lambda(t) = \int_{0}^{t} \lambda(u) du.
-\end{equation}
-```
+$$
+\Lambda(t) = \int_{0}^{t} \lambda(u) du.
+$$ {#eq-fTaxaFalhaAcumul}
 
 A função de taxa de falha acumulada, $\Lambda(t)$, não têm uma interpretação direta, mas pode ser útil na avaliação da função de maior interesse que é a função de taxa de falha, $\lambda(t)$. Isto acontece essencialmente na estimação não-paramétrica em que $\Lambda(t)$ apresenta um estimador com propriedades ótimas e $\lambda(t)$ é difícil de ser estimada.
 
@@ -140,31 +126,49 @@ A função de taxa de falha acumulada, $\Lambda(t)$, não têm uma interpretaç�
 
 Outras duas quantidades de interesse em análise de sobrevivência são: o tempo médio de via e a vida média residual. A primeira é obtida pela área sob a função de sobrevivência. Isto é,
 
-```{=latex}
-\begin{equation}
-    t_{m} = \int_{0}^{\infty} S(t) dt.
-\end{equation}
-```
+$$
+t_{m} = \int_{0}^{\infty} S(t) dt.
+$$ {#eq-TempMédio}
 
 Já a vida média residual é definida condicional a um certo tempo de vida $t$. Ou seja, para indivíduos com idade $t$ está quantidade mede o tempo médio restante de vida e é, então, a área sob a curva de sobrevivência à direita do tempo $t$ dividida por $S(t)$. Isto é,
 
-```{=latex}
-\begin{equation}
-    \text{vmr}(t) = \dfrac{\int_{0}^{\infty} (u - t) f(u) du}{S(t)} = \dfrac{\int_{0}^{\infty} S(u) du}{S(t)},
-\end{equation}
-```
+$$
+\text{vmr}(t) = \dfrac{\int_{0}^{\infty} (u - t) f(u) du}{S(t)} = \dfrac{\int_{0}^{\infty} S(u) du}{S(t)},
+$$ {#eq-TemVidaMediaResid}
 
 sendo $f(\cdot)$ a função densidade de $T$. Observe que $\text{vmr}(0) = t_{m}$.
 
 ## Relações entre as Funções
 
-Para $T$ uma variável aleatória contínua e não-negativa, tem-se, em termos das funções definidas anteriormente, algumas relações matemáticas importantes entre elas, a saber: $$\lambda(t) = \dfrac{f(t)}{S(t)} = - \dfrac{d}{dt} \left[ \log S(t) \right],$$
+Para $T$ uma variável aleatória contínua e não-negativa, tem-se, em termos das funções definidas anteriormente, algumas relações matemáticas importantes entre elas, a saber: 
 
-$$\Lambda(t) = \int_0^{t} \lambda(u) du = - \log S(t)$$ e $$S(t) = \exp \left\{ - \Lambda(t) \right\} = \exp \left\{ - \int_0^{t} \lambda(u) du \right\}$$
+$$
+\lambda(t) = \dfrac{f(t)}{S(t)} = - \dfrac{d}{dt} \left[ \log S(t) \right],
+$$
 
-Tais relações mostram que o conhecimento de uma das funções, por exemplo $S(t)$, implica no conhecimento das demais, isto é, $F(t)$, $f(t)$, $\lambda(t)$ e $\Lambda(t)$. Outras relações envolvendo estas funções são as seguintes: $$ S(t) = \dfrac{\text{vmr}(0)}{\text{vmr}(t)} \exp \left\{ - \int_{0}^{t} \dfrac{du}{\text{vmr}(u)} \right\} $$ e $$\lambda(t) = \left( \dfrac{d \text{ } [\text{vmr}(t)]}{dt} + 1 \right) / \text{vmr}(t).$$
+$$
+\Lambda(t) = \int_0^{t} \lambda(u) du = - \log S(t)
+$$ 
+
+e 
+
+$$
+S(t) = \exp \left\{ - \Lambda(t) \right\} = \exp \left\{ - \int_0^{t} \lambda(u) du \right\}
+$$
+
+Tais relações mostram que o conhecimento de uma das funções, por exemplo $S(t)$, implica no conhecimento das demais, isto é, $F(t)$, $f(t)$, $\lambda(t)$ e $\Lambda(t)$. Outras relações envolvendo estas funções são as seguintes: 
+
+$$ 
+S(t) = \dfrac{\text{vmr}(0)}{\text{vmr}(t)} \exp \left\{ - \int_{0}^{t} \dfrac{du}{\text{vmr}(u)} \right\}
+$$ 
+
+e 
+
+$$
+\lambda(t) = \left( \dfrac{d \text{ } [\text{vmr}(t)]}{dt} + 1 \right) / \text{vmr}(t).
+$$
 
 :::: progress
-::: {.progress-bar style="width: 100%;"}
-:::
+:::: {.progress-bar style="width: 100%;"}
+::::
 ::::

@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Breno Cauã Rodrigues da Silva">
 
-<title>Análise de Sobrevivência</title>
+<title>Referêcias – Análise de Sobrevivência</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -55,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -65,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./CI_ConceitosBasicos.html" rel="next">
+<link href="./CIII_ModelProb.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -123,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Prefácio</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">Referêcias</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -188,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Prefácio</span></a>
   </div>
 </li>
@@ -212,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Referêcias</span></a>
   </div>
 </li>
@@ -221,54 +239,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Índice</h2>
-   
-  <ul>
-  <li><a href="#prefácio" id="toc-prefácio" class="nav-link active" data-scroll-target="#prefácio">Prefácio</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Análise de Sobrevivência</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
-<p class="subtitle lead">Iniciação Ciêntifica - PIBIC 2024/2025 (UFPA)</p>
+<div class="quarto-title-block"><div><h1 class="title">Referêcias</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
 </div>
 
 
-<div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Autor</div>
-  <div class="quarto-title-meta-heading">Afiliações</div>
-  
-    <div class="quarto-title-meta-contents">
-    <p class="author">Breno Cauã Rodrigues da Silva <a href="https://orcid.org/0009-0005-9740-2069" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            Universidade Federal do Pará
-          </p>
-        <p class="affiliation">
-            Instituto de Ciências Exatas e Naturais
-          </p>
-        <p class="affiliation">
-            Falculdade de Estatística
-          </p>
-      </div>
-  </div>
 
 <div class="quarto-title-meta">
 
-      
-    <div>
-    <div class="quarto-title-meta-heading">Data de Publicação</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">25 de janeiro de 2024</p>
-    </div>
-  </div>
+    
   
     
   </div>
@@ -278,27 +264,106 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<style>
-  body{text-align: justify}
-</style>
-<div class="progress">
-<div class="progress-bar" style="width: 100%;">
-
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-aalen1978nonparametric" class="csl-entry" role="listitem">
+Aalen, Odd O. 1978. <span>“Nonparametric Inference for a Family of
+Counting Processes.”</span> <em>Annals of Statistics</em> 6 (4): 701–26.
+<a href="https://doi.org/10.1214/aos/1176344247">https://doi.org/10.1214/aos/1176344247</a>.
 </div>
+<div id="ref-aalen1978empirical" class="csl-entry" role="listitem">
+Aalen, Odd O., and Søren Johansen. 1978. <span>“An Empirical Transition
+Matrix for Non-Homogeneous Markov Chains Based on Censored
+Observations.”</span> <em>Scandinavian Journal of Statistics</em> 5 (3):
+141–50.
 </div>
-<section id="prefácio" class="level1 unnumbered">
-<h1 class="unnumbered">Prefácio</h1>
-<p>Este é um projeto desenvolvido…</p>
-<div class="progress">
-<div class="progress-bar" style="width: 100%;">
-
+<div id="ref-bohoris1994comparison" class="csl-entry" role="listitem">
+Bohoris, G. A. 1994. <span>“Comparison of the Cumulative-Hazard and
+Kaplan-Meier Estimators of the Survivor Function.”</span> <em>IEEE
+Transactions on Reliability</em> 43 (2): 230–32. <a href="https://doi.org/10.1109/24.293488">https://doi.org/10.1109/24.293488</a>.
+</div>
+<div id="ref-breslow1974large" class="csl-entry" role="listitem">
+Breslow, Norman, and John Crowley. 1974. <span>“A Large Sample Study of
+the Life Table and Product Limit Estimates Under Random
+Censorship.”</span> <em>The Annals of Statistics</em> 2 (3): 437–53. <a href="https://doi.org/10.1214/aos/1176342705">https://doi.org/10.1214/aos/1176342705</a>.
+</div>
+<div id="ref-colosimo2006analise" class="csl-entry" role="listitem">
+Colosimo, Enrico Antonio, and Suely Ruiz Giolo. 2006. <em>Análise de
+Sobrevivência Aplicada</em>. 1st ed. São Paulo, Brasil: Blucher.
+</div>
+<div id="ref-gehan1965generalized" class="csl-entry" role="listitem">
+Gehan, Edmund A. 1965. <span>“A Generalized Wilcoxon Test for Comparing
+Arbitrarily Singly-Censored Samples.”</span> <em>Biometrika</em> 52
+(1-2): 203–24. <a href="https://doi.org/10.2307/2333825">https://doi.org/10.2307/2333825</a>.
+</div>
+<div id="ref-kalbfleisch1980statistical" class="csl-entry" role="listitem">
+Kalbfleisch, John D., and Ross L. Prentice. 1980. <em>The Statistical
+Analysis of Failure Time Data</em>. Wiley Series in Probability and
+Mathematical Statistics. New York: Wiley.
+</div>
+<div id="ref-kaplan1958nonparametric" class="csl-entry" role="listitem">
+Kaplan, Edward L., and Paul Meier. 1958. <span>“Nonparametric Estimation
+from Incomplete Observations.”</span> <em>Journal of the American
+Statistical Association</em> 53 (282): 457–81. <a href="https://doi.org/10.1080/01621459.1958.10501452">https://doi.org/10.1080/01621459.1958.10501452</a>.
+</div>
+<div id="ref-klein1991small" class="csl-entry" role="listitem">
+Klein, John P. 1991. <span>“Small Sample Moments of Some Estimators of
+the Variance of the Kaplan-Meier and Nelson-Aalen Estimators.”</span>
+<em>Scandinavian Journal of Statistics</em> 18 (4): 333–40. <a href="https://doi.org/10.2307/4616203">https://doi.org/10.2307/4616203</a>.
+</div>
+<div id="ref-latta1981monte" class="csl-entry" role="listitem">
+Latta, Robert B. 1981. <span>“A Monte Carlo Study of Some Two-Sample
+Rank Tests with Censored Data.”</span> <em>Journal of the American
+Statistical Association</em> 76 (375): 713–19. <a href="https://doi.org/10.2307/2287572">https://doi.org/10.2307/2287572</a>.
+</div>
+<div id="ref-lawless1982statistical" class="csl-entry" role="listitem">
+Lawless, J. F. 1982. <em>Statistical Models and Methods for Lifetime
+Data</em>. Wiley Series in Probability and Statistics. New York: John
+Wiley &amp; Sons.
+</div>
+<div id="ref-lindsey1998methods" class="csl-entry" role="listitem">
+Lindsey, Jane C., and Louise M. Ryan. 1998. <span>“Methods for
+Interval-Censored Data.”</span> <em>Statistics in Medicine</em> 17 (2):
+219–38. <a href="https://doi.org/10.1002/(SICI)1097-0258(19980130)17:2<219::AID-SIM735>3.0.CO;2-D">https://doi.org/10.1002/(SICI)1097-0258(19980130)17:2&lt;219::AID-SIM735&gt;3.0.CO;2-D</a>.
+</div>
+<div id="ref-mantel1966evaluation" class="csl-entry" role="listitem">
+Mantel, Nathan. 1966. <span>“Evaluation of Survival Data and Two New
+Rank Order Statistics Arising in Its Consideration.”</span> <em>Cancer
+Chemotherapy Reports</em> 50 (3): 163–70.
+</div>
+<div id="ref-mantel1959statistical" class="csl-entry" role="listitem">
+Mantel, Nathan, and William Haenszel. 1959. <span>“Statistical Aspects
+of the Analysis of Data from Retrospective Studies of Disease.”</span>
+<em>Journal of the National Cancer Institute</em> 22 (4): 719–48.
+</div>
+<div id="ref-meier1975estimation" class="csl-entry" role="listitem">
+Meier, Paul. 1975. <span>“Estimation of a Survival Curve from Incomplete
+Data.”</span> <em>Journal of the American Statistical Association</em>
+70 (351): 607–10. <a href="https://doi.org/10.1080/01621459.1975.10479872">https://doi.org/10.1080/01621459.1975.10479872</a>.
+</div>
+<div id="ref-nelson1972theory" class="csl-entry" role="listitem">
+Nelson, Wayne. 1972. <span>“Theory and Applications of Hazard Plotting
+for Censored Failure Data.”</span> <em>Technometrics</em> 14 (4):
+945–66. <a href="https://doi.org/10.1080/00401706.1972.10488981">https://doi.org/10.1080/00401706.1972.10488981</a>.
+</div>
+<div id="ref-peto1972asymptotically" class="csl-entry" role="listitem">
+Peto, Richard, and Julian Peto. 1972. <span>“Asymptotically Efficient
+Rank Invariant Test Procedures.”</span> <em>Journal of the Royal
+Statistical Society: Series A (General)</em> 135 (2): 185–98. <a href="https://doi.org/10.2307/2344317">https://doi.org/10.2307/2344317</a>.
+</div>
+<div id="ref-prentice1978linear" class="csl-entry" role="listitem">
+Prentice, Ross L. 1978. <span>“Linear Rank Tests with Right Censored
+Data.”</span> <em>Biometrika</em> 65 (1): 167–79. <a href="https://doi.org/10.2307/2335206">https://doi.org/10.2307/2335206</a>.
+</div>
+<div id="ref-turnbull1974nonparametric" class="csl-entry" role="listitem">
+Turnbull, Bruce W. 1974. <span>“Nonparametric Estimation of a
+Survivorship Function with Doubly Censored Data.”</span> <em>Journal of
+the American Statistical Association</em> 69 (345): 169–73. <a href="https://doi.org/10.1080/01621459.1974.10480146">https://doi.org/10.1080/01621459.1974.10480146</a>.
 </div>
 </div>
 
 
 <!-- -->
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -918,32 +983,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./CIII_ModelProb.html" class="pagination-link" aria-label="Técnicas Paramétricas - Modelos Probabilísticos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Técnicas Paramétricas - Modelos Probabilísticos</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./CI_ConceitosBasicos.html" class="pagination-link" aria-label="Conceitos Básicos e Exemplos">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conceitos Básicos e Exemplos</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;style&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">  body{text-align: justify}</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/style&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>:::: progress</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>::: {.progress-bar style="width: 100%;"}</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu"># Prefácio {.unnumbered}</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>Este é um projeto desenvolvido...</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>:::: progress</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>::: {.progress-bar style="width: 100%;"}</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>::::</span></code><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Referêcias {.unnumbered}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

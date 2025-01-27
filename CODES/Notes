@@ -1,1 +1,67 @@
-effect <- coVariates %*% vecCoef
+Site p/ aprendizado: https://www.rpubs.com/elias_medeiros/estatistica_no_r
+
+Tema do R: Pastel On Dark
+
+```{=latex}
+\begin{table}[H]
+    \centering
+    \caption{Tabela de contingência gerada no tempo $t_{j}$.}
+    \begin{tabular}{c|c c|c}
+                  & \multicolumn{2}{c|}{Grupos}           &             \\
+                  & 1                 & 2                 &             \\ \hline
+        Falha     & $d_{1j}$          & $d_{2j}$          & $d_j$       \\ 
+        Não Falha & $n_{1j} - d_{1j}$ & $n_{2j} - d_{2j}$ & $n_j - d_j$ \\ \hline
+                  & $n_{1j}$          & $n_{2j}$          & $n_{j}$     \\
+    \end{tabular}
+    \label{tab:ExampleTableContig}
+\end{table}
+```
+
+```{=latex}
+\begin{table}[H]
+    \centering
+    \caption{Tabela de contingência gerada no tempo $t_{j}$.}
+    \begin{tabular}{c|c c|c}
+                  & \multicolumn{2}{c|}{Grupos}           &             \\
+                  & 1                 & 2                 &             \\ \hline
+        Falha     & $d_{1j}$          & $d_{2j}$          & $d_j$       \\ 
+        Não Falha & $n_{1j} - d_{1j}$ & $n_{2j} - d_{2j}$ & $n_j - d_j$ \\ \hline
+                  & $n_{1j}$          & $n_{2j}$          & $n_{j}$     \\
+    \end{tabular}
+    \label{tab:ExampleTableContig}
+\end{table}
+```
+
+```{=html}
+<table>
+  <caption>Tabela de contingência gerada no tempo \( t_j \).</caption>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Grupo 1</th>
+      <th>Grupo 2</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Falha</td>
+      <td>\( d_{1j} \)</td>
+      <td>\( d_{2j} \)</td>
+      <td>\( d_{j} \)</td>
+    </tr>
+    <tr>
+      <td>Não Falha</td>
+      <td>\( n_{1j} - d_{1j} \)</td>
+      <td>\( n_{2j} - d_{2j} \)</td>
+      <td>\( n_{j} - d_{j} \)</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>\( n_{1j} \)</td>
+      <td>\( n_{2j} \)</td>
+      <td>\( n_{j} \)</td>
+    </tr>
+  </tbody>
+</table>
+```
