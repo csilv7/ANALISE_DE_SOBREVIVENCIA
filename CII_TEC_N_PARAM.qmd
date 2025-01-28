@@ -1,0 +1,359 @@
+```{=html}
+<style>
+  body{text-align: justify}
+</style>
+```
+
+:::: progress
+:::: {.progress-bar style="width: 100%;"}
+::::
+::::
+
+# Técnicas Não Paramétricas
+
+## Introdução
+
+Este capítulo apresenta as técnicas não-paramétricas utilizadas para a análise de dados de sobrevivência. Essas técnicas são empregadas quando não se faz suposições sobre a forma específica da distribuição dos tempos de falha, sendo particularmente úteis para dados censurados.
+
+## O Estimador de Kaplan-Meier
+
+Proposto por @kaplan1958nonparametric. É um estimador não-paramétrico utilizado para estimar a função de sobrevivência, $S(t)$. Tal estimador também é chamado de de \textit{estimador limite-produto}. O Estimador de Kaplan-Meier é uma adaptação a $S(t)$ empiríca que, na ausência de censura nos dados, é definida como:
+
+$$
+\hat{S}(t) = \dfrac{\text{nº de observações que não falharam até o tempo } t}{\text{nº total de observações no estudo}}.
+$$
+
+\noindent $\hat{S}(t)$ é uma função que tem uma formato gráfico de escada com degraus nos tempos observados de falha de tamanho $1/n$, onde $n$ é o tamanho amostral.
+
+O processo utilizado até se obter a estimativa de Kaplan-Meier é um processo passo a passo, em que o próximo passo depende do anterior. De forma suscetível, para qualquer $t$, $S(t)$ pode ser escrito em termos de probabilidades condicionais. Suponha que existam $n$ pacientes no estudo e $k (\leq n)$ falhas distintas nos tempos $t_{1} \leq t_{2} \leq \cdots \leq t_{k}$. Considerando $S(t)$ uma função discreta com probabilidade maior que zero somente nos tempos de falha $t_{j}$, $j = 1, \cdots, k$, tem-se que:
+
+$$
+S(t_{j}) = (1 - q_{1}) (1 - q_{2}) \cdots (1 - q_{j}),
+$$ {#eq-DecomposeSt}
+
+\noindent em que $q_{j}$ é a probabilidade de um indivíduo morrer no intervalo $[t_{j-1}, t{j})$ sabendo que ele não morreu até $t_{j-1}$ e considerando $t_{0} = 0$. Ou seja, pode se escrever $q_{j}$ como:
+
+$$
+q_{j} = P(T \in [t_{j-1}, t{j}) | T \geq t_{j-1}),
+$$ {#eq-FormProbQj}
+
+\noindent para $j = 1, \cdots, k$.
+
+A expressão geral do estimador de Kaplan-Meier pode ser apresentada após estas considerações preliminares, Formalmente, considere:
+
+-   $t_{1} \leq t_{2} \leq \cdots \leq t_{k}$, os $k$ tempos distintos e ordenados de falha;
+-   $d_{j}$ o número de falhas em $t_{j}$, $j = 1, \cdots, k$;
+-   $n_{j}$ o número de indivíduos sob risco em $t_{j}$, ou seja, os indivíduos que não falharam e não foram censurados até o instante imediatamente anterior a $t_{j}$.
+
+Com isso, pode-se definir o estimador de Kaplan-Meier como:
+
+$$
+\hat{S}_{KM}(t) = \prod_{j \text{ : } t_{j} < t} \left( \dfrac{n_{j} - d_{j}}{n_{j}} \right) = \prod_{j \text{ : } t_{j} < t} \left( 1 - \dfrac{d_{j}}{n_{j}} \right)
+$$ {#eq-ESTKaplanMeier}
+
+De forma intuitiva, por assim dizer, a @eq-ESTKaplanMeier é proveniente da @eq-DecomposeSt, sendo está, uma decomposição de $S(t)$ em termos $q_{j}$'s. Assim, a @eq-ESTKaplanMeier é justificada se os $q_{j}$'s forem estimados por $d_{j}/n_{j}$, que em palavras está expresso na @eq-FormProbQj. No artigo original de 1958, Kaplan e Meier provam que a @eq-ESTKaplanMeier é um *Estimador de Máxima Verossimilhança* (EMV) para $S(t)$. Seguindo certos passos, é possível provar que que $\hat{S}_{KM}(t)$ é EMV de $S(t)$. Supondo que $d_{j}$ observações falham no tempo tempo $t_{j}$, para $j = 1, \cdots, k$, e $m_{j}$ observações são censuradas no intervalo $[t{j}, t_{j+1})$, nos tempos $t_{j1}, \cdots, t_{jm_{j}}$. A probabilidade de falha no tempo $t_{j}$ é, então,
+
+$$
+S(t_{j}) - S(t_{j}+),
+$$
+
+\noindent com $S(t_{j}+) = \lim_{\Delta t \to 0+} S(t_{j} + \Delta t)$, $j = 1, \cdots, k$. Por outro lado, a contribuição para a função de verossimilhança de um tempo de sobrevivência censurado em $t_{jl}$ para $l = 1, \cdots, m_{j}$, é:
+
+$$
+P(T > t_{jl}) = S(t_{jl}+).
+$$
+
+A função de verossimilhança pode, então, ser escrita como:
+
+$$L(S(\cdot)) = \prod_{j = 0}^{k} \left\{ [ S(t_{j}) - S(t_{j}+) ]^{d_{j}} \prod_{l = 1}^{m_{j}} S(t_{jl}+) \right\}.$$
+
+\noindent Com isso, é possível provar que $S(t)$ que maximiza $L(S(\cdot))$ é exatamente a expressão dada pela @eq-ESTKaplanMeier.
+
+### Propriedades do Estimador de Kaplan-Meier
+
+Como um estimador de máxima verossimilhança, o estimador de Kaplan-Meier têm interessantes propriedades. As principais são:
+
+-   É não-viciado para grandes amostras;
+-   É fracamente consistente;
+-   Converge assintoticamente para um processo gaussiano.
+
+A consistência e normalidade assintótica de $\hat{S}_{KM}(t)$ foram provadas sob certas condições de regularidade, por @breslow1974large e @meier1975estimation e, no artigo original, @kaplan1958nonparametric mostram que $\hat{S}_{KM}(t)$ é um EMV para $S(t)$, como já dito.
+
+### Variância do Estimador de Kaplan-Meier
+
+Para que se possa construir intervalos de confiança e testar hipóteses para $S(t)$, se faz necessário ter conhecimento quanto variabilidade e precisão do estimador de Kaplan-Meier. Este estimador, assim como outros, está sujeito a variações que devem ser descritas em termos de estimações intervalares. A expressão assintótica do estimador de Kaplan-Meier é dada pela @eq-VarKaplanMeier.
+
+$$
+\hat{Var}[\hat{S}_{KM}(t)] = [\hat{S}_{KM}(t)]^{2} \sum_{j \text{ : } t_{j} < t} \dfrac{d_{j}}{n_{j} (n_{j} - d_{j})}
+$$ {#eq-VarKaplanMeier}
+
+A expressão dada na @eq-VarKaplanMeier, é conhecida como fórmula de Greenwood e pode ser obtida a partir de propriedades do estimador de máxima verossimilhança. Os detalhes da obtenção da (@eq-VarKaplanMeier estão disponíveis em Kalbfleisch e Prentice (1980, pag. 12-14).
+
+Como $\hat{S}_{KM}(t)$, para um $t$ fixo, tem distribuição assintóticamente Normal. O intervalo de confiança com $100(1 - \alpha)$% de confiança para $\hat{S}_{KM}(t)$ é expresso por:
+
+$$
+\hat{S}_{KM}(t) \pm z_{\alpha/2} \sqrt{\hat{Var}[\hat{S}_{KM}(t)]}.
+$$
+
+Vale salientar que para valores extremos de $t$, este intervalo de confiança pode apresentar limites que não condizem com a teoria de probabilidades. Para solucionar tal problema, aplica-se uma transformação em $S(t)$ como, por exemplo, $\hat{U}(t) = \log{[-\log{(\hat{S}_{KM}(t)})]}$. Esta transformação foi sugerida por @kalbfleisch1980statistical, tendo sua variância estimada por:
+
+$$
+\hat{Var}[\hat{U}(t)] = \dfrac{ \sum_{j \text{ : } t_{j} < t} \dfrac{d_{j}}{n_{j} (n_{j} - d_{j})} }{ \left[\sum_{j \text{ : } t_{j} < t} \log{\left( \dfrac{n_{j} - d_{j}}{n_{j}} \right)}\right]^{2}} = \dfrac{ \sum_{j \text{ : } t_{j} < t} \dfrac{d_{j}}{n_{j} (n_{j} - d_{j})} }{ \left[ \log{\hat{S}_{KM}(t)} \right]^{2} }
+$$
+
+Logo, pode-se aproximar um intervalo com $100 (1 - \alpha)\%$ de confiança para $S(t)$ desta forma:
+
+$$
+\left[ \hat{S}(t) \right]^{ \exp\left\{ \pm z_{\alpha / 2} \sqrt{\hat{Var}[\hat{U}(t)]} \right\}}.
+$$
+
+Veja uma aplicação do Estimador de Kaplan-Meier. Os dados de Leucemia Pediátrica dispostos no Apêndice (A) do livro *Análise de Sobrevivência Aplicada* de @colosimo2006analise. De posse do conjunto de dados, pode-se estimar a curva de sobrevivência, tal curva foi ilustrada na @fig-SobrKM.
+
+```{r warning=FALSE, message=FALSE}
+#| fig-cap: "Curva de Sobrevivência de Kaplan-Meier com IC de 95%"
+#| fig-cap-location: top
+#| label: fig-SobrKM
+
+
+# -----------------------
+# [1] ATIVAÇÃO DE PACOTES
+# -----------------------
+library(survival)
+library(ggplot2)
+
+# ---------------------------------
+# [2] IMPORTAÇÃO E AJUSTE DOS DADOS
+# ---------------------------------
+
+# Caminho URL para os dados
+url <- "https://docs.ufpr.br/~giolo/asa/dados/leucemia.txt"
+
+# Leitura dos dados
+dados <- read.table(url, header = TRUE)
+
+# -----------------------------
+# [3] ESTIMADOR DE KAPLAN-MEIER
+# -----------------------------
+ekm <- survfit(Surv(tempos, cens) ~ 1, data = dados)
+
+# -----------------
+# [4] VISUALIZAÇÃO
+# -----------------
+
+# Preparando os dados para o ggplot2
+ekm_data <- data.frame(time = ekm$time, survival = ekm$surv,
+  lower = ekm$lower, upper = ekm$upper)
+
+# Gráfico com ggplot2
+ggplot(ekm_data, aes(x = time, y = survival)) +
+  geom_line(color = "blue", lwd = 1.2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper), fill = "blue", alpha = 0.2) +
+  labs(x = "Tempo", y = "Probabilidade de Sobrevivência",
+    caption = "Fonte: https://docs.ufpr.br/~giolo/asa/dados/leucemia.txt") +
+  theme_minimal(base_size = 12) +
+  theme( plot.caption = element_text(hjust = 0.5, size = 12))
+```
+
+## Outros Estimadores Não Parâmetricos
+
+O estimador de Kaplan-Meier é, indiscutivelmente, o mais utilizado para estimar $S(t)$ em análises de sobrevivência. Ele é amplamente disponibilizado em diversos pacotes estatísticos e abordado em inúmeros textos de estatística básica. Entretanto, outros dois estimadores de $S(t)$ também possuem relevância significativa na literatura especializada: o estimador de Nelson-Aalen e o estimador da tabela de vida.
+
+O estimador de Nelson-Aalen, mais recente que o de Kaplan-Meier, apresenta propriedades similares às deste último. Já o estimador da tabela de vida possui importância histórica, tendo sido utilizado em informações derivadas de censos demográficos para estimar características associadas ao tempo de vida humano. Este estimador foi inicialmente proposto por demógrafos e atuários no final do século XIX, sendo empregado principalmente em grandes amostras.
+
+Nesta seção será abordado apenas o estimador de Nelson-Aalen. Para conhecer mais sobre o estimador da Tabela de Vida ou Tabela Atuarial, consulte a Seção 2.4.2 do livro *Análise de Sobrevivência Aplicada* de @colosimo2006analise.
+
+
+### Estimador de Nelson-Aalen
+
+Mais recente que o estimador de Kaplan-Meier, este estimador se baseia na função de sobrevivência expressa da seguinte forma:
+
+$$
+S(t) = \exp\left\{ - \Lambda(t) \right\},
+$$
+
+em que $\Lambda(t)$ é a função de risco acumulado apresentada na @sec-TaxaAcu.
+
+A estimativa para $\Lambda(t)$ foi inicialmente proposta por @nelson1972theory  posteriormente retomada por @aalen1978nonparametric que demonstrou suas propriedades assintóticas utilizando processos de contagem. Na literatura, esse estimador é amplamente conhecido como o estimador de Nelson-Aalen e é definido pela seguinte expressão:
+
+$$
+\hat{\Lambda}(t) = \sum_{j:t_{j} < t} \left( \dfrac{d_{j}}{n_{j}} \right),
+$$ {#eq-ESTNelsonAalen}
+
+onde $d_{j}$ e $n_{j}$ são as mesmas definições usadas no estimador de Kaplan-Meier. A variância do estimador, conforme proposta por @aalen1978nonparametric, é dada por:
+
+$$
+\hat{Var}(\hat{\Lambda}(t)) = \sum_{j:t_{j} < t} \left( \dfrac{d_{j}}{n_{j}^{2}} \right).
+$$ {#eq-VarNelsonAalen}
+
+Uma alternativa para a estimativa da variância de $\hat{\Lambda}(t)$, proposta por @klein1991small, é:
+
+$$
+\hat{Var}(\hat{\Lambda}(t)) = \sum_{j:t_{j} < t} \dfrac{(n_{j} - d_{j})d_{j}}{n_{j}^{3}},
+$$
+
+entretanto, o estimador da @eq-VarNelsonAalen apresenta menor vício, tornando-o mais preferível que o proposto por @klein1991small.
+
+Desta forma, podemos definir, com base no estimador de Nelson-Aalen, um estimador para a função de sobrevivência, podendo ser expressa por:
+
+$$
+\hat{S}_{NA}(t) = \exp\left\{- \hat{\Lambda}(t) \right\}.
+$$
+
+Deve-se, a variância deste estimador, a @aalen1978empirical. Podendo ser mensurada pela expressão:
+
+$$
+\hat{Var}(\hat{S}_{NA}(t)) = \left[ \hat{S}_{NA}(t) \right]^{2} \sum_{j:t_{j} < t} \left( \dfrac{d_{j}}{n_{j}^{2}} \right)
+$$
+
+Vale destacar que o estimador de Nelson-Aalen aprenseta, na maioria dos casos, estimativas próximas ao estimador de Kaplan-Meier. @bohoris1994comparison mostrou que $\hat{S}_{NA}(t) \geq \hat{S}_{KM}(t)$ para todo $t$, isto é, as estimativas obtidas pelo estimador de Nelson-Aalen são maiores ou iguais às estimativas obtidas pelo estimador de Kaplan-Meier.
+
+## Comparação de Curvas de Sobrevivência
+
+Considere um problema na área da saúde em que se deseja comparar dois grupos: um que receberá tratamento com uma determinada droga e outro que será o grupo controle. Estatísticas amplamente utilizadas para esse fim podem ser vistas como generalizações, para dados censurados, de testes não paramétricos bem conhecidos. Entre esses, o teste *logrank* [@mantel1966evaluation] é o mais empregado em análises de sobrevivência. @gehan1965generalized propôs uma generalização para a estatística de Wilcoxon. Outras generalizações foram introduzidas por autores como @peto1972asymptotically e @prentice1978linear, enquanto @latta1981monte utilizou simulações de Monte Carlo para comparar diversos testes não-paramétricos.
+
+Nesta seção, será dada ênfase ao teste *logrank*, amplamente utilizado em análises de sobrevivência e particularmente adequado quando a razão entre as funções de risco dos grupos a serem comparados é aproximadamente constante. Ou seja, quando as populações apresentam a propriedade de riscos proporcionais. 
+
+A estatística do teste *logrank* baseia-se na diferença entre o número observado de falhas em cada grupo e o número esperado de falhas sob a hipótese nula. Essa abordagem é semelhante à do teste de @mantel1959statistical, que combina tabelas de contingência. Além disso, o teste *logrank* possui a mesma expressão do teste de escore para o modelo de regressão de Cox, que será apresentado no [...]. Outros testes também serão discutidos nesta seção.
+
+Considere, inicialmente, o teste de igualdade entre duas funções de sobrevivência $S_{1}(t)$ e $S_{2}(t)$. Seja $t_{1} < t_{2} < \ldots < t_{k}$ a sequência dos tempos de falha distintos observados na amostra combinada, formada pela união das duas amostras individuais. Suponha que, no tempo $t_{j}$, ocorram $d_{j}$ falhas e que $n_{j}$ indivíduos estejam sob risco imediatamente antes de $t_{j}$ na amostra combinada. Nas amostras individuais, as quantidades correspondentes são $d_{ij}$ e $n_{ij}$, onde $i = 1, 2$ representa o grupo e $j = 1, \cdots, k$ indica o tempo de falha.
+
+No tempo $t_{j}$, os dados podem ser organizados em uma tabela de contingência $2 \times 2$, onde $d_{ij}$ representa o número de falhas e $n_{ij} - d_{ij}$ o número de sobreviventes em cada grupo $i$. Essa disposição está ilustrada na @tbl-ExampleTableContig.
+
+```{r, echo=FALSE}
+#| tbl-cap: "Tabela de contingência gerada no tempo $t_{j}$."
+#| label: tbl-ExampleTableContig
+
+library(knitr)
+library(kableExtra)
+
+# Criando a tabela em R
+kable(
+  data.frame(
+    " " = c("Falha", "Não Falha", " "),
+    "1" = c("$d_{1j}$", "$n_{1j} - d_{1j}$", "$n_{1j}$"),
+    "2" = c("$d_{2j}$", "$n_{2j} - d_{2j}$", "$n_{2j}$"),
+    " " = c("$d_{j}$", "$n_{j} - d_{j}$", "$n_{j}$")
+  ),
+  escape = FALSE,
+  align = "c",
+  col.names = c("", "Grupo 1", "Grupo 2", " "),
+  booktabs = TRUE
+)
+```
+
+Condicionado à ocorrência de falhas e censuras até o tempo $t_{j}$ (fixando as marginais das colunas) e ao número total de falhas no tempo $t_{j}$ (fixando as marginais das linhas), a distribuição de $d_{2j}$ é, então, uma hipergeométrica:
+
+$$
+\dfrac{ \binom{ n_{1j} }{ d_{1j} } \binom{ n_{2j} }{ d_{2j} } }{ \binom{ n_{j} }{ d_{j} } }.
+$$
+
+A média de $d_{2j}$ é dada por $w_{2j} = n_{2j} d_{j} n_{j}^{-1}$. Isso significa que, na ausência de diferenças entre as duas populações no tempo $t_{j}$, o número total de falhas ($d_{j}$) pode ser alocado entre as duas amostras proporcionalmente à razão entre o número de indivíduos sob risco em cada amostra e o número total sob risco.
+
+A variância de $d_{2j}$ obtida a partir da distribuição hipergeométrica é:
+
+$$
+(V_{j})_{2} = n_{2j}(n_{j} - n_{2j})d_{j}(n_{j} - d_{j}) n_{j}^{-2} (n_{j} - 1)^{-1}.
+$$
+
+Portanto, a estatística $d_{2j} - w_{2j}$ possui média zero e variância $(V_{j})_{2}$. Se as $k$ tabelas de contingência forem independentes, um teste aproximado para avaliar a igualdade entre as duas funções de sobrevivência pode ser construído com base na seguinte estatística:
+
+$$
+T = \dfrac{ \left[ \sum_{j = 1}^{k} (d_{2j} - w_{2j}) \right]^{2} }{ \sum_{j = 1}^{k} (V_{j})_{2} },
+$$ {#eq-EstTestelogrank}
+
+que, sob a hipótese nula $H_{0}: S_{1}(t) = S_{2}(t)$ para todo $t$ no período de acompanhamento, segue aproximadamente uma distribuição qui-quadrado com $1$ grau de liberdade para amostras grandes.
+
+Para exemplificar a aplicação do teste de *logrank* em dados reais, utilizou-se o conjunto de dados sobre Leucemia Pediátrica, disponível no Apêndice (A) do livro *Análise de Sobrevivência Aplicada* de @colosimo2006analise. Esses mesmos dados foram usados para gerar a @fig-SobrKM. O objetivo do teste realizado foi avaliar se as curvas de sobrevivência das categorias da covariável `r6` são iguais, com as seguintes hipóteses:
+
+$$
+\begin{cases}
+  H_{0}: \text{As curvas de sobrevivência dos grupos são iguais ao longo do tempo.} \\
+  H_{1}: \text{As curvas de sobrevivência dos grupos são diferentes ao longo do tempo.}
+\end{cases}
+$$
+
+```{r warning=FALSE, message=FALSE}
+# -----------------------
+# [1] ATIVAÇÃO DE PACOTES
+# -----------------------
+library(survival)
+library(ggplot2)
+library(dplyr)
+
+# ----------------------------------
+# [2] IMPORTAÇÃO E AJUSTES DOS DADOS
+# ----------------------------------
+
+# Caminho URL para os dados
+url <- "https://docs.ufpr.br/~giolo/asa/dados/leucemia.txt"
+
+# Leitura dos dados
+df <- read.table(url, header = TRUE)
+
+# Decodificando a coluna r_6
+df <- df %>%
+  mutate(grupo = ifelse(r6 == 0, "Category Zero", "Category One"))
+
+# ----------------------
+# [3] TESTE DE LOGRANK
+# ----------------------
+
+# Aplicando o Teste de Logrank
+TestLogrank <- survdiff(Surv(tempos, cens) ~ grupo, data = df, rho = 0)
+print(TestLogrank)
+```
+
+Ao fixar o nível de significância em 5% ($\alpha = 0,05$), rejeitamos a hipótese nula. Essa conclusão baseia-se no valor $p$ (probabilidade de significância) obtido no teste, calculado como $p-valor =$ `r TestLogrank$pvalue`. Como o $p-valor < \alpha$, rejeita-se $H_{0}$. Assim, conclui-se que as curvas de sobrevivência dos grupos são diferentes ao longo do tempo, ao nível de significância de 5%.
+
+A generalização do teste *logrank* para a comparação de $r > 2$ funções de sobrevivência, $S_{1}(t), S_{2}(t), \ldots, S_{r}(t)$, é direta. Utilizando a mesma notação anterior, o índice $i$ varia agora de $1$ a $r$. Assim, os dados podem ser organizados em uma tabela de contingência $2 \times r$, onde cada coluna $i$ contém $d_{ij}$ falhas e $n_{ij} - d_{ij}$ sobreviventes. Dessa forma, a @tbl-ExampleTableContig seria estendida para ter $r$ colunas em vez de apenas duas.
+
+Condicionada à experiência de falha e censura até o tempo $t_{j}$ e ao número total de falhas no tempo $t_{j}$, a distribuição conjunta de $d_{2j}, \ldots,d_{rj}$ segue uma hipergeométrica multivariada, dada por:
+
+$$
+\dfrac{ \prod_{i = 1}^{r} \binom{ n_{ij }}{ d_{ij} } }{ \binom{ n_{j }}{ d_{j} } }.
+$$
+
+A média de $d_{ij}$ é $w_{ij} = n_{ij} d_{j} n_{j}^{-1}$, bem como a variância de $d_{ij}$ e a covariância de $d_{ij}$ e $d_{lj}$ são, respectivamente,
+
+$$
+(V_{j})_{ii} = n_{ij} (n_{j} - n_{ij}) d_{j} (n_{j} - d_{j}) n_{j}^{-2} (n_{j} - 1)^{-1}
+$$
+
+e
+
+$$
+(V_{j})_{il} = - n_{ij} n_{lj} d_{j} (n_{j} - d_{j}) n_{j}^{-2} (n_{j} - 1)^{-1}.
+$$
+
+A estatística $v'_{j} = (d_{2j} - w_{2j}, \ldots, d_{rj} - w_{rj})$ possui média zero e matriz de variância-covariância $V_{j}$, com dimensão $r - 1$. A matriz $V_{j}$ contém os termos $(V_{j}){ii}$ na diagonal principal e $(V_{j})_{il}$, $i,l = 2, \ldots,r$, fora da diagonal principal. 
+
+A estatística $v$, que agrega as contribuições de todos os tempos distintos de falha, é definida como:
+
+$$
+v = \sum_{j = 1}^{k} v_{j},
+$$
+
+onde $v$ é um vetor de dimensão $(r - 1) \times 1$, cujos elementos correspondem às diferenças entre os totais observados e esperados de falhas.
+
+Considerando, novamente, a independência das $k$ tabelas de contingência, a variância de $v$ é dada por $V = V_{1} + \ldots + V_{k}$. Um teste aproximado para a igualdade das $r$ funções de sobrevivência pode ser baseado na estatística:
+
+$$
+T = v´V^{-1} v,
+$$ {#eq-EstTestelogrankGeneralizado}
+
+que, sob a hipótese nula $H_{0}$ (igualdade das curvas de sobrevivência), segue uma distribuição qui-quadrado com $r - 1$ graus de liberdade para amostras grandes. Os graus de liberdade são $r - 1$ em vez de $r$, pois os elementos de $v$ somam zero.
+
+Uma aplicação para a comparação de $r$ curvas de sobrevivência [...].
+
+```{r warning=FALSE, message=FALSE}
+cat("Código em R a ser preenchido")
+```
+
+### Outros Testes
+
+[...]
+
+:::: progress
+:::: {.progress-bar style="width: 100%;"}
+::::
+::::

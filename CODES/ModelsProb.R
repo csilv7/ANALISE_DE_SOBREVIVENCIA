@@ -1,202 +1,213 @@
 # -----------------------
 # [1] ATIVAÇÃO DE PACOTES
 # -----------------------
+library(dplyr)
 library(ggplot2)
 
 set.seed(123)
 n <- 1000 # Tamanho da amostra simulada
 
 # ---------------------------
-# [2] DISTRIBUIÇÃO EXPONENCIAL
+# [1] DISTRIBUIÇÃO EXPONENCIAL
 # ---------------------------
-
 # -------------
-# [2.1] FUNÇÕES
+# [1.1] FUNÇÕES
 # -------------
-# As funções de sobrevivência, risco e risco acumulado são simplificadas
+ftexp <- function(t, alpha) alpha * exp(-alpha * t)
 Stexp <- function(t, alpha) exp(-alpha * t)
-htexp <- function(alpha) rep(alpha, length(t))
+htexp <- function(t, alpha) rep(alpha, length(t))
 Ltexp <- function(t, alpha) alpha * t
 
 # ----------------------------------------
-# [2.2] SIMULAÇÃO E VARIAÇÃO DE PARÂMETROS
+# [1.2] SIMULAÇÃO E VARIAÇÃO DE PARÂMETROS
 # ----------------------------------------
+n <- 1000                  # Tamanho amostral
 tempo <- rexp(n, rate = 1) # Simulando dados de uma exponencial
-alphas <- c(1, 1.5, 2)     # Valores de alpha a serem avaliados
+alphas <- c(1, 1.5, 2)     # Valores do parâmetro a serem avaliados
 
 # Criando um Data Frame com valores das funções
 dados <- do.call(rbind, lapply(alphas, function(alpha) {
   data.frame(
-    tempo = tempo,
-    St = Stexp(tempo, alpha),
-    ht = htexp(alpha),
-    Lt = Ltexp(tempo, alpha),
+    tempo = sort(tempo),
+    ft = ftexp(sort(tempo), alpha),
+    St = Stexp(sort(tempo), alpha),
+    ht = htexp(sort(tempo), alpha),
+    Lt = Ltexp(sort(tempo), alpha),
     alpha = factor(alpha)
   )
 }))
 
-# -------------
-# [2.3] GRÁFICOS
-# -------------
-
-# Criando uma função para gerar gráficos
-plot_func <- function(data, y_var, y_label, color_values, y_expression) {
-  ggplot(data, aes(x = tempo, y = !!sym(y_var), color = alpha)) +
-    geom_line(stat = "summary", fun = mean, size = 1) +
-    labs(x = "Tempo", y = y_expression, color = expression(alpha)) +
-    scale_color_manual(values = color_values,
-                       labels = lapply(alphas, function(a) bquote(alpha == .(a)))) +
-    theme_minimal()
+# --------------------
+# [1.3] FUNÇÃO GRÁFICA
+# --------------------
+PlotFunction <- function(dados, ft, label) {
+  ggplot(data = dados, aes_string(x = "tempo", y = ft, color = "alpha")) +
+    geom_line(size = 1.2) +
+    labs(
+      x = "Tempo",
+      y = label, 
+      color = expression(alpha)
+    ) +
+    scale_color_manual(
+      values = c("red", "blue", "green"),
+      labels = scales::parse_format()(levels(dados$alpha))
+    ) +
+    theme_minimal(base_size = 12)
 }
 
-# Função de Sobrevivência
-plot_func(dados, "St", "S(t)", c("red", "blue", "green"), expression(S(t)))
+# Plotando a função densidade de probabilidade
+PlotFunction(dados, "ft", "Função Densidade de Probabilidade")
 
-# Função de Risco
-plot_func(dados, "ht", expression(lambda(t)), c("red", "blue", "green"), expression(lambda(t)))
+# Plotando a função de sobrevivência
+PlotFunction(dados, "St", "Função de Sobrevivência")
 
-# Função de Risco Acumulado
-plot_func(dados, "Lt", expression(Lambda(t)), c("red", "blue", "green"), expression(Lambda(t)))
+# Plotando a função de risco
+PlotFunction(dados, "ht", "Função de Risco")
+
+# Plotando a função de risco acumulado
+PlotFunction(dados, "Lt", "Função de Risco Acumulado")
 
 # ------------------------
-# [3] DISTRIBUIÇÃO WEIBULL
+# [2] DISTRIBUIÇÃO WEIBULL
 # ------------------------
-
 # -------------
-# [3.1] FUNÇÕES
+# [2.1] FUNÇÕES
 # -------------
-
-# Funções para Weibull
-StWei <- function(t, alpha, gamma) exp(-(alpha * t)^gamma)
-htWei <- function(t, alpha, gamma) gamma * (alpha^gamma) * t^(gamma - 1)
-LtWei <- function(t, alpha, gamma) (alpha * t)^gamma
+ftexp <- function(t, gamma, alpha) {
+  ft <- gamma*alpha^(-gamma)*t^(gamma-1)*exp(-(t/alpha)^gamma)
+  return(ft)
+}
+Stexp <- function(t, gamma, alpha) {
+  St <- exp(-(t/alpha)^gamma)
+  return(St)
+}
+htexp <- function(t, gamma, alpha) {
+  ht <- gamma*alpha^(-gamma)*t^(gamma-1)
+  return(ht)
+}
+Ltexp <- function(t, gamma, alpha) {
+  Lt <- (t/alpha)^gamma
+  return(Lt)
+}
 
 # ----------------------------------------
-# [3.2] SIMULAÇÃO E VARIAÇÃO DE PARÂMETROS
+# [2.2] SIMULAÇÃO E VARIAÇÃO DE PARÂMETROS
 # ----------------------------------------
-
-# Simulando dados de uma Weibull
-tempo <- rweibull(n, shape = 2, scale = 1)
-alpha <- 1   # Fixo para simplificar
-gammas <- c(0.5, 1.0, 1.5, 2.0, 2.5, 3.0) # Valores de gamma
+n <- 1000                                  # Tamanho amostral
+tempo <- rweibull(n, shape = 2, scale = 1) # Simulando dados de uma Weibull
+alpha <- 1                                 # Fixo para simplificar
+gammas <- c(0.5, 1.0, 1.5, 2.0, 2.5, 3.0)  # # Valores do parâmetro a serem avaliados
 
 # Criando um Data Frame com valores das funções
 dados <- do.call(rbind, lapply(gammas, function(gamma) {
   data.frame(
-    tempo = tempo,
-    St = StWei(tempo, alpha, gamma),
-    ht = htWei(tempo, alpha, gamma),
-    Lt = LtWei(tempo, alpha, gamma),
+    tempo = sort(tempo),
+    ft = ftexp(sort(tempo), gamma, alpha),
+    St = Stexp(sort(tempo), gamma, alpha),
+    ht = htexp(sort(tempo), gamma, alpha),
+    Lt = Ltexp(sort(tempo), gamma, alpha),
     gamma = factor(gamma)
   )
 }))
 
-# -------------
-# [3.3] GRÁFICOS
-# -------------
-
-# Função genérica para gráficos
-plot_func <- function(data, y_var, y_label, color_values, y_expression) {
-  ggplot(data, aes(x = tempo, y = !!sym(y_var), color = gamma)) +
-    geom_line(stat = "summary", fun = mean, size = 1) +
-    labs(x = "Tempo", y = y_expression, color = expression(gamma)) +
-    scale_color_manual(values = color_values,
-                       labels = lapply(gammas, function(g) bquote(gamma == .(g)))) +
-    theme_minimal()
+# --------------------
+# [2.3] FUNÇÃO GRÁFICA
+# --------------------
+PlotFunction <- function(dados, ft, label) {
+  ggplot(data = dados, aes_string(x = "tempo", y = ft, color = "gamma")) +
+    geom_line(size = 1.2) +
+    labs(
+      x = "Tempo",
+      y = label, 
+      color = expression(gamma)
+    ) +
+    scale_color_manual(
+      values = c("red", "blue", "green", "purple", "orange", "brown"),
+      labels = scales::parse_format()(levels(dados$gamma))
+    ) +
+    theme_minimal(base_size = 12)
 }
 
-# Paleta de cores
-color_values <- c("red", "blue", "green", "purple", "orange", "brown")
+# Plotando a função densidade de probabilidade
+PlotFunction(dados, "ft", "Função Densidade de Probabilidade")
 
-# Função de Sobrevivência
-plot_func(dados, "St", expression(S(t)), color_values, expression(S(t)))
+# Plotando a função de sobrevivência
+PlotFunction(dados, "St", "Função de Sobrevivência")
 
-# Função de Risco
-plot_func(dados, "ht", expression(lambda(t)), color_values, expression(lambda(t)))
+# Plotando a função de risco
+PlotFunction(dados, "ht", "Função de Risco")
 
-# Função de Risco Acumulado
-plot_func(dados, "Lt", expression(Lambda(t)), color_values, expression(Lambda(t)))
+# Plotando a função de risco acumulado
+PlotFunction(dados, "Lt", "Função de Risco Acumulado")
 
-# --------------------------
-# [4] DISTRIBUIÇÃO LOG-NORMAL
-# --------------------------
-
-library(ggplot2)
-library(dplyr)
-
-set.seed(123)
-n <- 1000 # Tamanho da amostra simulada
-
+# ---------------------------
+# [3] DISTRIBUIÇÃO LOG-NORMAL
+# ---------------------------
 # -------------
-# [4.1] FUNÇÕES
+# [3.1] FUNÇÕES
 # -------------
-
-# Função densidade (f)
-ftLogNormal <- function(t, mu, sigma) {
+ftlnorm <- function(t, mu, sigma) {
   (1 / (t * sigma * sqrt(2 * pi))) * exp(-0.5 * ((log(t) - mu) / sigma)^2)
 }
 
-# Função de Sobrevivência (S)
-StLogNormal <- function(t, mu, sigma) {
-  pnorm(-(log(t) - mu) / sigma, lower.tail = TRUE)
+Stlnorm <- function(t, mu, sigma) {
+  1 - pnorm((log(t) - mu) / sigma, lower.tail = TRUE)
 }
 
-# Função de Risco (h)
-htLogNormal <- function(t, mu, sigma) {
-  ftLogNormal(t, mu, sigma) / StLogNormal(t, mu, sigma)
+htlnorm <- function(t, mu, sigma) {
+  ftlnorm(t, mu, sigma) / Stlnorm(t, mu, sigma)
 }
 
-# Função de Risco Acumulado (Lambda)
-LtLogNormal <- function(t, mu, sigma) {
-  -log(StLogNormal(t, mu, sigma))
+Ltlnorm <- function(t, mu, sigma) {
+  -log(Stlnorm(t, mu, sigma))
 }
 
 # ----------------------------------------
-# [4.2] SIMULAÇÃO E VARIAÇÃO DE PARÂMETROS
+# [3.2] SIMULAÇÃO E VARIAÇÃO DE PARÂMETROS
 # ----------------------------------------
-
-# Simulando dados da distribuição log-normal
-tempo <- rlnorm(n, meanlog = 0, sdlog = 1)
-mus <- c(0, 0.5, 1) # Valores de mu
-sigma <- 1         # Valor fixo de sigma
+n <- 1000                                  # Tamanho amostral
+tempo <- rlnorm(n, meanlog = 0, sdlog = 1) # Simulando dados de uma Log-normal
+mus <- c(0, 0.5, 1, 1.5, 2)                # Valores de mu
+sigma <- 1                                 # Valor fixo de sigma
 
 # Criando um Data Frame com valores das funções
 dados <- do.call(rbind, lapply(mus, function(mu) {
   data.frame(
-    tempo = tempo,
-    ft = ftLogNormal(tempo, mu, sigma),
-    St = StLogNormal(tempo, mu, sigma),
-    ht = htLogNormal(tempo, mu, sigma),
-    Lt = LtLogNormal(tempo, mu, sigma),
+    tempo = sort(tempo),
+    ft = ftlnorm(sort(tempo), mu, sigma),
+    St = Stlnorm(sort(tempo), mu, sigma),
+    ht = htlnorm(sort(tempo), mu, sigma),
+    Lt = Ltlnorm(sort(tempo), mu, sigma),
     mu = factor(mu)
   )
 }))
 
-# -------------
-# [4.3] GRÁFICOS
-# -------------
-
-# Função genérica para gráficos
-plot_func <- function(data, y_var, y_label, color_values, y_expression) {
-  ggplot(data, aes(x = tempo, y = !!sym(y_var), color = mu)) +
-    geom_line(stat = "summary", fun = mean, size = 1) +
-    labs(x = "Tempo", y = y_expression, color = expression(mu)) +
-    scale_color_manual(values = color_values,
-                       labels = lapply(mus, function(m) bquote(mu == .(m)))) +
-    theme_minimal()
+# --------------------
+# [3.3] FUNÇÃO GRÁFICA
+# --------------------
+PlotFunction <- function(dados, ft, label) {
+  ggplot(data = dados, aes_string(x = "tempo", y = ft, color = "mu")) +
+    geom_line(size = 1.2) +
+    labs(
+      x = "Tempo",
+      y = label, 
+      color = expression(mu)
+    ) +
+    scale_color_manual(
+      values = c("red", "blue", "green", "purple", "orange"),
+      labels = scales::parse_format()(levels(dados$mu))
+    ) +
+    theme_minimal(base_size = 12)
 }
 
-# Paleta de cores
-color_values <- c("red", "blue", "green")
+# Plotando a função densidade de probabilidade
+PlotFunction(dados, "ft", "Função Densidade de Probabilidade")
 
-# Função de Densidade
-plot_func(dados, "ft", expression(f(t)), color_values, expression(f(t)))
+# Plotando a função de sobrevivência
+PlotFunction(dados, "St", "Função de Sobrevivência")
 
-# Função de Sobrevivência
-plot_func(dados, "St", expression(S(t)), color_values, expression(S(t)))
+# Plotando a função de risco
+PlotFunction(dados, "ht", "Função de Risco")
 
-# Função de Risco
-plot_func(dados, "ht", expression(lambda(t)), color_values, expression(lambda(t)))
-
-# Função de Risco Acumulado
-plot_func(dados, "Lt", expression(Lambda(t)), color_values, expression(Lambda(t)))
+# Plotando a função de risco acumulado
+PlotFunction(dados, "Lt", "Função de Risco Acumulado")

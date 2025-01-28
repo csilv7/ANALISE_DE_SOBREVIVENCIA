@@ -19,7 +19,7 @@ book:
       
   page-footer:
     left: |
-      Copyright: (**SILVA, B.C.R - 2024**)
+      Copyright: (**SILVA, B.C.R**)
     right: |
       Construído <a href="https://quarto.org/"> Pacote Quarto no R4.3</a>.
   repo-url : https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA
@@ -28,9 +28,9 @@ book:
   page-navigation: true
   chapters:
     - index.qmd
-    - CI_ConceitosBasicos.qmd
-    - CII_EstimNaoParam.qmd
-    - CIII_ModelProb.qmd
+    - CI_CONC_BASIC.qmd
+    - CII_TEC_N_PARAM.qmd
+    - CIII_TEC_PARAM.qmd
     - references.qmd
 
 comments:
