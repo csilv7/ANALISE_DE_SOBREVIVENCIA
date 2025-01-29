@@ -71,7 +71,7 @@ print(estimate)
 # -------------------------
 # [3.1.1.1] Vetor Gradiente
 # -------------------------
-U <- function(times, theta) {
+GRADIEN <- function(times, theta) {
   # Número de observações
   n <- length(times)
   
@@ -83,8 +83,8 @@ U <- function(times, theta) {
   t <- times
   
   # Derivadas Parciais
-  DerivGamma <- n/gamma - log(alpha)*n + sum(log(t)) - sum((t/alpha)^gamma*log((t/alpha)^gamma))
-  DerivAlpha <- -(gamma/alpha)*n + gamma*alpha^(-gamma-1)*sum(t^gamma)
+  DerivGamma <- n/gamma - log(alpha)*n + sum(log(t)) - sum(((t/alpha)^gamma)*log(t/alpha))
+  DerivAlpha <- -(gamma/alpha)*n + gamma*(alpha^(-gamma-1))*sum(t^gamma)
   
   # Vetor Gradiente
   gradient <- c(DerivGamma, DerivAlpha)
@@ -96,7 +96,7 @@ U <- function(times, theta) {
 # -----------------------
 # [2.2.2] Matriz Hessiana
 # -----------------------
-H <- function(times, theta) {
+HESSIAN <- function(times, theta) {
   # Número de observações
   n <- length(times)
   
@@ -108,9 +108,9 @@ H <- function(times, theta) {
   t <- times
   
   # Derivadas de 2ª ordem
-  D2Gamma <- n/gamma^2 - sum((t/alpha)^gamma*log((t/alpha)^gamma)^2)
-  D2Alpha <- (gamma/alpha^2)*n - gamma*(gamma + 1)*alpha^(-gamma-2)*sum(t^gamma)
-  D2 <- -n*alpha + sum((t^gamma/alpha^(gamma+1)))*(gamma*log(t/alpha)+1)
+  D2Gamma <- - n/gamma^2 - sum(((t/alpha)^gamma)*(log(t/alpha)^2))
+  D2Alpha <- - (gamma/alpha^2)*n - gamma*(gamma + 1)*(alpha^(-gamma-2))*sum(t^gamma)
+  D2 <- -n*alpha + (alpha^(-gamma-1))*sum((t^gamma)*(gamma*log(t/alpha) + 1))
     
   # Matriz Hessiana
   H <- matrix(
@@ -125,29 +125,31 @@ H <- function(times, theta) {
 # --------------------------------------
 # [3] Método Iterativo de Newton-Raphson
 # --------------------------------------
-theta0 <- c(1, 1) # Chute Inicial
-diff <- 1           # Diferença entre o passo atual e passo anterior
-error <- 10^(-8)    # Erro tolerável
-id <- 1             # Contador da iteração
+theta0 <- c(1, 1)     # Chute Inicial
+diff <- 1             # Diferença entre o passo atual e o passo anterior
+error <- 10^(-8)      # Erro tolerável
+id <- 1               # Contador da iteração
 
 # Iteração
-while(diff > error) {
-  U <- U(times = w_dados, theta = theta0) # Vetor Escore
-  H <- H(times = w_dados, theta = theta0) # Matriz Hessiana
+while (diff > error) {
+  # Vetor Gradiente e Matriz Hessiana
+  U <- GRADIEN(times = w_dados, theta = theta0) # Vetor Escore
+  H <- HESSIAN(times = w_dados, theta = theta0) # Matriz Hessiana
   
-  # Solução
+  # Solução do sistema linear H %*% solution = U
   solution <- solve(H, U)
   
-  # Atulização do Algoritmo
+  # Atualização do Algoritmo
   theta1 <- theta0 - solution
-  theta0 <- theta1
   
-  # Diferença
+  # Diferença entre os parâmetros
   diff <- max(abs(theta1 - theta0))
   
   # Imprimir resultados na tela
-  cat("Iteração:", id, " ;  Estimativa = (Forma:", theta1[1], ", Escala:", theta1[2], ") \n")
+  cat("Iteração:", id, " -  Estimativa = (Forma:", theta1[1], ", Escala:", theta1[2], ") \n")
   
   # Controle do Algoritmo
+  theta0 <- theta1
   id <- id + 1
 }
+
