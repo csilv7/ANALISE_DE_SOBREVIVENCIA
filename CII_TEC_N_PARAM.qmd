@@ -87,7 +87,7 @@ $$
 \hat{Var}[\hat{S}_{KM}(t)] = [\hat{S}_{KM}(t)]^{2} \sum_{j \text{ : } t_{j} < t} \dfrac{d_{j}}{n_{j} (n_{j} - d_{j})}
 $$ {#eq-VarKaplanMeier}
 
-A expressão dada na @eq-VarKaplanMeier, é conhecida como fórmula de Greenwood e pode ser obtida a partir de propriedades do estimador de máxima verossimilhança. Os detalhes da obtenção da (@eq-VarKaplanMeier estão disponíveis em Kalbfleisch e Prentice (1980, pag. 12-14).
+A expressão dada na @eq-VarKaplanMeier, é conhecida como fórmula de Greenwood e pode ser obtida a partir de propriedades do estimador de máxima verossimilhança. Os detalhes da obtenção da @eq-VarKaplanMeier estão disponíveis em @kalbfleisch1980statistical.
 
 Como $\hat{S}_{KM}(t)$, para um $t$ fixo, tem distribuição assintóticamente Normal. O intervalo de confiança com $100(1 - \alpha)$% de confiança para $\hat{S}_{KM}(t)$ é expresso por:
 
@@ -148,10 +148,8 @@ ekm_data <- data.frame(time = ekm$time, survival = ekm$surv,
 ggplot(ekm_data, aes(x = time, y = survival)) +
   geom_line(color = "blue", lwd = 1.2) +
   geom_ribbon(aes(ymin = lower, ymax = upper), fill = "blue", alpha = 0.2) +
-  labs(x = "Tempo", y = "Probabilidade de Sobrevivência",
-    caption = "Fonte: https://docs.ufpr.br/~giolo/asa/dados/leucemia.txt") +
-  theme_minimal(base_size = 12) +
-  theme( plot.caption = element_text(hjust = 0.5, size = 12))
+  labs(x = "Tempo", y = "Probabilidade de Sobrevivência") +
+  theme_minimal(base_size = 14)
 ```
 
 ## Outros Estimadores Não Parâmetricos
@@ -267,10 +265,12 @@ Para exemplificar a aplicação do teste de *logrank* em dados reais, utilizou-s
 
 $$
 \begin{cases}
-  H_{0}: \text{As curvas de sobrevivência dos grupos são iguais ao longo do tempo.} \\
+  H_{0}: \text{As curvas de sobrevivência dos grupos são iguais ao longo do tempo} \\
   H_{1}: \text{As curvas de sobrevivência dos grupos são diferentes ao longo do tempo.}
 \end{cases}
 $$
+
+Veja a saída resultante do teste realizado no software R:
 
 ```{r warning=FALSE, message=FALSE}
 # -----------------------

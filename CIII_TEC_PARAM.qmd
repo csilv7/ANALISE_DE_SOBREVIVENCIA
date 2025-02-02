@@ -32,7 +32,7 @@ library(dplyr)
 library(ggplot2)
 
 # Semente
-set.seed(123456789)
+set.seed(123)
 
 # Tamanho Amostral
 n <- 1000
@@ -75,9 +75,21 @@ $$
 \Lambda(t) = - \ln[S(t)] = - \ln[ \exp\{ -\alpha t \} ] = - (- \alpha t) = \alpha t
 $$ {#eq-RiscoAcumExp}
 
-Com o objetivo de facilitar a visualização e aprimorar o aprendizado do leitor, foram simuladas as funções, acima, definidas.
+Veja, a seguir, a @fig-CurvasExp que mostra as curvas de densidade de probabilidade, de sobrevivência, risco e risco acumulado para diferentes valores do parâmetro $\alpha$.
 
 ```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Funções Densidade de Probabilidade, Sobrevivência, Risco e Risco Acumulado segundo uma Distribuição Exponencial para diferentes valores do parâmetro de taxa."
+#| fig-cap-location: top
+#| fig-subcap: 
+#| - "Função Densidade de Probabilidade"
+#| - "Função de Sobrevivência"
+#| - "Função de Risco"
+#| - "Função de Risco Acumulado"
+#| layout-ncol: 2
+#| layout-nrow: 2
+#| label: fig-CurvasExp
+
+
 # ---------------------------
 # [1] DISTRIBUIÇÃO EXPONENCIAL
 # ---------------------------
@@ -125,21 +137,6 @@ PlotFunction <- function(dados, ft, label) {
     ) +
     theme_minimal(base_size = 12)
 }
-```
-
-Veja, a seguir, a @fig-CurvasExp que mostra as curvas de densidade de probabilidade, de sobrevivência, risco e risco acumulado para diferentes valores do parâmetro $\alpha$.
-
-```{r message=FALSE, warning=FALSE}
-#| fig-cap: "Funções Densidade de Probabilidade, Sobrevivência, Risco e Risco Acumulado segundo uma Distribuição Exponencial para diferentes valores do parâmetro de taxa."
-#| fig-cap-location: top
-#| fig-subcap: 
-#| - "Função Densidade de Probabilidade"
-#| - "Função de Sobrevivência"
-#| - "Função de Risco"
-#| - "Função de Risco Acumulado"
-#| layout-ncol: 2
-#| layout-nrow: 2
-#| label: fig-CurvasExp
 
 # Plotando a função densidade de probabilidade
 PlotFunction(dados, "ft", "Função Densidade de Probabilidade")
@@ -226,9 +223,20 @@ Note que, o parâmetro $\gamma$ determina a forma função de risco da seguinte 
 -   $\gamma > 1 \rightarrow$ função de risco cresce;
 -   $\gamma = 1 \rightarrow$ função de risco constante, caindo no caso particular da distribuição exponencial.
 
-Assim como na distribuição exponencial, com objetivo de facilitar a visualização e aprimorar o aprendizado do leitor, foram simuladas as funções das @eq-densittWei, @eq-StWeibull, @eq-RiscoWeibull e @eq-RiscAcumWeibull.
+Veja, a seguir, a @fig-CurvasWeibull que mostra as curvas de densidade, sobrevivência, risco e risco acumulado para diferentes valores do parâmetro de forma $\gamma$ e o de escala $\alpha = 1$.
 
 ```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Funções Densidade de Probabilidade, Sobrevivência, Risco e Risco Acumulado segundo uma Distribuição Weibull para diferentes valores do parâmetro de forma."
+#| fig-cap-location: top
+#| fig-subcap: 
+#| - "Função Densidade de Probabilidade"
+#| - "Função de Sobrevivência"
+#| - "Função de Risco"
+#| - "Função de Risco Acumulado"
+#| layout-ncol: 2
+#| layout-nrow: 2
+#| label: fig-CurvasWeibull
+
 # ------------------------
 # [2] DISTRIBUIÇÃO WEIBULL
 # ------------------------
@@ -288,21 +296,6 @@ PlotFunction <- function(dados, ft, label) {
     ) +
     theme_minimal(base_size = 12)
 }
-```
-
-Veja, a seguir, a @fig-CurvasWeibull que mostra as curvas de densidade, sobrevivência, risco e risco acumulado para diferentes valores do parâmetro de forma $\gamma$ e o de escala $\alpha = 1$.
-
-```{r message=FALSE, warning=FALSE}
-#| fig-cap: "Funções Densidade de Probabilidade, Sobrevivência, Risco e Risco Acumulado segundo uma Distribuição Weibull para diferentes valores do parâmetro de forma."
-#| fig-cap-location: top
-#| fig-subcap: 
-#| - "Função Densidade de Probabilidade"
-#| - "Função de Sobrevivência"
-#| - "Função de Risco"
-#| - "Função de Risco Acumulado"
-#| layout-ncol: 2
-#| layout-nrow: 2
-#| label: fig-CurvasWeibull
 
 # Plotando a função densidade de probabilidade
 PlotFunction(dados, "ft", "Função Densidade de Probabilidade")
@@ -374,9 +367,20 @@ $$
 
 em que $\Phi (\cdot)$ é a função de distribuição acumulada da normal padrão.
 
-Assim como ocorreu com as outras distribuições. Foram ilustradas as funções e densidade, sobrevivência, risco e risco acumulado.
+Veja a @fig-CurvasLognormal que ilustras as curvas usadas na análise de sobrevivência segundo uma distribuição log-normal, variando o parâmetro de locação $\mu$ e fixando o parâmetro de escala $\sigma = 1$.
 
 ```{r message=FALSE, warning=FALSE}
+#| fig-cap: "Funções Densidade de Probabilidade, Sobrevivência, Risco e Risco Acumulado segundo uma Distribuição Log-normal para diferentes valores do parâmetro de média."
+#| fig-cap-location: top
+#| fig-subcap: 
+#| - "Função Densidade de Probabilidade"
+#| - "Função de Sobrevivência"
+#| - "Função de Risco"
+#| - "Função de Risco Acumulado"
+#| layout-ncol: 2
+#| layout-nrow: 2
+#| label: fig-CurvasLognormal
+
 # ---------------------------
 # [3] DISTRIBUIÇÃO LOG-NORMAL
 # ---------------------------
@@ -388,7 +392,7 @@ ftlnorm <- function(t, mu, sigma) {
 }
 
 Stlnorm <- function(t, mu, sigma) {
-  1 - pnorm((log(t) - mu) / sigma, lower.tail = TRUE)
+  pnorm((-log(t) + mu) / sigma, lower.tail = TRUE)
 }
 
 htlnorm <- function(t, mu, sigma) {
@@ -435,21 +439,6 @@ PlotFunction <- function(dados, ft, label) {
     ) +
     theme_minimal(base_size = 12)
 }
-```
-
-Veja a @fig-CurvasLognormal que ilustras as curvas usadas na análise de sobrevivência segundo uma distribuição log-normal.
-
-```{r message=FALSE, warning=FALSE}
-#| fig-cap: "Funções Densidade de Probabilidade, Sobrevivência, Risco e Risco Acumulado segundo uma Distribuição Log-normal para diferentes valores do parâmetro de média."
-#| fig-cap-location: top
-#| fig-subcap: 
-#| - "Função Densidade de Probabilidade"
-#| - "Função de Sobrevivência"
-#| - "Função de Risco"
-#| - "Função de Risco Acumulado"
-#| layout-ncol: 2
-#| layout-nrow: 2
-#| label: fig-CurvasLognormal
 
 # Plotando a função densidade de probabilidade
 PlotFunction(dados, "ft", "Função Densidade de Probabilidade")
@@ -563,13 +552,17 @@ $$
 \hat{\alpha} = \dfrac{n}{\sum_{i = 1}^{n} t_{i}}
 $$
 
-A seguir, apresentamos um exemplo computacional. Simulou-se uma amostra proveniente de uma distribuição exponencial e, a partir dessa amostra, obteve-se a estimativa de máxima verossimilhança (EMV) para o parâmetro $\alpha$.
+Simulou-se uma amostra proveniente de uma distribuição exponencial e, a partir dessa amostra, obteve-se a estimativa de máxima verossimilhança (EMV) para o parâmetro $\alpha$. Veja a @tbl-EMVexpSt, que apresenta as dez primeiras observações e suas respectivas funções de sobrevivência real e estimada.
 
 ```{r message=FALSE, warning=FALSE}
+#| tbl-cap: "Comparação da dez primeiras observações entre o valor Real e Estimado da Função de Sobrevivência."
+#| label: tbl-EMVexpSt
+#| tbl-cap-location: top
+
 # Configuração inicial
 set.seed(123)
-n <- 1000     # Tamanho amostral
-alpha <- 1.75 # Parâmetro verdadeiro
+n <- 1000    # Tamanho amostral
+rate <- 1.5  # Parâmetro verdadeiro
 
 # ---------------------------
 # [1] Função de Sobrevivência
@@ -579,7 +572,7 @@ Stexp <- function(t, alpha) exp(-alpha * t)
 # -------------------------
 # [2] Simulação e Estimação
 # -------------------------
-tempo <- rexp(n, rate = alpha) # Simulação de tempos de sobrevivência
+tempo <- rexp(n, rate = rate) # Simulação de tempos de sobrevivência
 emvExp <- n / sum(tempo)       # Estimador de Máxima Verossimilhança (EMV)
 
 # -------------------------
@@ -587,19 +580,9 @@ emvExp <- n / sum(tempo)       # Estimador de Máxima Verossimilhança (EMV)
 # -------------------------
 dados <- data.frame(
   Tempo = sort(tempo),
-  St = Stexp(sort(tempo), alpha),
+  St = Stexp(sort(tempo), rate),
   StEst = Stexp(sort(tempo), emvExp)
 )
-```
-
-O valor verdadeiro do parâmetro é $\alpha =$ `{r} alpha`. A estimativa de máxima verossimilhança obtida foi $\hat{\alpha} =$ `{r} round(emvExp, 2)`.
-
-Veja a @tbl-EMVexpSt, que apresenta as dez primeiras observações e suas respectivas funções de sobrevivência real e estimada.
-
-```{r message=FALSE, warning=FALSE}
-#| tbl-cap: "Comparação da dez primeiras observações entre o valor Real e Estimado da Função de Sobrevivência."
-#| label: tbl-EMVexpSt
-#| tbl-cap-location: top
 
 library(knitr)
 
@@ -610,10 +593,9 @@ knitr::kable(
   align = 'c',
   booktabs = TRUE
 )
-
 ```
 
-Na @fig-CompEMVexp, comparamos graficamente as duas curvas de sobrevivência, ilustrando o valor real do parâmetro $\alpha$ e sua estimativa $\hat{\alpha}$.
+O valor verdadeiro do parâmetro é $\alpha =$ `{r} rate`. A estimativa de máxima verossimilhança obtida foi $\hat{\alpha} =$ `{r} round(emvExp, 2)`. Na @fig-CompEMVexp, comparamos graficamente as duas curvas de sobrevivência, ilustrando o valor real do parâmetro $\alpha$ e sua estimativa $\hat{\alpha}$.
 
 ```{r message=FALSE, warning=FALSE}
 #| fig-cap: "Comparação do verdadeiro valor do parâmetro $\\alpha$ com sua estimativa de máxima verossimilhança."
@@ -627,18 +609,18 @@ ggplot(dados, aes(x = Tempo)) +
   geom_line(aes(y = StEst, color = "emvAlpha"), lwd = 1, lty = 4) +
   scale_color_manual(
     values = c("alpha" = "black", "emvAlpha" = "red"),
-    labels = c(expression(alpha), expression(hat(alpha)))
+    labels = c(
+      bquote(alpha == .(rate)),
+      bquote(hat(alpha) == .(round(emvExp, 2)))
+    )
   ) +
   labs(
     x = "Tempo",
     y = "Probabilidade de Sobrevivência",
     color = "Parâmetro"
   ) +
-  theme_minimal(base_size = 14) +
-  theme(
-    legend.position = "right",
-    plot.caption = element_text(hjust = 0.5, size = 10)
-  )
+  theme_minimal(base_size = 11) +
+  theme(legend.position = "top")
 ```
 
 #### Distribuição Weibull
@@ -684,7 +666,7 @@ A seguir, será apresentada a construção do algoritmo passo a passo. Começa-s
 ```{=latex}
 \begin{align*}
     L (\gamma, \alpha) & = \prod_{i = 1}^{n} \left[ \dfrac{\gamma}{\alpha^{\gamma}} t_{i}^{\gamma - 1} \exp \left\{ - \left(\dfrac{t_{i}}{\alpha}\right)^{\gamma} \right\} \right]^{\delta_{i}} \left[ \exp \left\{ - \left(\dfrac{t_{i}}{\alpha}\right)^{\gamma} \right\} \right]^{1 - \delta_{i}} \\
-    & = \prod_{i = 1}^{n} \left[ \dfrac{\gamma}{\alpha^{\gamma}} t_{i}^{\gamma - 1} \right]^{\delta_{i}}  \exp \left\{ - \left(\dfrac{t_{i}}{\alpha}\right)^{\gamma} \right\}
+    & = \prod_{i = 1}^{n} \left[ \dfrac{\gamma}{\alpha^{\gamma}} t_{i}^{\gamma - 1} \right]^{\delta_{i}}  \exp \left\{ - \left(\dfrac{t_{i}}{\alpha}\right)^{\gamma} \right\}.
 \end{align*}
 ```
 
@@ -693,7 +675,7 @@ Toma-se o logaritmo de $L(\gamma, \alpha)$, logo:
 ```{=latex}
 \begin{align*}
     \ln[L(\gamma, \alpha)] & = \sum_{i = 1}^{n} \delta_{i} \ln[\gamma] - \sum_{i = 1}^{n} \delta_{i} \gamma \ln[\alpha] + \sum_{i = 1}^{n} \delta_{i} (\gamma - 1) \ln[t_{i}] + \sum_{i = 1}^{n} - (\alpha^{-1} t_{i})^{\gamma} \\
-    & = \ln[\gamma] \sum_{i = 1}^{n} \delta_{i} - \gamma \ln[\alpha] \sum_{i = 1}^{n} \delta_{i} + (\gamma - 1) \sum_{i = 1}^{n} \delta_{i} \ln[t_{i}] + \sum_{i = 1}^{n} - (\alpha^{-1} t_{i})^{\gamma}
+    & = \ln[\gamma] \sum_{i = 1}^{n} \delta_{i} - \gamma \ln[\alpha] \sum_{i = 1}^{n} \delta_{i} + (\gamma - 1) \sum_{i = 1}^{n} \delta_{i} \ln[t_{i}] + \sum_{i = 1}^{n} - (\alpha^{-1} t_{i})^{\gamma}.
 \end{align*}
 ```
 
@@ -718,7 +700,7 @@ $$
 $$
 
 $$
-\dfrac{\partial^{2} \ln[L(\gamma, \alpha)]}{\partial \gamma \partial \alpha} = - \dfrac{1}{\alpha} \sum_{i = 1}^{n} \delta_{i} + \alpha^{- \gamma - 1} \sum_{i = 1}^{n} t_{i}^{\gamma} \left( \gamma \ln\left[ \dfrac{t_{i}}{\alpha} \right] + 1 \right)
+\dfrac{\partial^{2} \ln[L(\gamma, \alpha)]}{\partial \gamma \partial \alpha} = \dfrac{\partial^{2} \ln[L(\gamma, \alpha)]}{\partial \alpha \partial \gamma} = - \dfrac{1}{\alpha} \sum_{i = 1}^{n} \delta_{i} + \alpha^{- \gamma - 1} \sum_{i = 1}^{n} t_{i}^{\gamma} \left( \gamma \ln\left[ \dfrac{t_{i}}{\alpha} \right] + 1 \right)
 $$
 
 ```{r message=FALSE, warning=FALSE}
@@ -731,7 +713,7 @@ library(knitr)
 library(ggplot2)
 
 # Semente
-set.seed(123456789)
+set.seed(123)
 
 # Tamanho Amostral
 n <- 1000
@@ -750,7 +732,7 @@ w_scale <- 1.5 # Parâmetro de Escala
 w_dados <- rweibull(n, shape = w_shape, scale = w_scale)
 ```
 
-Com todas as derivadas definidas, é possível definirmos algumas funções e variáveis que iremos precisar para utilizar o algoritmo de Newton-Raphson. O bloco de código abaixo contém o algoritmo de Newton-Raphson.
+Com todas as derivadas definidas, pode-se construir o algoritmo iterativo de Newton-Raphson. Veja a saída obtida à implementação do algoritmo de Newton-Raphson escrito pelo autor.
 
 ```{r message=FALSE, warning=FALSE}
 # -----------------
@@ -813,10 +795,10 @@ HESSIAN <- function(times, theta) {
 # ----------------------------------------
 # [1.3] Método Iterativo de Newton-Raphson
 # ----------------------------------------
-theta0 <- c(1, 1)     # Chute Inicial
-diff <- 1             # Diferença entre o passo atual e o passo anterior
-error <- 10^(-8)      # Erro tolerável
-id <- 1               # Contador da iteração
+theta0 <- c(1, 1) # Chute Inicial
+diff <- 1         # Diferença entre o passo atual e o passo anterior
+error <- 10^(-8)  # Erro tolerável
+id <- 1           # Contador da iteração
 
 # Iteração
 while (diff > error) {
@@ -847,7 +829,7 @@ cat("Estimativa para o parâmetro de forma:", theta1[1], "\n")
 cat("Estimativa para o parâmetro de forma:", theta1[2], "\n")
 ```
 
-O bloco abaixo mostra o uso da função `optim` para otimização.
+O mesmo resultado, ou bem próximo, pode ser obtido de uma forma mais direta por meio do uso da função `optim` para otimização. Veja a saída obtida de tal função.
 
 ```{r message=FALSE, warning=FALSE}
 # ------------------
@@ -913,8 +895,10 @@ dfWeibull <- data.frame(
   StEst = StWei(sort(w_dados), estimate$par[1], estimate$par[2])
 )
 
+library(knitr)
+
 knitr::kable(
-  round(head(dfWeibull, 10), 4),
+  round(head(dados, 10), 4), 
   col.names = c("Tempo", "$S(t)$", "$\\hat{S}(t)$"),
   escape = FALSE,
   align = 'c',
@@ -925,11 +909,9 @@ knitr::kable(
 Temos também a comparação dessas duas curvas de sobrevivência, ilustradas na @fig-CompEMVWeibull.
 
 ```{r, warning=FALSE}
-#| fig-cap: "Comparação do verdadeiro valor dos parâmetros γ e α com suas estimativas de máxima verossimilhança."
+#| fig-cap: "Comparação do verdadeiro valor dos parâmetros $\\gamma$ e $\\alpha$ com suas estimativas de máxima verossimilhança."
 #| label: fig-CompEMVWeibull
 #| fig-cap-location: top
-
-
 
 ggplot(dfWeibull, aes(x = Tempo)) +
   geom_line(aes(y = St, color = "Verdadeiro"), lwd = 2) +
@@ -937,20 +919,208 @@ ggplot(dfWeibull, aes(x = Tempo)) +
   scale_color_manual(
     values = c("Verdadeiro" = "black", "EMV" = "red"),
     labels = c(
-      "Verdadeiro" = expression(paste("Verdadeiro: ", gamma, ", ", alpha)),
-      "EMV" = expression(paste("EMV: ", hat(gamma), ", ", hat(alpha)))
-    )) +
+      bquote("Verdadeiro: " ~ gamma == .(w_shape) ~ "," ~ alpha == .(w_scale)),
+      bquote("EMV: " ~ hat(gamma) == .(round(estimate$par[1], 2)) ~ "," ~ hat(alpha) == .(round(estimate$par[2], 2)))
+    )
+  ) +
   labs(
     x = "Tempo",
     y = expression(S(t)), 
-    color = "Parâmetros") + 
-  theme_minimal()
+    color = "Parâmetros"
+  ) + 
+  theme_minimal() +
+  theme(legend.position = "top")
+
 ```
 
-#### Distribuição Log-normal
+### Aplicação caso haja Censura
+
+Amostras aleatórias foram geradas simultaneamente a partir das distribuições Weibull e Exponencial, com o objetivo de modelar tempos de falha e censura, respectivamente. Para cada unidade amostral, o tempo observado foi definido como a menor realização entre as duas distribuições, ou seja:
+$$
+t_{i} = min(T_{i}, C_{i}),
+$$ 
+
+onde
+
+- $T \sim Weibull(\gamma, \alpha)$ representa o tempo real de falha, assumindo uma distribuição Weibull parametrizada por forma ($\gamma = 2$) e escala ($\alpha = 1.5$);
+- $C \sim Exp(\alpha)$ corresponde ao tempo de censura, assumindo uma distribuição Exponencial com parâmetro de taxa $\alpha = 1$. 
+
+A censura ocorre quando o tempo de observação não corresponde ao tempo real de falha, ou seja, quando $C_{i} < T_{i}$. Nesse caso, o evento de interesse não foi completamente observado, sendo conhecido apenas que o verdadeiro tempo de falha excede o valor registrado. Essa característica, fundamental na análise de sobrevivência, requer métodos estatísticos específicos para garantir inferências adequadas a partir de dados censurados.
+
+```{r, warning=FALSE}
+# -----------------------
+# [1] Ativação de Pacotes
+# -----------------------
+
+library(survival)
+library(ggplot2)
+
+# -----------------------
+# [2] Simulação dos Dados
+# -----------------------
+
+# Definindo Semente
+set.seed(123)
+
+# Parâmetros
+n <- 1000       # Número total de observações
+gamma <- 2      # Parâmetro shape da Weibull
+alpha <- 1.5    # Parâmetro scale da Weibull
+TaxaExp <- 1    # Taxa da distribuição exponencial
+propCens <- 1/4 # Proporção desejada de censuras
+
+# Vetores para armazenar os resultados
+Tobservado <- numeric(n)
+indCensura <- numeric(n)
+
+# Contadores
+nFalhas <- 0
+nCensuras <- 0
+
+# Loop para gerar os tempos
+for (i in 1:n) {
+  # Gerar um tempo de falha e um tempo de censura
+  Tfalha <- rweibull(1, shape = gamma, scale = alpha)
+  Tcensu <- rexp(1, rate = TaxaExp)
+  
+  # Verificar qual é o menor tempo
+  if (Tfalha <= Tcensu) {
+    Tobservado[i] <- Tfalha
+    indCensura[i] <- 1 # Falha
+    nFalhas <- nFalhas + 1
+  } else {
+    if (nCensuras < propCens * n) {
+      Tobservado[i] <- Tcensu
+      indCensura[i] <- 0 # Censura
+      nCensuras <- nCensuras + 1
+    } else {
+      Tobservado[i] <- Tfalha
+      indCensura[i] <- 1 # Falha
+      nFalhas <- nFalhas + 1
+    }
+  }
+}
+```
+
+Foram simulados `r n` tempos de falha, dentre eles, `r propCens * n` são tempos de falha censurados. Deixa-se uma sugestão de variar essa proporção e avaliar a qualidade das estimativas. De posse dos dados simulados, gerou-se a @fig-HistSimulCens.
 
 
+```{r, warning=FALSE}
+#| fig-cap: "Histograma dos dados simulados."
+#| label: fig-HistSimulCens
+#| fig-cap-location: top
 
+# Dados simulados
+dados <- data.frame(Tempo = Tobservado, Censura = indCensura)
+
+# Histograma
+ggplot(data = dados, aes(x = Tempo)) +
+  geom_histogram(bins = 15, fill = "blue") +
+  labs(x = "Tempo", y = "Frequência") +
+  theme_minimal(base_size = 14)
+```
+
+Estimou-se a curva de sobrevivência pelo estimador de Kaplan-Meier, segundo uma distribuição exponencial e segundo uma distribuição Weibull. A @fig-CompCurvSobr mostra a comparação dessas estimativas.
+
+```{r, warning=FALSE}
+
+# -------------
+# [3] Estimação
+# -------------
+# -------------------------------
+# [3.1] Estimação Não Paramátrica
+# -------------------------------
+# ---------------------------------
+# [3.1.1] Estimador de Kaplan-Meier
+# ---------------------------------
+
+# Modelo de Kaplan-Meier
+ekm <- survfit(Surv(Tempo, Censura) ~ 1, data = dados)
+
+# Formatando como DataFrame
+DataEKM <- data.frame(Time = ekm$time, Survival = ekm$surv, Estimação = "Kaplan-Meier")
+
+
+# ---------------------------
+# [3.2] Estimação Paramátrica
+# ---------------------------
+# --------------------------------
+# [3.2.1] Distribuição Exponencial
+# --------------------------------
+
+# Função de Sobrevivência
+Stexp <- function(t, alpha) exp(-alpha * t)
+
+# EMV de α
+emvExp <- sum(dados$Censura) / sum(dados$Tempo)
+
+# EMV da Sobrevivência
+EMVSurvExp <- Stexp(dados$Tempo, emvExp)
+
+# Formatando como DataFrame
+DataExp <- data.frame(Time = dados$Tempo, Survival = EMVSurvExp, 
+                      Estimação = "Distrib Exponencial")
+
+# ----------------------------
+# [3.2.1] Distribuição Weibull
+# ----------------------------
+
+# Função de Sobrevivência
+StWeibull <- function(t, gamma, alpha) exp(-(t / alpha)^gamma)
+
+# EMV de γ e α
+# 1. Função Log-verossimilhança
+logWeibull <- function(theta, dados){
+  gamma <- theta[1] # Parâmetro de forma
+  alpha <- theta[2] # Parâmetro de escala
+  
+  t <- dados$Tempo   # Tempo de falha
+  c <- dados$Censura # Variável indicadora
+  
+  logv <- (sum(c) * log(gamma)) - (gamma * log(alpha) * sum(c)) +
+    (gamma - 1) * sum(c * log(t)) - sum((t / alpha)^gamma)
+  return(-logv)
+}
+
+# 2. Otimizando
+theta0 <- c(1.5, 1)
+estimate <- optim(par = theta0, fn = logWeibull,
+                  gr = NULL, method = "BFGS", 
+                  hessian = TRUE, dados = dados)
+
+# EMV da Sobrevivência
+EMVSurvWeib <- StWeibull(dados$Tempo, estimate$par[1], estimate$par[2])
+
+# Formatando como DataFrame
+DataWeib <- data.frame(Time = dados$Tempo, Survival = EMVSurvWeib, 
+                       Estimação = "Distrib Weibull")
+
+```
+
+```{r, warning=FALSE}
+#| fig-cap: "Comparação das curvas de sobrevivência de Kaplan-Meier, Distribuição Exponencial e Distribuição Weibull."
+#| label: fig-CompCurvSobr
+#| fig-cap-location: top
+
+# --------------------
+# [4] Análise Conjunta
+# --------------------
+
+# Unindo os dados para visualização
+AllData <- rbind(DataEKM, DataExp, DataWeib)
+
+# Gráfico com ggplot2
+ggplot(AllData, aes(x = Time, y = Survival)) +
+  geom_line(aes(color = Estimação, lwd = Estimação)) +
+  labs(x = "Tempo", y = "Probabilidade de Sobrevivência") +
+  theme_minimal(base_size = 11) +
+  theme(legend.position = "top",
+        legend.text = element_text(size = 10)) +
+  scale_color_manual(values = c("blue", "green", "red")) +
+  scale_linewidth_manual(values = c(1.5, 1.5, 1))
+```
+
+[...]
 
 :::: progress
 :::: {.progress-bar style="width: 100%;"}

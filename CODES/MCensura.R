@@ -71,15 +71,13 @@ dados <- data.frame(Tempo = Tobservado, Censura = indCensura)
 # Histograma
 ggplot(data = dados, aes(x = Tempo)) +
   geom_histogram(bins = 15, fill = "blue") +
-  labs(title = "Histograma do Tempo de Sobrevivência - Simulação",
-       x = "Tempo", y = "Frequência") +
-  theme_minimal(base_size = 14) +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+  #xlim(c(0, max(dados$Tempo))) +
+  labs(x = "Tempo", y = "Frequência") +
+  theme_minimal(base_size = 14)
 
 # -------------
 # [3] Estimação
 # -------------
-
 # -------------------------------
 # [3.1] Estimação Não Paramátrica
 # -------------------------------
@@ -91,7 +89,7 @@ ggplot(data = dados, aes(x = Tempo)) +
 ekm <- survfit(Surv(Tempo, Censura) ~ 1, data = dados)
 
 # Formatando como DataFrame
-DataEKM <- data.frame(Time = ekm$time, Survival = ekm$surv, Type = "Kaplan-Meier")
+DataEKM <- data.frame(Time = ekm$time, Survival = ekm$surv, Estimação = "Kaplan-Meier")
 
 
 # ---------------------------
@@ -111,7 +109,8 @@ emvExp <- sum(dados$Censura) / sum(dados$Tempo)
 EMVSurvExp <- Stexp(dados$Tempo, emvExp)
 
 # Formatando como DataFrame
-DataExp <- data.frame(Time = dados$Tempo, Survival = EMVSurvExp, Type = "Exponencial")
+DataExp <- data.frame(Time = dados$Tempo, Survival = EMVSurvExp, 
+                      Estimação = "Distrib Exponencial")
 
 # ----------------------------
 # [3.2.1] Distribuição Weibull
@@ -135,17 +134,17 @@ logWeibull <- function(theta, dados){
 }
 
 # 2. Otimizando
-Theta0 <- c(1.5, 1)
-estimate <- optim(par = Theta0, fn = logWeibull,
-                  gr = NULL, method = "BFGS", hessian = TRUE, dados = dados)
-
-estimate
+theta0 <- c(1.5, 1)
+estimate <- optim(par = theta0, fn = logWeibull,
+                  gr = NULL, method = "BFGS", 
+                  hessian = TRUE, dados = dados)
 
 # EMV da Sobrevivência
 EMVSurvWeib <- StWeibull(dados$Tempo, estimate$par[1], estimate$par[2])
 
 # Formatando como DataFrame
-DataWeib <- data.frame(Time = dados$Tempo, Survival = EMVSurvWeib, Type = "Weibull")
+DataWeib <- data.frame(Time = dados$Tempo, Survival = EMVSurvWeib, 
+                       Estimação = "Distrib Weibull")
 
 # --------------------
 # [4] Análise Conjunta
@@ -156,11 +155,12 @@ AllData <- rbind(DataEKM, DataExp, DataWeib)
 
 # Gráfico com ggplot2
 ggplot(AllData, aes(x = Time, y = Survival)) +
-  geom_line(aes(color = Type, linetype = Type), lwd = 1.5) +
-  labs(title = "S(t): Kaplan-Meier, Weibull e Exponencial",
-       x = "Tempo", y = "Probabilidade de Sobrevivência") +
+  geom_line(aes(color = Estimação, lwd = Estimação)) +
+  labs(x = "Tempo", y = "Probabilidade de Sobrevivência") +
   theme_minimal(base_size = 14) +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
-        legend.title = element_blank()) +
+  theme(legend.position = "top",
+        legend.text = element_text(size = 10)) +
   scale_color_manual(values = c("blue", "green", "red")) +
-  scale_linetype_manual(values = c(1, 2, 3)) # c("solid", "dashed", "dotted")
+  scale_linewidth_manual(values = c(1.5, 1.5, 1))
+
+

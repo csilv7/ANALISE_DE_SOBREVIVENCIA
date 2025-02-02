@@ -9,7 +9,7 @@ book:
   
   author:
     
-    name: "Breno Cauã Rodrigues da Silva"
+    name: "**Breno Cauã Rodrigues da Silva**"
     orcid: 0009-0005-9740-2069
     corresponding: true
     affiliations:
@@ -19,7 +19,7 @@ book:
       
   page-footer:
     left: |
-      Copyright: (**SILVA, B.C.R**)
+      **SILVA, B.C.R**
     right: |
       Construído <a href="https://quarto.org/"> Pacote Quarto no R4.3</a>.
   repo-url : https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA
@@ -58,6 +58,7 @@ format:
     pdf-engine: xelatex
     fontsize: 12pt
     geometry: margin=2.5cm
+    echo: false
   docx:
     number-sections: true
 

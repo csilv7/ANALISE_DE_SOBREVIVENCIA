@@ -88,7 +88,7 @@ GRADIEN <- function(times, theta) {
   
   # Vetor Gradiente
   gradient <- c(DerivGamma, DerivAlpha)
-    
+  
   # Retornar
   return(gradient)
 }
@@ -111,7 +111,7 @@ HESSIAN <- function(times, theta) {
   D2Gamma <- - n/gamma^2 - sum(((t/alpha)^gamma)*(log(t/alpha)^2))
   D2Alpha <- - (gamma/alpha^2)*n - gamma*(gamma + 1)*(alpha^(-gamma-2))*sum(t^gamma)
   D2 <- -n*alpha + (alpha^(-gamma-1))*sum((t^gamma)*(gamma*log(t/alpha) + 1))
-    
+  
   # Matriz Hessiana
   H <- matrix(
     data = c(D2Gamma, D2, D2, D2Alpha),
@@ -152,4 +152,3 @@ while (diff > error) {
   theta0 <- theta1
   id <- id + 1
 }
-

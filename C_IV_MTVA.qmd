@@ -1,0 +1,21 @@
+```{=html}
+<style>
+  body{text-align: justify}
+</style>
+```
+
+:::: progress
+:::: {.progress-bar style="width: 100%;"}
+::::
+::::
+
+# Modelos de Tempo de Vida Acelerado
+
+# Introdução
+
+
+
+:::: progress
+:::: {.progress-bar style="width: 100%;"}
+::::
+::::
