@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Referêcias – Análise de Sobrevivência</title>
+<title>4&nbsp; Modelos de Tempo de Vida Acelerado – Análise de Sobrevivência</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -54,26 +54,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -83,7 +64,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./CIV_MTVA.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./CIII_TEC_PARAM.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -129,6 +111,35 @@ div.csl-indent {
   });
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -141,7 +152,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">Referêcias</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./CIV_MTVA.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modelos de Tempo de Vida Acelerado</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -230,13 +241,13 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./CIV_MTVA.html" class="sidebar-item-text sidebar-link">
+  <a href="./CIV_MTVA.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modelos de Tempo de Vida Acelerado</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Referêcias</span></a>
   </div>
 </li>
@@ -245,15 +256,23 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">4.1</span> Introdução</a></li>
+  <li><a href="#distribuição-exponencial" id="toc-distribuição-exponencial" class="nav-link" data-scroll-target="#distribuição-exponencial"><span class="header-section-number">4.2</span> Distribuição Exponencial</a></li>
+  <li><a href="#distribuição-weibull" id="toc-distribuição-weibull" class="nav-link" data-scroll-target="#distribuição-weibull"><span class="header-section-number">4.3</span> Distribuição Weibull</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Referêcias</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modelos de Tempo de Vida Acelerado</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
 </div>
 
 
@@ -270,110 +289,56 @@ div.csl-indent {
 </header>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-aalen1978nonparametric" class="csl-entry" role="listitem">
-Aalen, Odd O. 1978. <span>“Nonparametric Inference for a Family of
-Counting Processes.”</span> <em>Annals of Statistics</em> 6 (4): 701–26.
-<a href="https://doi.org/10.1214/aos/1176344247">https://doi.org/10.1214/aos/1176344247</a>.
+<style>
+  body{text-align: justify}
+</style>
+<div class="progress">
+<div class="progress-bar" style="width: 100%;">
+
 </div>
-<div id="ref-aalen1978empirical" class="csl-entry" role="listitem">
-Aalen, Odd O., and Søren Johansen. 1978. <span>“An Empirical Transition
-Matrix for Non-Homogeneous Markov Chains Based on Censored
-Observations.”</span> <em>Scandinavian Journal of Statistics</em> 5 (3):
-141–50.
 </div>
-<div id="ref-bohoris1994comparison" class="csl-entry" role="listitem">
-Bohoris, G. A. 1994. <span>“Comparison of the Cumulative-Hazard and
-Kaplan-Meier Estimators of the Survivor Function.”</span> <em>IEEE
-Transactions on Reliability</em> 43 (2): 230–32. <a href="https://doi.org/10.1109/24.293488">https://doi.org/10.1109/24.293488</a>.
-</div>
-<div id="ref-breslow1974large" class="csl-entry" role="listitem">
-Breslow, Norman, and John Crowley. 1974. <span>“A Large Sample Study of
-the Life Table and Product Limit Estimates Under Random
-Censorship.”</span> <em>The Annals of Statistics</em> 2 (3): 437–53. <a href="https://doi.org/10.1214/aos/1176342705">https://doi.org/10.1214/aos/1176342705</a>.
-</div>
-<div id="ref-bussab2010estatistica" class="csl-entry" role="listitem">
-Bussab, Wilton de Oliveira, and Pedro Alberto Morettin. 2010.
-<em>Estatística Básica</em>. 6ª ed. São Paulo: Saraiva.
-</div>
-<div id="ref-colosimo2006analise" class="csl-entry" role="listitem">
-Colosimo, Enrico Antonio, and Suely Ruiz Giolo. 2006. <em>Análise de
-Sobrevivência Aplicada</em>. 1st ed. São Paulo, Brasil: Blucher.
-</div>
-<div id="ref-gehan1965generalized" class="csl-entry" role="listitem">
-Gehan, Edmund A. 1965. <span>“A Generalized Wilcoxon Test for Comparing
-Arbitrarily Singly-Censored Samples.”</span> <em>Biometrika</em> 52
-(1-2): 203–24. <a href="https://doi.org/10.2307/2333825">https://doi.org/10.2307/2333825</a>.
-</div>
-<div id="ref-kalbfleisch1980statistical" class="csl-entry" role="listitem">
-Kalbfleisch, John D., and Ross L. Prentice. 1980. <em>The Statistical
-Analysis of Failure Time Data</em>. Wiley Series in Probability and
-Mathematical Statistics. New York: Wiley.
-</div>
-<div id="ref-kaplan1958nonparametric" class="csl-entry" role="listitem">
-Kaplan, Edward L., and Paul Meier. 1958. <span>“Nonparametric Estimation
-from Incomplete Observations.”</span> <em>Journal of the American
-Statistical Association</em> 53 (282): 457–81. <a href="https://doi.org/10.1080/01621459.1958.10501452">https://doi.org/10.1080/01621459.1958.10501452</a>.
-</div>
-<div id="ref-klein1991small" class="csl-entry" role="listitem">
-Klein, John P. 1991. <span>“Small Sample Moments of Some Estimators of
-the Variance of the Kaplan-Meier and Nelson-Aalen Estimators.”</span>
-<em>Scandinavian Journal of Statistics</em> 18 (4): 333–40. <a href="https://doi.org/10.2307/4616203">https://doi.org/10.2307/4616203</a>.
-</div>
-<div id="ref-latta1981monte" class="csl-entry" role="listitem">
-Latta, Robert B. 1981. <span>“A Monte Carlo Study of Some Two-Sample
-Rank Tests with Censored Data.”</span> <em>Journal of the American
-Statistical Association</em> 76 (375): 713–19. <a href="https://doi.org/10.2307/2287572">https://doi.org/10.2307/2287572</a>.
-</div>
-<div id="ref-lawless1982statistical" class="csl-entry" role="listitem">
-Lawless, J. F. 1982. <em>Statistical Models and Methods for Lifetime
-Data</em>. Wiley Series in Probability and Statistics. New York: John
-Wiley &amp; Sons.
-</div>
-<div id="ref-lindsey1998methods" class="csl-entry" role="listitem">
-Lindsey, Jane C., and Louise M. Ryan. 1998. <span>“Methods for
-Interval-Censored Data.”</span> <em>Statistics in Medicine</em> 17 (2):
-219–38. <a href="https://doi.org/10.1002/(SICI)1097-0258(19980130)17:2<219::AID-SIM735>3.0.CO;2-D">https://doi.org/10.1002/(SICI)1097-0258(19980130)17:2&lt;219::AID-SIM735&gt;3.0.CO;2-D</a>.
-</div>
-<div id="ref-mantel1966evaluation" class="csl-entry" role="listitem">
-Mantel, Nathan. 1966. <span>“Evaluation of Survival Data and Two New
-Rank Order Statistics Arising in Its Consideration.”</span> <em>Cancer
-Chemotherapy Reports</em> 50 (3): 163–70.
-</div>
-<div id="ref-mantel1959statistical" class="csl-entry" role="listitem">
-Mantel, Nathan, and William Haenszel. 1959. <span>“Statistical Aspects
-of the Analysis of Data from Retrospective Studies of Disease.”</span>
-<em>Journal of the National Cancer Institute</em> 22 (4): 719–48.
-</div>
-<div id="ref-meier1975estimation" class="csl-entry" role="listitem">
-Meier, Paul. 1975. <span>“Estimation of a Survival Curve from Incomplete
-Data.”</span> <em>Journal of the American Statistical Association</em>
-70 (351): 607–10. <a href="https://doi.org/10.1080/01621459.1975.10479872">https://doi.org/10.1080/01621459.1975.10479872</a>.
-</div>
-<div id="ref-nelson1972theory" class="csl-entry" role="listitem">
-Nelson, Wayne. 1972. <span>“Theory and Applications of Hazard Plotting
-for Censored Failure Data.”</span> <em>Technometrics</em> 14 (4):
-945–66. <a href="https://doi.org/10.1080/00401706.1972.10488981">https://doi.org/10.1080/00401706.1972.10488981</a>.
-</div>
-<div id="ref-peto1972asymptotically" class="csl-entry" role="listitem">
-Peto, Richard, and Julian Peto. 1972. <span>“Asymptotically Efficient
-Rank Invariant Test Procedures.”</span> <em>Journal of the Royal
-Statistical Society: Series A (General)</em> 135 (2): 185–98. <a href="https://doi.org/10.2307/2344317">https://doi.org/10.2307/2344317</a>.
-</div>
-<div id="ref-prentice1978linear" class="csl-entry" role="listitem">
-Prentice, Ross L. 1978. <span>“Linear Rank Tests with Right Censored
-Data.”</span> <em>Biometrika</em> 65 (1): 167–79. <a href="https://doi.org/10.2307/2335206">https://doi.org/10.2307/2335206</a>.
-</div>
-<div id="ref-turnbull1974nonparametric" class="csl-entry" role="listitem">
-Turnbull, Bruce W. 1974. <span>“Nonparametric Estimation of a
-Survivorship Function with Doubly Censored Data.”</span> <em>Journal of
-the American Statistical Association</em> 69 (345): 169–73. <a href="https://doi.org/10.1080/01621459.1974.10480146">https://doi.org/10.1080/01621459.1974.10480146</a>.
+<section id="introdução" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">4.1</span> Introdução</h2>
+</section>
+<section id="distribuição-exponencial" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="distribuição-exponencial"><span class="header-section-number">4.2</span> Distribuição Exponencial</h2>
+<p>Em modelos de tempo de vida acelerados a distribuição exponencial tem densidade expressa por:</p>
+<p><span id="eq-densitExpMTVA"><span class="math display">\[
+f(t) = \alpha \exp\left\{ - \alpha \left( \dfrac{t}{\exp\{\mathbf{x'}\boldsymbol{\beta}\}} \right) \right\}.
+\tag{4.1}\]</span></span></p>
+<p>A partir de <a href="#eq-densitExpMTVA" class="quarto-xref">Equação&nbsp;<span>4.1</span></a> pode-se obter a função de sobrevivência, dada por:</p>
+<p><span id="eq-StExpMTVA"><span class="math display">\[
+S(t) = \exp\left\{ - \alpha \left( \dfrac{t}{\exp\{\mathbf{x'}\boldsymbol{\beta}\}} \right) \right\}.
+\tag{4.2}\]</span></span></p>
+<p>Desta forma, é possível chegar na função de log-verossimilhança dada pela <a href="#eq-logVerExpMTVA" class="quarto-xref">Equação&nbsp;<span>4.3</span></a> para MTVA da distribuição exponencial.</p>
+<p><span id="eq-logVerExpMTVA"><span class="math display">\[
+l(\theta) = \ln[\alpha] \sum_{i = 1}^{n} \delta_{i} - \alpha \sum_{i = 1}^{n} \dfrac{t_{i}}{\exp\{\mathbf{x'}_{i}\boldsymbol{\beta}\}},
+\tag{4.3}\]</span></span></p>
+<p>onde <span class="math inline">\(\theta = (\alpha, \beta_{0}, \beta_{1}, \ldots, \beta_{p})\)</span>. Toma-se as derivadas parciais em relação a cada parâmetro deste modelo, desta forma, tem-se:</p>
+<p><span class="math display">\[
+\dfrac{\partial l(\theta)}{\partial \alpha} = \dfrac{1}{\alpha} \sum_{i = 1}^{n} \delta_{i} - \sum_{i = 1}^{n} \dfrac{t_{i}}{\exp\{\mathbf{x'}_{i}\boldsymbol{\beta}\}},
+\]</span></p>
+<p>para <span class="math inline">\(\beta_{0}\)</span>, temos:</p>
+<p><span class="math display">\[
+\dfrac{\partial l(\theta)}{\partial \beta_{0}} = \alpha \sum_{i = 1}^{n} \dfrac{t_{i}}{\exp\{\mathbf{x'}_{i}\boldsymbol{\beta}\}}.
+\]</span></p>
+<p>Para qualquer outro coeficiente <span class="math inline">\(\beta_{k}\)</span>, derivando, temos:</p>
+<p><span class="math display">\[
+\dfrac{\partial l(\theta)}{\partial \beta_{k}} = - \alpha \sum_{i = 1}^{n} \frac{\partial}{\partial \beta_{k}} \left[ \frac{t_{i}}{\exp\{\mathbf{x'}\boldsymbol{\beta}\}} \right] = - \alpha \sum_{i = 1}^{n} - \frac{t_{i} x_{ki}}{\exp\{\mathbf{x'}\boldsymbol{\beta}\}} = \alpha \sum_{i = 1}^{n} \frac{t_{i} x_{ki}}{\exp\{\mathbf{x'}\boldsymbol{\beta}\}}.
+\]</span> Para obter as estimativas para o vetor de parâmetros <span class="math inline">\(\theta\)</span> temos que utilizar algum método numérico, pois não a solução análitico para as funções (não lineares) resultantes das derivadas.</p>
+</section>
+<section id="distribuição-weibull" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="distribuição-weibull"><span class="header-section-number">4.3</span> Distribuição Weibull</h2>
+<div class="progress">
+<div class="progress-bar" style="width: 100%;">
+
 </div>
 </div>
 
 
 <!-- -->
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -993,17 +958,76 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./CIV_MTVA.html" class="pagination-link" aria-label="Modelos de Tempo de Vida Acelerado">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modelos de Tempo de Vida Acelerado</span></span>
+      <a href="./CIII_TEC_PARAM.html" class="pagination-link" aria-label="Técnicas Paramétricas - Modelos Probabilísticos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Técnicas Paramétricas - Modelos Probabilísticos</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="Referêcias">
+        <span class="nav-page-text">Referêcias</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Referêcias {.unnumbered}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;style&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">  body{text-align: justify}</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/style&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>:::: progress</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>::: {.progress-bar style="width: 100%;"}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu"># Modelos de Tempo de Vida Acelerado</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introdução</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Distribuição Exponencial</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Em modelos de tempo de vida acelerados a distribuição exponencial tem densidade expressa por:</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>f(t) = \alpha \exp\left<span class="sc">\{</span> - \alpha \left( \dfrac{t}{\exp<span class="sc">\{</span>\mathbf{x'}\boldsymbol{\beta}<span class="sc">\}</span>} \right) \right<span class="sc">\}</span>.</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>$$ {#eq-densitExpMTVA}</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>A partir de @eq-densitExpMTVA pode-se obter a função de sobrevivência, dada por:</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>S(t) = \exp\left<span class="sc">\{</span> - \alpha \left( \dfrac{t}{\exp<span class="sc">\{</span>\mathbf{x'}\boldsymbol{\beta}<span class="sc">\}</span>} \right) \right<span class="sc">\}</span>.</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>$$ {#eq-StExpMTVA}</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>Desta forma, é possível chegar na função de log-verossimilhança dada pela @eq-logVerExpMTVA para MTVA da distribuição exponencial.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>l(\theta) = \ln<span class="co">[</span><span class="ot">\alpha</span><span class="co">]</span> \sum_{i = 1}^{n} \delta_{i} - \alpha \sum_{i = 1}^{n} \dfrac{t_{i}}{\exp<span class="sc">\{</span>\mathbf{x'}_{i}\boldsymbol{\beta}<span class="sc">\}</span>},</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>$$ {#eq-logVerExpMTVA}</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>onde $\theta = (\alpha, \beta_{0}, \beta_{1}, \ldots, \beta_{p})$. Toma-se as derivadas parciais em relação a cada parâmetro deste modelo, desta forma, tem-se:</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>\dfrac{\partial l(\theta)}{\partial \alpha} = \dfrac{1}{\alpha} \sum_{i = 1}^{n} \delta_{i} - \sum_{i = 1}^{n} \dfrac{t_{i}}{\exp<span class="sc">\{</span>\mathbf{x'}_{i}\boldsymbol{\beta}<span class="sc">\}</span>},</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>para $\beta_{0}$, temos:</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>\dfrac{\partial l(\theta)}{\partial \beta_{0}} = \alpha \sum_{i = 1}^{n} \dfrac{t_{i}}{\exp<span class="sc">\{</span>\mathbf{x'}_{i}\boldsymbol{\beta}<span class="sc">\}</span>}.</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>Para qualquer outro coeficiente $\beta_{k}$, derivando, temos:</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>\dfrac{\partial l(\theta)}{\partial \beta_{k}} = - \alpha \sum_{i = 1}^{n} \frac{\partial}{\partial \beta_{k}} \left<span class="co">[</span><span class="ot"> \frac{t_{i}}{\exp\{\mathbf{x'}\boldsymbol{\beta}\}} \right</span><span class="co">]</span> = - \alpha \sum_{i = 1}^{n} - \frac{t_{i} x_{ki}}{\exp<span class="sc">\{</span>\mathbf{x'}\boldsymbol{\beta}<span class="sc">\}</span>} = \alpha \sum_{i = 1}^{n} \frac{t_{i} x_{ki}}{\exp<span class="sc">\{</span>\mathbf{x'}\boldsymbol{\beta}<span class="sc">\}</span>}.</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>Para obter as estimativas para o vetor de parâmetros $\theta$ temos que utilizar algum método numérico, pois não a solução análitico para as funções (não lineares) resultantes das derivadas.</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="fu">## Distribuição Weibull</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>:::: progress</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>::: {.progress-bar style="width: 100%;"}</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>::::</span></code><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

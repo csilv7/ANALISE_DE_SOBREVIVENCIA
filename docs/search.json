@@ -150,6 +150,36 @@
     ]
   },
   {
+    "objectID": "CIV_MTVA.html",
+    "href": "CIV_MTVA.html",
+    "title": "4  Modelos de Tempo de Vida Acelerado",
+    "section": "",
+    "text": "4.1 Introdução",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Modelos de Tempo de Vida Acelerado</span>"
+    ]
+  },
+  {
+    "objectID": "CIV_MTVA.html#distribuição-exponencial",
+    "href": "CIV_MTVA.html#distribuição-exponencial",
+    "title": "4  Modelos de Tempo de Vida Acelerado",
+    "section": "4.2 Distribuição Exponencial",
+    "text": "4.2 Distribuição Exponencial\nEm modelos de tempo de vida acelerados a distribuição exponencial tem densidade expressa por:\n\\[\nf(t) = \\alpha \\exp\\left\\{ - \\alpha \\left( \\dfrac{t}{\\exp\\{\\mathbf{x'}\\boldsymbol{\\beta}\\}} \\right) \\right\\}.\n\\tag{4.1}\\]\nA partir de Equação 4.1 pode-se obter a função de sobrevivência, dada por:\n\\[\nS(t) = \\exp\\left\\{ - \\alpha \\left( \\dfrac{t}{\\exp\\{\\mathbf{x'}\\boldsymbol{\\beta}\\}} \\right) \\right\\}.\n\\tag{4.2}\\]\nDesta forma, é possível chegar na função de log-verossimilhança dada pela Equação 4.3 para MTVA da distribuição exponencial.\n\\[\nl(\\theta) = \\ln[\\alpha] \\sum_{i = 1}^{n} \\delta_{i} - \\alpha \\sum_{i = 1}^{n} \\dfrac{t_{i}}{\\exp\\{\\mathbf{x'}_{i}\\boldsymbol{\\beta}\\}},\n\\tag{4.3}\\]\nonde \\(\\theta = (\\alpha, \\beta_{0}, \\beta_{1}, \\ldots, \\beta_{p})\\). Toma-se as derivadas parciais em relação a cada parâmetro deste modelo, desta forma, tem-se:\n\\[\n\\dfrac{\\partial l(\\theta)}{\\partial \\alpha} = \\dfrac{1}{\\alpha} \\sum_{i = 1}^{n} \\delta_{i} - \\sum_{i = 1}^{n} \\dfrac{t_{i}}{\\exp\\{\\mathbf{x'}_{i}\\boldsymbol{\\beta}\\}},\n\\]\npara \\(\\beta_{0}\\), temos:\n\\[\n\\dfrac{\\partial l(\\theta)}{\\partial \\beta_{0}} = \\alpha \\sum_{i = 1}^{n} \\dfrac{t_{i}}{\\exp\\{\\mathbf{x'}_{i}\\boldsymbol{\\beta}\\}}.\n\\]\nPara qualquer outro coeficiente \\(\\beta_{k}\\), derivando, temos:\n\\[\n\\dfrac{\\partial l(\\theta)}{\\partial \\beta_{k}} = - \\alpha \\sum_{i = 1}^{n} \\frac{\\partial}{\\partial \\beta_{k}} \\left[ \\frac{t_{i}}{\\exp\\{\\mathbf{x'}\\boldsymbol{\\beta}\\}} \\right] = - \\alpha \\sum_{i = 1}^{n} - \\frac{t_{i} x_{ki}}{\\exp\\{\\mathbf{x'}\\boldsymbol{\\beta}\\}} = \\alpha \\sum_{i = 1}^{n} \\frac{t_{i} x_{ki}}{\\exp\\{\\mathbf{x'}\\boldsymbol{\\beta}\\}}.\n\\] Para obter as estimativas para o vetor de parâmetros \\(\\theta\\) temos que utilizar algum método numérico, pois não a solução análitico para as funções (não lineares) resultantes das derivadas.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Modelos de Tempo de Vida Acelerado</span>"
+    ]
+  },
+  {
+    "objectID": "CIV_MTVA.html#distribuição-weibull",
+    "href": "CIV_MTVA.html#distribuição-weibull",
+    "title": "4  Modelos de Tempo de Vida Acelerado",
+    "section": "4.3 Distribuição Weibull",
+    "text": "4.3 Distribuição Weibull",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Modelos de Tempo de Vida Acelerado</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "Referêcias",
