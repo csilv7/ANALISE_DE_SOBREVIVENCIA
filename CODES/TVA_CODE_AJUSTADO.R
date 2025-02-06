@@ -29,6 +29,7 @@ set.seed(123456789)
 # ---------------------------
 
 myRexp <- function(n, rate, coVariates, vecCoef) {
+  set.seed(123456789)
   # Uniforme(0, 1)
   U <- runif(n, 0, 1)
   
@@ -44,8 +45,6 @@ myRexp <- function(n, rate, coVariates, vecCoef) {
 # --------------------------
 # [2.2.2] Simulação de Dados
 # --------------------------
-
-set.seed(123456789)
 
 # Tamanho da amostra e número de variáveis
 n <- 1000
@@ -63,7 +62,7 @@ X <- matrix(
 )
 
 # Vetor de Coeficientes Betas
-betas <- matrix(data = c(1.5, 2/3, 2), nrow = p + 1, ncol = 1)
+betas <- matrix(data = c(3/2, 2/3, 2), nrow = p + 1, ncol = 1)
 
 # Simulando o Tempo de Sobrevivência
 timesSurv <- myRexp(n, taxa, X, betas)
@@ -75,12 +74,8 @@ timesSurv <- myRexp(n, taxa, X, betas)
 # Histograma
 g1 <- ggplot(data = data.frame(Tempo = timesSurv), aes(x = Tempo)) +
   geom_histogram(fill = "blue") +
-  labs(title = "Histograma do Tempo de Sobrevida",
-       x = "Tempo", y = "Frequência") +
-  theme_minimal(base_size = 14) +
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 15)
-  )
+  labs(x = "Tempo", y = "Frequência") +
+  theme_minimal(base_size = 14)
 
 # Função de Sobrevivência
 cens <- rep(1, n)
@@ -95,14 +90,10 @@ g2 <- ggplot(ekm_data, aes(x = time, y = survival)) +
   geom_step(color = "blue", size = 1.2) +
   geom_ribbon(aes(ymin = lower, ymax = upper), fill = "blue", alpha = 0.2) +
   labs(
-    title = "Função de Sobrevida de Kaplan-Meier",
     x = "Tempo",
     y = "Probabilidade de Sobrevivência",
   ) +
-  theme_minimal(base_size = 14) +
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 15)
-  )
+  theme_minimal(base_size = 14)
 
 # Combine os gráficos em um subplot com duas colunas e uma linha
 grid.arrange(g1, g2, ncol = 2, widths=c(1, 1.25))
@@ -119,15 +110,36 @@ fit1 <- survreg(formula = Surv(timesSurv, cens)~x1 + x2,
                 dist = "exponential")
 summary(fit1)
 
+# Função de Sobrevivência
+Stexp <- function(t, alpha, betas, X) exp(-alpha * t / exp(X %*% betas))
+
+thetaEst <- fit1$coefficients
+
+# Formatando como DataFrame
+DataExp <- data.frame(Time = sort(timesSurv), 
+                      Survival = Stexp(sort(timesSurv), taxa, betas, X),
+                      EMV_Survival = Stexp(sort(timesSurv), taxa, thetaEst, X))
+
+ggplot(data = DataExp, aes(x = Time)) +
+  geom_line(aes(y = Survival, color = "Verdadeira")) +
+  geom_line(aes(y = EMV_Survival, color = "Estimada")) +
+  labs(x = "Tempo", y = "Probabilidade de Sobrevivência") +
+  scale_color_manual(name = "Curva", values = c("Verdadeira" = "blue", "Estimada" = "red")) +
+  theme_minimal(base_size = 14)
+
+
+
 # --------------------
 # [3.1] Via otimização
 # --------------------
-
 # ---------------------------
 # [3.1.1] Log-Verossimilhança
 # ---------------------------
 
 logVerossimil <- function(theta, coVariates, times) {
+  # Comprimento do Vetor de observações
+  n <- length(times)
+  
   # Comprimento do vetor de parâmetros
   nPar <- length(theta)
   
@@ -140,7 +152,7 @@ logVerossimil <- function(theta, coVariates, times) {
   effect <- coVariates %*% betas
   
   # Função de Log-verossimilhança
-  flv <- n * log(rate) - rate * sum(times / exp(effect))
+  flv <- n * rate - rate * sum(times / exp(effect))
   
   return(-flv)
 }
@@ -149,7 +161,7 @@ logVerossimil <- function(theta, coVariates, times) {
 # [3.1.1] Função optim
 # --------------------
 
-theta0 <- rep(1.5, 4) # Chute inicial
+theta0 <- rep(1, 4) # Chute inicial
 
 # Aplicação do algoritmo
 estimate <- optim(
@@ -172,7 +184,7 @@ thetaEst <- estimate$par
 nPar <- length(thetaEst)
 
 # Função de Sobrevivência
-Stexp <- function(t, alpha, betas, X) alpha * exp(- alpha * ( t / exp(X %*% betas) ) )
+Stexp <- function(t, alpha, betas, X) exp(- alpha * ( t / exp(X %*% betas) ) )
 
 
 # Formatando como DataFrame
@@ -187,3 +199,4 @@ ggplot(DataExp, aes(x = Time)) +
   labs(x = "Tempo", y = "Probabilidade de Sobrevivência") +
   scale_color_manual(name = "Curva", values = c("Verdadeira" = "blue", "Estimada" = "red")) +
   theme_minimal(base_size = 14)
+
