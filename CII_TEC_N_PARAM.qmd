@@ -1,9 +1,3 @@
-```{=html}
-<style>
-  body{text-align: justify}
-</style>
-```
-
 :::: progress
 :::: {.progress-bar style="width: 100%;"}
 ::::
@@ -113,7 +107,6 @@ Veja uma aplicação do Estimador de Kaplan-Meier. Os dados de Leucemia Pediátr
 #| fig-cap: "Curva de Sobrevivência de Kaplan-Meier com IC de 95%"
 #| fig-cap-location: top
 #| label: fig-SobrKM
-
 
 # -----------------------
 # [1] ATIVAÇÃO DE PACOTES
@@ -288,19 +281,23 @@ library(dplyr)
 url <- "https://docs.ufpr.br/~giolo/asa/dados/leucemia.txt"
 
 # Leitura dos dados
-df <- read.table(url, header = TRUE)
+dados <- read.table(url, header = TRUE)
 
-# Decodificando a coluna r_6
-df <- df %>%
+# Verificando os nomes das colunas
+print(names(dados))
+
+# Decodificando a coluna r6
+dados <- dados %>%
   mutate(grupo = ifelse(r6 == 0, "Category Zero", "Category One"))
 
-# ----------------------
+# --------------------
 # [3] TESTE DE LOGRANK
-# ----------------------
+# --------------------
 
 # Aplicando o Teste de Logrank
-TestLogrank <- survdiff(Surv(tempos, cens) ~ grupo, data = df, rho = 0)
+TestLogrank <- survdiff(Surv(tempos, cens) ~ grupo, data = dados, rho = 0)
 print(TestLogrank)
+
 ```
 
 Ao fixar o nível de significância em 5% ($\alpha = 0,05$), rejeitamos a hipótese nula. Essa conclusão baseia-se no valor $p$ (probabilidade de significância) obtido no teste, calculado como $p-valor =$ `r TestLogrank$pvalue`. Como o $p-valor < \alpha$, rejeita-se $H_{0}$. Assim, conclui-se que as curvas de sobrevivência dos grupos são diferentes ao longo do tempo, ao nível de significância de 5%.

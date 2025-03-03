@@ -1,75 +1,55 @@
-:::: progress
-:::: {.progress-bar style="width: 100%;"}
-::::
-::::
+---
+title: "Modelos AFT"
+author: "Breno C R Silva"
+format:
+  html:
+    number-sections: true
+lang: pt
+---
 
-# Modelos de Tempo de Vida Acelerado
+# Modelos de Tempo de Vida Acelerados
 
 ## Introdução
 
-No capítulo anterior, foram apresentados modelos paramétricos para dados de sobrevivência. Entretanto, esses modelos não contemplam a inclusão de covariáveis na análise do tempo de sobrevivência. Neste capítulo, exploraremos esse método.
+[...]
 
-No modelo de regressão linear clássico, a relação entre a variável resposta $Y$ e as covariáveis $\mathbf{x'}$ é aditiva, ou seja, mudanças nas covariáveis alteram $Y$ de maneira linear. O modelo de regressão linear clássico é expresso como:
-
-$$
-Y = \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} \ldots + \beta_{p} X_{p} + \varepsilon,
-$$ {#eq-LinearModel}
-
-onde $\varepsilon$ é a parte estocástica (erro) que segue uma distribuição $Normal(0, \sigma^{2})$.
-
-No entanto, em análise de sobrevivência, essa suposição não se sustenta, pois o efeito das covariáveis geralmente acelera ou retarda o tempo de falha, tornando necessária uma abordagem multiplicativa. Este modelo de regressão é chamado de Modelo de *Tempo de Vida Acelerado* (Accelerated Failure Time - AFT).
-
-No modelo AFT, assume-se que o tempo de falha $T$ é afetado por um fator de aceleração exponencial das covariáveis. Esse fator multiplicativo indica se o tempo até o evento será prolongado ou encurtado. Assim, o modelo é definido como:
-
-$$
-T = \exp\{ \mathbf{x'} \boldsymbol{\beta} \} \varepsilon = \exp\{ \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} \ldots + \beta_{p} X_{p} \} \varepsilon,
-$$ {#eq-RelationAFT}
-
-onde $\varepsilon$ é um termo de erro multiplicativo que captura a variabilidade não explicada pelas covariáveis. Aplicando a transformação logarítmica em $T$ obtém-se a forma linearizável de @eq-RelationAFT que aproxima-se da @eq-LinearModel, de forma que
-
-$$
-\ln[T] = \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} \ldots + \beta_{p} X_{p} + v,
-$$
-
-onde $v = \ln[\varepsilon]$ segue uma distribuição de valor extremo. Essa escolha para a distribuição dos erros decorre do fato de que os tempos de sobrevivência frequentemente apresentam forte assimetria à direita. Portanto, os erros não podem ser adequadamente representados por uma distribuição normal, sendo mais apropriado assumir distribuições como Log-normal, Weibull ou Exponencial.
-
-Nos modelos AFT, a função de sobrevivência sofre um ajuste devido ao efeito das covariáveis, que podem acelerar ou retardar o tempo de falha. Assim, a função de sobrevivência condicional às covariáveis é expressa como:
+Tem-se a função de sobrevivência em modelos AFT com mudança no argumento, pois o efeito das covariáveis no tempo de sobrevivência pode acelerar ou retardar o mesmo. Assim,
 
 $$
 S (t | x) = P (T > t / \exp\{ \mathbf{x'} \boldsymbol{\beta}\}).
-$$ {#eq-fSobrAFT}
+$$
 
-Como o tempo de falha é ajustado pelo fator de aceleração, a função de risco também precisa ser reformulada para incorporar o efeito das covariáveis. A forma geral da função de risco em modelos AFT é dada por:
+A função de risco, desta forma, também precisar ser ajustada. Um caso geral para a função de risco em modelos AFT pode ser expresso como:
 
 $$
-\lambda(t | \mathbf{x}) = \lambda_{0}(t) g(\mathbf{x}).
-$$ {#eq-fhazardAFT}
+\lambda(t | \mathbf{x}) = \lambda_{0}(t) g(\mathbf{x}),
+$$
 
-Nesta expressão, $\lambda_{0}(t)$, representa a função de risco basal, isto é, representa o risco no tempo $t$ quando todas as covariáveis são iguais a zero, ou seja, na ausência de efeitos das covariáveis. Já o termo $g(\mathbf{x}) = \exp\{ - \mathbf{x'} \boldsymbol{\beta} \}$ age como um fator de ajuste, mensurando o impacto das covariáveis na taxa de falha.
+onde $\lambda_{0}(t)$ é a função de risco basal para uma determinada distribuição e $g(\mathbf{x}) = \exp\{ - \mathbf{x'} \boldsymbol{\beta} \}$ entra como a função que mensura o efeito das covariáveis.
 
-## Modelo Exponencial
+## Distribuição Exponencial
 
-Em modelos AFT, a função de sobrevivência à distribuição exponencial é expressa por:
+Em modelos AFT a função de sobrevivência é expressa por:
 
 $$
 S (t | x) = \exp \left\{- \alpha \left( \dfrac{t}{\exp\{ \mathbf{x'} \boldsymbol{\beta} \}} \right) \right\}.
 $$ {#eq-AFTexpSt}
 
-Com função de risco dada por:
+Com função de risco dada por
 
 $$
-\lambda(t | \mathbf{x}) = \alpha \exp\{ - \mathbf{x'} \boldsymbol{\beta} \}.
+\lambda(t | \mathbf{x}) = \alpha \exp\{ - \mathbf{x'} \boldsymbol{\beta} \},
 $$ {#eq-AFTexpht}
 
 ## Distribuição Weibull
 
-Para modelos AFT, baseados na distribuição Weibull, a função de sobrevivência é dada por:
+Para modelos AFT, baseados na distribuição Weibull, a função de sobrevivência é dada por
 
 $$
 S (t | x) = \exp \left\{ - \left( \dfrac{t}{\alpha \exp\{ - \mathbf{x'} \boldsymbol{\beta} \} } \right)^{\gamma} \right\}.
 $$ {#eq-AFTweibSt}
 
-Assim, pode-se escrever a função de risco da distribuição Weibull como:
+Assim, pode-se escrever a função de risco da distribuição Weibull como
 
 $$
 \lambda(t | \mathbf{x}) = \dfrac{ \gamma }{ \alpha^{\gamma} } t^{\gamma - 1} \exp\{ - \mathbf{x'} \boldsymbol{\beta} \}
@@ -81,29 +61,16 @@ $$ {#eq-AFTeeibht}
 
 ## Estimação de Parâmetros
 
-Assim como no capítulo anterior, a estimação dos parâmetros será realizada pelo método de máxima verossimilhança. Recordando que a função de verossimilhança para dados censurados é expressa como:
+Assim como no capítulo anterior, será usado o método de máxima verossimilhança. Relebrando que a função de verossimilhança é dada na forma
 
-```{=latex}
+$$
 \begin{align*}
 L(\theta) & = \prod_{i = 1}^{n} \left[f(t_{i} | \mathbf{x}) \right]^{\delta_{i}} \left[S(t_{i} | \mathbf{x}) \right]^{1 - \delta_{i}} \\
-          & = \prod_{i = 1}^{n} \left[\lambda(t_{i} | \mathbf{x}) \right]^{\delta_{i}} S(t_{i} | \mathbf{x}),
+          & = \prod_{i = 1}^{n} \left[\lambda(t_{i} | \mathbf{x}) \right]^{\delta_{i}} S(t_{i} | \mathbf{x}).
 \end{align*}
-```
-
-onde:
-
-- $\delta_{i}$ é a variável indicadora, assumindo $1$ se $t_{i}$ for um tempo de falha observado e $0$ se for censurado;
-- $f(t_{i}|\mathbf{x})$ representa a função densidade de probabilidade condicional;
-- $S(t_{i}|\mathbf{x})$ é a função de sobrevivência condicional;
-- $\lambda(t_{i}|\mathbf{x})$ corresponde à função de risco condicional.
-
-O estimador de máxima verossimilhança (EMV) para $\theta$ é obtido maximizando a função de log-verossimilhança, dada por:
-
-$$
-\ln{L(\theta)} = \sum_{i = 1}^{n} \delta_{i} \ln{\lambda(t_{i}|\mathbf{x})} + \ln{S(t_{i}|\mathbf{x})}.
 $$
 
-Portanto, o parâmetro ou o conjunto de parâmetros $\theta$ que maximiza $\ln{L(\theta)}$ representa a melhor estimativa para a amostra observada, sendo obtido por métodos numéricos como o Newton-Raphson.
+Assim, o parâmetro ou o vetor de parâmetros que maximizar $\ln[ L(\theta) ]$, isto é, maximizar $L(\theta)$, é a melhor estimativa para a amostra observada.
 
 ## Implementação Computacional
 
@@ -175,7 +142,7 @@ prop <- mean(dados$delta)*100
 Veja a @tbl-SIMULexpAFT que apresenta as dez primeiras observações simuladas.
 
 ```{r message=FALSE, warning=FALSE}
-#| tbl-cap: "Dez primeiras observações Simuladas para Dados de Sobrevivência Censurados baseados no Modelo Exponencial."
+#| tbl-cap: "Dez primeiras observações simuladas."
 #| label: tbl-SIMULexpAFT
 #| tbl-cap-location: top
 
@@ -195,7 +162,7 @@ A proporção de censura nos dados foi: `r prop`%.
 #### Ajuste do modelo ATF usando o pacote `survival`:
 
 ```{r}
-library(survival)
+require(survival)
 ajust <- survreg(Surv(times, delta)~x1+x2, dist = "exponential", data=dados)
 summary(ajust)
 ```
@@ -313,7 +280,7 @@ prop <- mean(dados$delta)*100
 Veja a @tbl-SIMULweibAFT que apresenta as dez primeiras observações simuladas.
 
 ```{r message=FALSE, warning=FALSE}
-#| tbl-cap: "Dez primeiras observações Simuladas para Dados de Sobrevivência Censurados baseados no Modelo Weibull."
+#| tbl-cap: "Dez primeiras observações simuladas."
 #| label: tbl-SIMULweibAFT
 #| tbl-cap-location: top
 
@@ -333,7 +300,7 @@ A proporção de censura nos dados foi: `r prop`%.
 #### Ajuste do modelo ATF usando o pacote `survival`:
 
 ```{r}
-library(survival)
+require(survival)
 ajust <- survreg(Surv(times, delta)~x1+x2, dist = "weibull", data=dados)
 summary(ajust)
 ```
@@ -388,8 +355,3 @@ fit
 ```
 
 ### Distribuição Exponencial por Partes
-
-:::: progress
-:::: {.progress-bar style="width: 100%;"}
-::::
-::::

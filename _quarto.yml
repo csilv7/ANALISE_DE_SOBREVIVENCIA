@@ -52,6 +52,7 @@ format:
     code-link: true
     toc-title: Índice
     toc-location: right
+    css: styles.css  # Define a justificação no HTML via CSS
   pdf:
     documentclass: scrreprt
     fig-pos: "H"
@@ -60,6 +61,7 @@ format:
     fontsize: 12pt
     geometry: margin=2.5cm
     echo: false
+    keep-tex: true  # Mantém o recuo padrão do LaTeX
   docx:
     number-sections: true
 

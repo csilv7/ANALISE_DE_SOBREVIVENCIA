@@ -1,12 +1,6 @@
-```{=html}
-<style>
-  body{text-align: justify}
-</style>
-```
-
 :::: progress
-::: {.progress-bar style="width: 100%;"}
-:::
+:::: {.progress-bar style="width: 100%;"}
+::::
 ::::
 
 # Prefácio {.unnumbered}
@@ -14,6 +8,6 @@
 Este é um projeto desenvolvido...
 
 :::: progress
-::: {.progress-bar style="width: 100%;"}
-:::
+:::: {.progress-bar style="width: 100%;"}
+::::
 ::::

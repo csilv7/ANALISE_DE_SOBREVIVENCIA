@@ -1,9 +1,3 @@
-```{=html}
-<style>
-  body{text-align: justify}
-</style>
-```
-
 :::: progress
 :::: {.progress-bar style="width: 100%;"}
 ::::
@@ -948,6 +942,10 @@ onde
 A censura ocorre quando o tempo de observação não corresponde ao tempo real de falha, ou seja, quando $C_{i} < T_{i}$. Nesse caso, o evento de interesse não foi completamente observado, sendo conhecido apenas que o verdadeiro tempo de falha excede o valor registrado. Essa característica, fundamental na análise de sobrevivência, requer métodos estatísticos específicos para garantir inferências adequadas a partir de dados censurados.
 
 ```{r, warning=FALSE}
+#| tbl-cap: "Dados de Sobrevivência Simulados com Tempos de Falha Censurados."
+#| label: tbl-DATASIMULCENS
+#| tbl-cap-location: top
+
 # -----------------------
 # [1] Ativação de Pacotes
 # -----------------------
@@ -955,54 +953,50 @@ A censura ocorre quando o tempo de observação não corresponde ao tempo real d
 library(survival)
 library(ggplot2)
 
+# Definindo Semente
+set.seed(123356789)
+
 # -----------------------
 # [2] Simulação dos Dados
 # -----------------------
-
-# Definindo Semente
-set.seed(123)
-
-# Parâmetros
-n <- 1000       # Número total de observações
-gamma <- 2      # Parâmetro shape da Weibull
-alpha <- 1.5    # Parâmetro scale da Weibull
-TaxaExp <- 1    # Taxa da distribuição exponencial
-propCens <- 1/4 # Proporção desejada de censuras
+n <- 1000     # Número total de observações
+gamma <- 3/2  # Parâmetro de forma da Weibull
+alpha <- 1    # Parâmetro de escala da Weibull
+exp.rate <- 1 # Parâmetro de taxa da exponencial
 
 # Vetores para armazenar os resultados
-Tobservado <- numeric(n)
-indCensura <- numeric(n)
+t <- numeric(n)
+c <- numeric(n)
+times <- numeric(n)
 
-# Contadores
-nFalhas <- 0
-nCensuras <- 0
-
-# Loop para gerar os tempos
+# Iteração de geração
 for (i in 1:n) {
-  # Gerar um tempo de falha e um tempo de censura
-  Tfalha <- rweibull(1, shape = gamma, scale = alpha)
-  Tcensu <- rexp(1, rate = TaxaExp)
+  t[i] <- rweibull(1, shape=gamma, scale=alpha) # Tempo de falha
+  c[i] <- rexp(1, rate=exp.rate)                # Censura
   
-  # Verificar qual é o menor tempo
-  if (Tfalha <= Tcensu) {
-    Tobservado[i] <- Tfalha
-    indCensura[i] <- 1 # Falha
-    nFalhas <- nFalhas + 1
-  } else {
-    if (nCensuras < propCens * n) {
-      Tobservado[i] <- Tcensu
-      indCensura[i] <- 0 # Censura
-      nCensuras <- nCensuras + 1
-    } else {
-      Tobservado[i] <- Tfalha
-      indCensura[i] <- 1 # Falha
-      nFalhas <- nFalhas + 1
-    }
-  }
+  # Tempo de Falha observado
+  times[i] <- min(t[i], c[i])
 }
+
+# Variável indicadora
+delta <- ifelse(t <= c, 1, 0)
+
+# Dados simulados
+dados <- data.frame(times, delta)
+prop.cens <- 1 - mean(dados$delta)
+
+library(knitr)
+
+knitr::kable(
+  round(head(dados, 10), 4), 
+  col.names = c("Tempo", "Censura"),
+  escape = FALSE,
+  align = 'c',
+  booktabs = TRUE
+)
 ```
 
-Foram simulados `r n` tempos de falha, dentre eles, `r propCens * n` são tempos de falha censurados. Deixa-se uma sugestão de variar essa proporção e avaliar a qualidade das estimativas. De posse dos dados simulados, gerou-se a @fig-HistSimulCens.
+Foram simulados `r n` tempos de falha, dentre eles, `r prop.cens * 100` são tempos de falha censurados. Deixa-se uma sugestão de variar essa proporção e avaliar a qualidade das estimativas. De posse dos dados simulados, gerou-se a @fig-HistSimulCens.
 
 
 ```{r, warning=FALSE}
@@ -1010,12 +1004,9 @@ Foram simulados `r n` tempos de falha, dentre eles, `r propCens * n` são tempos
 #| label: fig-HistSimulCens
 #| fig-cap-location: top
 
-# Dados simulados
-dados <- data.frame(Tempo = Tobservado, Censura = indCensura)
-
 # Histograma
-ggplot(data = dados, aes(x = Tempo)) +
-  geom_histogram(bins = 15, fill = "blue") +
+ggplot(data = dados, aes(x = times)) +
+  geom_histogram(bins = 18, fill = "blue") +
   labs(x = "Tempo", y = "Frequência") +
   theme_minimal(base_size = 14)
 ```
@@ -1023,6 +1014,9 @@ ggplot(data = dados, aes(x = Tempo)) +
 Estimou-se a curva de sobrevivência pelo estimador de Kaplan-Meier, segundo uma distribuição exponencial e segundo uma distribuição Weibull. A @fig-CompCurvSobr mostra a comparação dessas estimativas.
 
 ```{r, warning=FALSE}
+#| fig-cap: "Comparação das Curvas de Sobrevivência de Kaplan-Meier, Modelo Exponencial e Modelo Weibull."
+#| label: fig-CompCurvSobr
+#| fig-cap-location: top
 
 # -------------
 # [3] Estimação
@@ -1035,10 +1029,10 @@ Estimou-se a curva de sobrevivência pelo estimador de Kaplan-Meier, segundo uma
 # ---------------------------------
 
 # Modelo de Kaplan-Meier
-ekm <- survfit(Surv(Tempo, Censura) ~ 1, data = dados)
+ekm <- survfit(Surv(times, delta) ~ 1, data = dados)
 
 # Formatando como DataFrame
-DataEKM <- data.frame(Time = ekm$time, Survival = ekm$surv, Estimação = "Kaplan-Meier")
+data.km <- data.frame(Time=ekm$time, Survival=ekm$surv, Estimation="Kaplan-Meier")
 
 
 # ---------------------------
@@ -1049,75 +1043,62 @@ DataEKM <- data.frame(Time = ekm$time, Survival = ekm$surv, Estimação = "Kapla
 # --------------------------------
 
 # Função de Sobrevivência
-Stexp <- function(t, alpha) exp(-alpha * t)
+st.exp <- function(t, alpha) exp(-alpha * t)
 
 # EMV de α
-emvExp <- sum(dados$Censura) / sum(dados$Tempo)
-
-# EMV da Sobrevivência
-EMVSurvExp <- Stexp(dados$Tempo, emvExp)
+emv.exp <- sum(dados$delta) / sum(dados$times)
 
 # Formatando como DataFrame
-DataExp <- data.frame(Time = dados$Tempo, Survival = EMVSurvExp, 
-                      Estimação = "Distrib Exponencial")
+data.exp <- data.frame(Time=dados$times, Survival=st.exp(dados$times, emv.exp), 
+                       Estimation="Modelo Exponencial")
 
 # ----------------------------
 # [3.2.1] Distribuição Weibull
 # ----------------------------
 
 # Função de Sobrevivência
-StWeibull <- function(t, gamma, alpha) exp(-(t / alpha)^gamma)
+st.weib <- function(t, gamma, alpha) exp(-(t / alpha)^gamma)
 
-# EMV de γ e α
-# 1. Função Log-verossimilhança
-logWeibull <- function(theta, dados){
-  gamma <- theta[1] # Parâmetro de forma
-  alpha <- theta[2] # Parâmetro de escala
+# Função Log-verossimilhança
+logWeibull <- function(par, dados){
+  gamma <- par[1]   # Parâmetro de forma
+  alpha <- par[2]   # Parâmetro de escala
+  t <- dados$times  # Tempo de falha
+  c <- dados$delta  # Variável indicadora
   
-  t <- dados$Tempo   # Tempo de falha
-  c <- dados$Censura # Variável indicadora
+  ft <- dweibull(x=t, shape=gamma, scale=alpha)
+  st <- 1 - pweibull(q=t, shape=gamma, scale=alpha)
   
-  logv <- (sum(c) * log(gamma)) - (gamma * log(alpha) * sum(c)) +
-    (gamma - 1) * sum(c * log(t)) - sum((t / alpha)^gamma)
-  return(-logv)
+  flv <- sum(c*log(ft) + (1 - c)*log(st))
+  return(-flv)
 }
 
-# 2. Otimizando
-theta0 <- c(1.5, 1)
+# Maximizando
+theta0 <- c(0.5, 0.5)
 estimate <- optim(par = theta0, fn = logWeibull,
                   gr = NULL, method = "BFGS", 
                   hessian = TRUE, dados = dados)
 
-# EMV da Sobrevivência
-EMVSurvWeib <- StWeibull(dados$Tempo, estimate$par[1], estimate$par[2])
-
 # Formatando como DataFrame
-DataWeib <- data.frame(Time = dados$Tempo, Survival = EMVSurvWeib, 
-                       Estimação = "Distrib Weibull")
-
-```
-
-```{r, warning=FALSE}
-#| fig-cap: "Comparação das curvas de sobrevivência de Kaplan-Meier, Distribuição Exponencial e Distribuição Weibull."
-#| label: fig-CompCurvSobr
-#| fig-cap-location: top
+data.weib <- data.frame(Time=dados$times, Survival=st.weib(dados$times, estimate$par[1], estimate$par[2]), 
+                       Estimation="Modelo Weibull")
 
 # --------------------
 # [4] Análise Conjunta
 # --------------------
 
 # Unindo os dados para visualização
-AllData <- rbind(DataEKM, DataExp, DataWeib)
+all.data <- rbind(data.km, data.exp, data.weib)
 
 # Gráfico com ggplot2
-ggplot(AllData, aes(x = Time, y = Survival)) +
-  geom_line(aes(color = Estimação, lwd = Estimação)) +
+ggplot(all.data, aes(x = Time, y = Survival)) +
+  geom_line(aes(color = Estimation, lwd = Estimation)) +
   labs(x = "Tempo", y = "Probabilidade de Sobrevivência") +
   theme_minimal(base_size = 11) +
   theme(legend.position = "top",
         legend.text = element_text(size = 10)) +
   scale_color_manual(values = c("blue", "green", "red")) +
-  scale_linewidth_manual(values = c(1.5, 1.5, 1))
+  scale_linewidth_manual(values = c(1.5, 1.5, 1.2))
 ```
 
 [...]
