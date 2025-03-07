@@ -360,11 +360,11 @@ q_{j} = P(T \in [t_{j-1}, t{j}) | T \geq t_{j-1}),
 <p><span id="eq-ESTKaplanMeier"><span class="math display">\[
 \hat{S}_{KM}(t) = \prod_{j \text{ : } t_{j} &lt; t} \left( \dfrac{n_{j} - d_{j}}{n_{j}} \right) = \prod_{j \text{ : } t_{j} &lt; t} \left( 1 - \dfrac{d_{j}}{n_{j}} \right)
 \tag{2.3}\]</span></span></p>
-<p>De forma intuitiva, por assim dizer, a <a href="#eq-ESTKaplanMeier" class="quarto-xref">Equação&nbsp;<span>2.3</span></a> é proveniente da <a href="#eq-DecomposeSt" class="quarto-xref">Equação&nbsp;<span>2.1</span></a>, sendo está, uma decomposição de <span class="math inline">\(S(t)\)</span> em termos <span class="math inline">\(q_{j}\)</span>’s. Assim, a <a href="#eq-ESTKaplanMeier" class="quarto-xref">Equação&nbsp;<span>2.3</span></a> é justificada se os <span class="math inline">\(q_{j}\)</span>’s forem estimados por <span class="math inline">\(d_{j}/n_{j}\)</span>, que em palavras está expresso na <a href="#eq-FormProbQj" class="quarto-xref">Equação&nbsp;<span>2.2</span></a>. No artigo original de 1958, Kaplan e Meier provam que a <a href="#eq-ESTKaplanMeier" class="quarto-xref">Equação&nbsp;<span>2.3</span></a> é um <em>Estimador de Máxima Verossimilhança</em> (EMV) para <span class="math inline">\(S(t)\)</span>. Seguindo certos passos, é possível provar que que <span class="math inline">\(\hat{S}_{KM}(t)\)</span> é EMV de <span class="math inline">\(S(t)\)</span>. Supondo que <span class="math inline">\(d_{j}\)</span> observações falham no tempo tempo <span class="math inline">\(t_{j}\)</span>, para <span class="math inline">\(j = 1, \cdots, k\)</span>, e <span class="math inline">\(m_{j}\)</span> observações são censuradas no intervalo <span class="math inline">\([t{j}, t_{j+1})\)</span>, nos tempos <span class="math inline">\(t_{j1}, \cdots, t_{jm_{j}}\)</span>. A probabilidade de falha no tempo <span class="math inline">\(t_{j}\)</span> é, então,</p>
+<p>De forma intuitiva, por assim dizer, a <a href="#eq-ESTKaplanMeier" class="quarto-xref">Equação&nbsp;<span>2.3</span></a> é proveniente da <a href="#eq-DecomposeSt" class="quarto-xref">Equação&nbsp;<span>2.1</span></a>, sendo está, uma decomposição de <span class="math inline">\(S(t)\)</span> em termos <span class="math inline">\(q_{j}\)</span>’s. Assim, a <a href="#eq-ESTKaplanMeier" class="quarto-xref">Equação&nbsp;<span>2.3</span></a> é justificada se os <span class="math inline">\(q_{j}\)</span>’s forem estimados por <span class="math inline">\(d_{j}/n_{j}\)</span>, que em palavras está expresso na <a href="#eq-FormProbQj" class="quarto-xref">Equação&nbsp;<span>2.2</span></a>. No artigo original de 1958, Kaplan e Meier provam que a <a href="#eq-ESTKaplanMeier" class="quarto-xref">Equação&nbsp;<span>2.3</span></a> é um <em>Estimador de Máxima Verossimilhança</em> (EMV) para <span class="math inline">\(S(t)\)</span>. Seguindo certos passos, é possível provar que que <span class="math inline">\(\hat{S}_{KM}(t)\)</span> é EMV de <span class="math inline">\(S(t)\)</span>. Supondo que <span class="math inline">\(d_{j}\)</span> observações falham no tempo tempo <span class="math inline">\(t_{j}\)</span>, para <span class="math inline">\(j = 1, \cdots, k\)</span>, e <span class="math inline">\(m_{j}\)</span> observações são censuradas no intervalo <span class="math inline">\([t{j}, t_{j+1})\)</span>, nos tempos <span class="math inline">\(t_{j1}, \ldots, t_{jm_{j}}\)</span>. A probabilidade de falha no tempo <span class="math inline">\(t_{j}\)</span> é, então,</p>
 <p><span class="math display">\[
 S(t_{j}) - S(t_{j}+),
 \]</span></p>
-<p>com <span class="math inline">\(S(t_{j}+) = \lim_{\Delta t \to 0+} S(t_{j} + \Delta t)\)</span>, <span class="math inline">\(j = 1, \cdots, k\)</span>. Por outro lado, a contribuição para a função de verossimilhança de um tempo de sobrevivência censurado em <span class="math inline">\(t_{jl}\)</span> para <span class="math inline">\(l = 1, \cdots, m_{j}\)</span>, é:</p>
+<p>com <span class="math inline">\(S(t_{j}+) = \lim_{\Delta t \to 0+} S(t_{j} + \Delta t)\)</span>, <span class="math inline">\(j = 1, \cdots, k\)</span>. Por outro lado, a contribuição para a função de verossimilhança de um tempo de sobrevivência censurado em <span class="math inline">\(t_{jl}\)</span> para <span class="math inline">\(l = 1, \ldots, m_{j}\)</span>, é:</p>
 <p><span class="math display">\[
 P(T &gt; t_{jl}) = S(t_{jl}+).
 \]</span></p>
@@ -654,11 +654,6 @@ T = v´V^{-1} v,
 <section id="outros-testes" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="outros-testes"><span class="header-section-number">2.4.1</span> Outros Testes</h3>
 <p>[…]</p>
-<div class="progress">
-<div class="progress-bar" style="width: 100%;">
-
-</div>
-</div>
 
 
 <!-- -->
@@ -1391,13 +1386,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>\hat{S}_{KM}(t) = \prod_{j \text{ : } t_{j} &lt; t} \left( \dfrac{n_{j} - d_{j}}{n_{j}} \right) = \prod_{j \text{ : } t_{j} &lt; t} \left( 1 - \dfrac{d_{j}}{n_{j}} \right)</span>
 <span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>$$ {#eq-ESTKaplanMeier}</span>
 <span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>De forma intuitiva, por assim dizer, a @eq-ESTKaplanMeier é proveniente da @eq-DecomposeSt, sendo está, uma decomposição de $S(t)$ em termos $q_{j}$'s. Assim, a @eq-ESTKaplanMeier é justificada se os $q_{j}$'s forem estimados por $d_{j}/n_{j}$, que em palavras está expresso na @eq-FormProbQj. No artigo original de 1958, Kaplan e Meier provam que a @eq-ESTKaplanMeier é um *Estimador de Máxima Verossimilhança* (EMV) para $S(t)$. Seguindo certos passos, é possível provar que que $\hat{S}_{KM}(t)$ é EMV de $S(t)$. Supondo que $d_{j}$ observações falham no tempo tempo $t_{j}$, para $j = 1, \cdots, k$, e $m_{j}$ observações são censuradas no intervalo $[t{j}, t_{j+1})$, nos tempos $t_{j1}, \cdots, t_{jm_{j}}$. A probabilidade de falha no tempo $t_{j}$ é, então,</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>De forma intuitiva, por assim dizer, a @eq-ESTKaplanMeier é proveniente da @eq-DecomposeSt, sendo está, uma decomposição de $S(t)$ em termos $q_{j}$'s. Assim, a @eq-ESTKaplanMeier é justificada se os $q_{j}$'s forem estimados por $d_{j}/n_{j}$, que em palavras está expresso na @eq-FormProbQj. No artigo original de 1958, Kaplan e Meier provam que a @eq-ESTKaplanMeier é um *Estimador de Máxima Verossimilhança* (EMV) para $S(t)$. Seguindo certos passos, é possível provar que que $\hat{S}_{KM}(t)$ é EMV de $S(t)$. Supondo que $d_{j}$ observações falham no tempo tempo $t_{j}$, para $j = 1, \cdots, k$, e $m_{j}$ observações são censuradas no intervalo $[t{j}, t_{j+1})$, nos tempos $t_{j1}, \ldots, t_{jm_{j}}$. A probabilidade de falha no tempo $t_{j}$ é, então,</span>
 <span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>S(t_{j}) - S(t_{j}+),</span>
 <span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>\noindent com $S(t_{j}+) = \lim_{\Delta t \to 0+} S(t_{j} + \Delta t)$, $j = 1, \cdots, k$. Por outro lado, a contribuição para a função de verossimilhança de um tempo de sobrevivência censurado em $t_{jl}$ para $l = 1, \cdots, m_{j}$, é:</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>\noindent com $S(t_{j}+) = \lim_{\Delta t \to 0+} S(t_{j} + \Delta t)$, $j = 1, \cdots, k$. Por outro lado, a contribuição para a função de verossimilhança de um tempo de sobrevivência censurado em $t_{jl}$ para $l = 1, \ldots, m_{j}$, é:</span>
 <span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>P(T &gt; t_{jl}) = S(t_{jl}+).</span>
@@ -1561,145 +1556,138 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-ExampleTableContig</span></span>
 <span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a><span class="in">library(knitr)</span></span>
-<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a><span class="in">library(kableExtra)</span></span>
-<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a><span class="in"># Criando a tabela em R</span></span>
-<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a><span class="in">kable(</span></span>
-<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a><span class="in">  data.frame(</span></span>
-<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a><span class="in">    " " = c("Falha", "Não Falha", " "),</span></span>
-<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a><span class="in">    "1" = c("$d_{1j}$", "$n_{1j} - d_{1j}$", "$n_{1j}$"),</span></span>
-<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a><span class="in">    "2" = c("$d_{2j}$", "$n_{2j} - d_{2j}$", "$n_{2j}$"),</span></span>
-<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a><span class="in">    " " = c("$d_{j}$", "$n_{j} - d_{j}$", "$n_{j}$")</span></span>
-<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
-<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a><span class="in">  escape = FALSE,</span></span>
-<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a><span class="in">  align = "c",</span></span>
-<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="in">  col.names = c("", "Grupo 1", "Grupo 2", " "),</span></span>
-<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a><span class="in">  booktabs = TRUE</span></span>
-<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a>Condicionado à ocorrência de falhas e censuras até o tempo $t_{j}$ (fixando as marginais das colunas) e ao número total de falhas no tempo $t_{j}$ (fixando as marginais das linhas), a distribuição de $d_{2j}$ é, então, uma hipergeométrica:</span>
-<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a>\dfrac{ \binom{ n_{1j} }{ d_{1j} } \binom{ n_{2j} }{ d_{2j} } }{ \binom{ n_{j} }{ d_{j} } }.</span>
-<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a>A média de $d_{2j}$ é dada por $w_{2j} = n_{2j} d_{j} n_{j}^{-1}$. Isso significa que, na ausência de diferenças entre as duas populações no tempo $t_{j}$, o número total de falhas ($d_{j}$) pode ser alocado entre as duas amostras proporcionalmente à razão entre o número de indivíduos sob risco em cada amostra e o número total sob risco.</span>
-<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a>A variância de $d_{2j}$ obtida a partir da distribuição hipergeométrica é:</span>
-<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>(V_{j})_{2} = n_{2j}(n_{j} - n_{2j})d_{j}(n_{j} - d_{j}) n_{j}^{-2} (n_{j} - 1)^{-1}.</span>
-<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a>Portanto, a estatística $d_{2j} - w_{2j}$ possui média zero e variância $(V_{j})_{2}$. Se as $k$ tabelas de contingência forem independentes, um teste aproximado para avaliar a igualdade entre as duas funções de sobrevivência pode ser construído com base na seguinte estatística:</span>
-<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>T = \dfrac{ \left<span class="co">[</span><span class="ot"> \sum_{j = 1}^{k} (d_{2j} - w_{2j}) \right</span><span class="co">]</span>^{2} }{ \sum_{j = 1}^{k} (V_{j})_{2} },</span>
-<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a>$$ {#eq-EstTestelogrank}</span>
-<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a>que, sob a hipótese nula $H_{0}: S_{1}(t) = S_{2}(t)$ para todo $t$ no período de acompanhamento, segue aproximadamente uma distribuição qui-quadrado com $1$ grau de liberdade para amostras grandes.</span>
-<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>Para exemplificar a aplicação do teste de *logrank* em dados reais, utilizou-se o conjunto de dados sobre Leucemia Pediátrica, disponível no Apêndice (A) do livro *Análise de Sobrevivência Aplicada* de @colosimo2006analise. Esses mesmos dados foram usados para gerar a @fig-SobrKM. O objetivo do teste realizado foi avaliar se as curvas de sobrevivência das categorias da covariável <span class="in">`r6`</span> são iguais, com as seguintes hipóteses:</span>
-<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a>\begin{cases}</span>
-<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>  H_{0}: \text{As curvas de sobrevivência dos grupos são iguais ao longo do tempo} <span class="sc">\\</span></span>
-<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a>  H_{1}: \text{As curvas de sobrevivência dos grupos são diferentes ao longo do tempo.}</span>
-<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>\end{cases}</span>
-<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a>Veja a saída resultante do teste realizado no software R:</span>
-<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a><span class="in">```{r warning=FALSE, message=FALSE}</span></span>
-<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a><span class="in"># -----------------------</span></span>
-<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] ATIVAÇÃO DE PACOTES</span></span>
-<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a><span class="in"># -----------------------</span></span>
-<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a><span class="in">library(survival)</span></span>
-<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
-<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a><span class="in">library(dplyr)</span></span>
-<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a><span class="in"># ----------------------------------</span></span>
-<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a><span class="in"># [2] IMPORTAÇÃO E AJUSTES DOS DADOS</span></span>
-<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a><span class="in"># ----------------------------------</span></span>
-<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a><span class="in"># Caminho URL para os dados</span></span>
-<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a><span class="in">url &lt;- "https://docs.ufpr.br/~giolo/asa/dados/leucemia.txt"</span></span>
-<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a><span class="in"># Leitura dos dados</span></span>
-<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a><span class="in">dados &lt;- read.table(url, header = TRUE)</span></span>
-<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a><span class="in"># Verificando os nomes das colunas</span></span>
-<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a><span class="in">print(names(dados))</span></span>
-<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-289"><a href="#cb8-289" aria-hidden="true" tabindex="-1"></a><span class="in"># Decodificando a coluna r6</span></span>
-<span id="cb8-290"><a href="#cb8-290" aria-hidden="true" tabindex="-1"></a><span class="in">dados &lt;- dados %&gt;%</span></span>
-<span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(grupo = ifelse(r6 == 0, "Category Zero", "Category One"))</span></span>
-<span id="cb8-292"><a href="#cb8-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-293"><a href="#cb8-293" aria-hidden="true" tabindex="-1"></a><span class="in"># --------------------</span></span>
-<span id="cb8-294"><a href="#cb8-294" aria-hidden="true" tabindex="-1"></a><span class="in"># [3] TESTE DE LOGRANK</span></span>
-<span id="cb8-295"><a href="#cb8-295" aria-hidden="true" tabindex="-1"></a><span class="in"># --------------------</span></span>
-<span id="cb8-296"><a href="#cb8-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a><span class="in"># Aplicando o Teste de Logrank</span></span>
-<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a><span class="in">TestLogrank &lt;- survdiff(Surv(tempos, cens) ~ grupo, data = dados, rho = 0)</span></span>
-<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a><span class="in">print(TestLogrank)</span></span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a><span class="in"># Criando a tabela em R</span></span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a><span class="in">kable(</span></span>
+<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a><span class="in">  data.frame(</span></span>
+<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a><span class="in">    " " = c("Falha", "Não Falha", " "),</span></span>
+<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a><span class="in">    "1" = c("$d_{1j}$", "$n_{1j} - d_{1j}$", "$n_{1j}$"),</span></span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a><span class="in">    "2" = c("$d_{2j}$", "$n_{2j} - d_{2j}$", "$n_{2j}$"),</span></span>
+<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a><span class="in">    " " = c("$d_{j}$", "$n_{j} - d_{j}$", "$n_{j}$")</span></span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
+<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a><span class="in">  escape = FALSE,</span></span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a><span class="in">  align = "c",</span></span>
+<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a><span class="in">  col.names = c("", "Grupo 1", "Grupo 2", " "),</span></span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="in">  booktabs = TRUE</span></span>
+<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a>Condicionado à ocorrência de falhas e censuras até o tempo $t_{j}$ (fixando as marginais das colunas) e ao número total de falhas no tempo $t_{j}$ (fixando as marginais das linhas), a distribuição de $d_{2j}$ é, então, uma hipergeométrica:</span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a>\dfrac{ \binom{ n_{1j} }{ d_{1j} } \binom{ n_{2j} }{ d_{2j} } }{ \binom{ n_{j} }{ d_{j} } }.</span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a>A média de $d_{2j}$ é dada por $w_{2j} = n_{2j} d_{j} n_{j}^{-1}$. Isso significa que, na ausência de diferenças entre as duas populações no tempo $t_{j}$, o número total de falhas ($d_{j}$) pode ser alocado entre as duas amostras proporcionalmente à razão entre o número de indivíduos sob risco em cada amostra e o número total sob risco.</span>
+<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>A variância de $d_{2j}$ obtida a partir da distribuição hipergeométrica é:</span>
+<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a>(V_{j})_{2} = n_{2j}(n_{j} - n_{2j})d_{j}(n_{j} - d_{j}) n_{j}^{-2} (n_{j} - 1)^{-1}.</span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a>Portanto, a estatística $d_{2j} - w_{2j}$ possui média zero e variância $(V_{j})_{2}$. Se as $k$ tabelas de contingência forem independentes, um teste aproximado para avaliar a igualdade entre as duas funções de sobrevivência pode ser construído com base na seguinte estatística:</span>
+<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a>T = \dfrac{ \left<span class="co">[</span><span class="ot"> \sum_{j = 1}^{k} (d_{2j} - w_{2j}) \right</span><span class="co">]</span>^{2} }{ \sum_{j = 1}^{k} (V_{j})_{2} },</span>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>$$ {#eq-EstTestelogrank}</span>
+<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a>que, sob a hipótese nula $H_{0}: S_{1}(t) = S_{2}(t)$ para todo $t$ no período de acompanhamento, segue aproximadamente uma distribuição qui-quadrado com $1$ grau de liberdade para amostras grandes.</span>
+<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>Para exemplificar a aplicação do teste de *logrank* em dados reais, utilizou-se o conjunto de dados sobre Leucemia Pediátrica, disponível no Apêndice (A) do livro *Análise de Sobrevivência Aplicada* de @colosimo2006analise. Esses mesmos dados foram usados para gerar a @fig-SobrKM. O objetivo do teste realizado foi avaliar se as curvas de sobrevivência das categorias da covariável <span class="in">`r6`</span> são iguais, com as seguintes hipóteses:</span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>\begin{cases}</span>
+<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a>  H_{0}: \text{As curvas de sobrevivência dos grupos são iguais ao longo do tempo} <span class="sc">\\</span></span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>  H_{1}: \text{As curvas de sobrevivência dos grupos são diferentes ao longo do tempo.}</span>
+<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a>\end{cases}</span>
+<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a>Veja a saída resultante do teste realizado no software R:</span>
+<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a><span class="in">```{r warning=FALSE, message=FALSE}</span></span>
+<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a><span class="in"># -----------------------</span></span>
+<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] ATIVAÇÃO DE PACOTES</span></span>
+<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a><span class="in"># -----------------------</span></span>
+<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a><span class="in">library(survival)</span></span>
+<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
+<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a><span class="in">library(dplyr)</span></span>
+<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a><span class="in"># ----------------------------------</span></span>
+<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a><span class="in"># [2] IMPORTAÇÃO E AJUSTES DOS DADOS</span></span>
+<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a><span class="in"># ----------------------------------</span></span>
+<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a><span class="in"># Caminho URL para os dados</span></span>
+<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a><span class="in">url &lt;- "https://docs.ufpr.br/~giolo/asa/dados/leucemia.txt"</span></span>
+<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a><span class="in"># Leitura dos dados</span></span>
+<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a><span class="in">dados &lt;- read.table(url, header = TRUE)</span></span>
+<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a><span class="in"># Verificando os nomes das colunas</span></span>
+<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a><span class="in">print(names(dados))</span></span>
+<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a><span class="in"># Decodificando a coluna r6</span></span>
+<span id="cb8-289"><a href="#cb8-289" aria-hidden="true" tabindex="-1"></a><span class="in">dados &lt;- dados %&gt;%</span></span>
+<span id="cb8-290"><a href="#cb8-290" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(grupo = ifelse(r6 == 0, "Category Zero", "Category One"))</span></span>
+<span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-292"><a href="#cb8-292" aria-hidden="true" tabindex="-1"></a><span class="in"># --------------------</span></span>
+<span id="cb8-293"><a href="#cb8-293" aria-hidden="true" tabindex="-1"></a><span class="in"># [3] TESTE DE LOGRANK</span></span>
+<span id="cb8-294"><a href="#cb8-294" aria-hidden="true" tabindex="-1"></a><span class="in"># --------------------</span></span>
+<span id="cb8-295"><a href="#cb8-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-296"><a href="#cb8-296" aria-hidden="true" tabindex="-1"></a><span class="in"># Aplicando o Teste de Logrank</span></span>
+<span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a><span class="in">TestLogrank &lt;- survdiff(Surv(tempos, cens) ~ grupo, data = dados, rho = 0)</span></span>
+<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a><span class="in">print(TestLogrank)</span></span>
+<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-300"><a href="#cb8-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a>Ao fixar o nível de significância em 5% ($\alpha = 0,05$), rejeitamos a hipótese nula. Essa conclusão baseia-se no valor $p$ (probabilidade de significância) obtido no teste, calculado como $p-valor =$ <span class="in">`r TestLogrank$pvalue`</span>. Como o $p-valor &lt; \alpha$, rejeita-se $H_{0}$. Assim, conclui-se que as curvas de sobrevivência dos grupos são diferentes ao longo do tempo, ao nível de significância de 5%.</span>
 <span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a>Ao fixar o nível de significância em 5% ($\alpha = 0,05$), rejeitamos a hipótese nula. Essa conclusão baseia-se no valor $p$ (probabilidade de significância) obtido no teste, calculado como $p-valor =$ <span class="in">`r TestLogrank$pvalue`</span>. Como o $p-valor &lt; \alpha$, rejeita-se $H_{0}$. Assim, conclui-se que as curvas de sobrevivência dos grupos são diferentes ao longo do tempo, ao nível de significância de 5%.</span>
+<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a>A generalização do teste *logrank* para a comparação de $r &gt; 2$ funções de sobrevivência, $S_{1}(t), S_{2}(t), \ldots, S_{r}(t)$, é direta. Utilizando a mesma notação anterior, o índice $i$ varia agora de $1$ a $r$. Assim, os dados podem ser organizados em uma tabela de contingência $2 \times r$, onde cada coluna $i$ contém $d_{ij}$ falhas e $n_{ij} - d_{ij}$ sobreviventes. Dessa forma, a @tbl-ExampleTableContig seria estendida para ter $r$ colunas em vez de apenas duas.</span>
 <span id="cb8-304"><a href="#cb8-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a>A generalização do teste *logrank* para a comparação de $r &gt; 2$ funções de sobrevivência, $S_{1}(t), S_{2}(t), \ldots, S_{r}(t)$, é direta. Utilizando a mesma notação anterior, o índice $i$ varia agora de $1$ a $r$. Assim, os dados podem ser organizados em uma tabela de contingência $2 \times r$, onde cada coluna $i$ contém $d_{ij}$ falhas e $n_{ij} - d_{ij}$ sobreviventes. Dessa forma, a @tbl-ExampleTableContig seria estendida para ter $r$ colunas em vez de apenas duas.</span>
+<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a>Condicionada à experiência de falha e censura até o tempo $t_{j}$ e ao número total de falhas no tempo $t_{j}$, a distribuição conjunta de $d_{2j}, \ldots,d_{rj}$ segue uma hipergeométrica multivariada, dada por:</span>
 <span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a>Condicionada à experiência de falha e censura até o tempo $t_{j}$ e ao número total de falhas no tempo $t_{j}$, a distribuição conjunta de $d_{2j}, \ldots,d_{rj}$ segue uma hipergeométrica multivariada, dada por:</span>
-<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a>\dfrac{ \prod_{i = 1}^{r} \binom{ n_{ij }}{ d_{ij} } }{ \binom{ n_{j }}{ d_{j} } }.</span>
 <span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a>\dfrac{ \prod_{i = 1}^{r} \binom{ n_{ij }}{ d_{ij} } }{ \binom{ n_{j }}{ d_{j} } }.</span>
-<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a>A média de $d_{ij}$ é $w_{ij} = n_{ij} d_{j} n_{j}^{-1}$, bem como a variância de $d_{ij}$ e a covariância de $d_{ij}$ e $d_{lj}$ são, respectivamente,</span>
 <span id="cb8-312"><a href="#cb8-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-313"><a href="#cb8-313" aria-hidden="true" tabindex="-1"></a>A média de $d_{ij}$ é $w_{ij} = n_{ij} d_{j} n_{j}^{-1}$, bem como a variância de $d_{ij}$ e a covariância de $d_{ij}$ e $d_{lj}$ são, respectivamente,</span>
-<span id="cb8-314"><a href="#cb8-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-313"><a href="#cb8-313" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-314"><a href="#cb8-314" aria-hidden="true" tabindex="-1"></a>(V_{j})_{ii} = n_{ij} (n_{j} - n_{ij}) d_{j} (n_{j} - d_{j}) n_{j}^{-2} (n_{j} - 1)^{-1}</span>
 <span id="cb8-315"><a href="#cb8-315" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb8-316"><a href="#cb8-316" aria-hidden="true" tabindex="-1"></a>(V_{j})_{ii} = n_{ij} (n_{j} - n_{ij}) d_{j} (n_{j} - d_{j}) n_{j}^{-2} (n_{j} - 1)^{-1}</span>
-<span id="cb8-317"><a href="#cb8-317" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-316"><a href="#cb8-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-317"><a href="#cb8-317" aria-hidden="true" tabindex="-1"></a>e</span>
 <span id="cb8-318"><a href="#cb8-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a>e</span>
-<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a>(V_{j})_{il} = - n_{ij} n_{lj} d_{j} (n_{j} - d_{j}) n_{j}^{-2} (n_{j} - 1)^{-1}.</span>
 <span id="cb8-321"><a href="#cb8-321" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a>(V_{j})_{il} = - n_{ij} n_{lj} d_{j} (n_{j} - d_{j}) n_{j}^{-2} (n_{j} - 1)^{-1}.</span>
-<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a>A estatística $v'_{j} = (d_{2j} - w_{2j}, \ldots, d_{rj} - w_{rj})$ possui média zero e matriz de variância-covariância $V_{j}$, com dimensão $r - 1$. A matriz $V_{j}$ contém os termos $(V_{j}){ii}$ na diagonal principal e $(V_{j})_{il}$, $i,l = 2, \ldots,r$, fora da diagonal principal. </span>
 <span id="cb8-324"><a href="#cb8-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a>A estatística $v'_{j} = (d_{2j} - w_{2j}, \ldots, d_{rj} - w_{rj})$ possui média zero e matriz de variância-covariância $V_{j}$, com dimensão $r - 1$. A matriz $V_{j}$ contém os termos $(V_{j}){ii}$ na diagonal principal e $(V_{j})_{il}$, $i,l = 2, \ldots,r$, fora da diagonal principal. </span>
+<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a>A estatística $v$, que agrega as contribuições de todos os tempos distintos de falha, é definida como:</span>
 <span id="cb8-326"><a href="#cb8-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a>A estatística $v$, que agrega as contribuições de todos os tempos distintos de falha, é definida como:</span>
-<span id="cb8-328"><a href="#cb8-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-328"><a href="#cb8-328" aria-hidden="true" tabindex="-1"></a>v = \sum_{j = 1}^{k} v_{j},</span>
 <span id="cb8-329"><a href="#cb8-329" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb8-330"><a href="#cb8-330" aria-hidden="true" tabindex="-1"></a>v = \sum_{j = 1}^{k} v_{j},</span>
-<span id="cb8-331"><a href="#cb8-331" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-330"><a href="#cb8-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-331"><a href="#cb8-331" aria-hidden="true" tabindex="-1"></a>onde $v$ é um vetor de dimensão $(r - 1) \times 1$, cujos elementos correspondem às diferenças entre os totais observados e esperados de falhas.</span>
 <span id="cb8-332"><a href="#cb8-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-333"><a href="#cb8-333" aria-hidden="true" tabindex="-1"></a>onde $v$ é um vetor de dimensão $(r - 1) \times 1$, cujos elementos correspondem às diferenças entre os totais observados e esperados de falhas.</span>
+<span id="cb8-333"><a href="#cb8-333" aria-hidden="true" tabindex="-1"></a>Considerando, novamente, a independência das $k$ tabelas de contingência, a variância de $v$ é dada por $V = V_{1} + \ldots + V_{k}$. Um teste aproximado para a igualdade das $r$ funções de sobrevivência pode ser baseado na estatística:</span>
 <span id="cb8-334"><a href="#cb8-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-335"><a href="#cb8-335" aria-hidden="true" tabindex="-1"></a>Considerando, novamente, a independência das $k$ tabelas de contingência, a variância de $v$ é dada por $V = V_{1} + \ldots + V_{k}$. Um teste aproximado para a igualdade das $r$ funções de sobrevivência pode ser baseado na estatística:</span>
-<span id="cb8-336"><a href="#cb8-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-337"><a href="#cb8-337" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb8-338"><a href="#cb8-338" aria-hidden="true" tabindex="-1"></a>T = v´V^{-1} v,</span>
-<span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a>$$ {#eq-EstTestelogrankGeneralizado}</span>
+<span id="cb8-335"><a href="#cb8-335" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb8-336"><a href="#cb8-336" aria-hidden="true" tabindex="-1"></a>T = v´V^{-1} v,</span>
+<span id="cb8-337"><a href="#cb8-337" aria-hidden="true" tabindex="-1"></a>$$ {#eq-EstTestelogrankGeneralizado}</span>
+<span id="cb8-338"><a href="#cb8-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a>que, sob a hipótese nula $H_{0}$ (igualdade das curvas de sobrevivência), segue uma distribuição qui-quadrado com $r - 1$ graus de liberdade para amostras grandes. Os graus de liberdade são $r - 1$ em vez de $r$, pois os elementos de $v$ somam zero.</span>
 <span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a>que, sob a hipótese nula $H_{0}$ (igualdade das curvas de sobrevivência), segue uma distribuição qui-quadrado com $r - 1$ graus de liberdade para amostras grandes. Os graus de liberdade são $r - 1$ em vez de $r$, pois os elementos de $v$ somam zero.</span>
+<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a>Uma aplicação para a comparação de $r$ curvas de sobrevivência <span class="co">[</span><span class="ot">...</span><span class="co">]</span>.</span>
 <span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a>Uma aplicação para a comparação de $r$ curvas de sobrevivência <span class="co">[</span><span class="ot">...</span><span class="co">]</span>.</span>
-<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a><span class="in">```{r warning=FALSE, message=FALSE}</span></span>
-<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a><span class="in">cat("Código em R a ser preenchido")</span></span>
-<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a><span class="in">```{r warning=FALSE, message=FALSE}</span></span>
+<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a><span class="in">cat("Código em R a ser preenchido")</span></span>
+<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a><span class="fu">### Outros Testes</span></span>
 <span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a><span class="fu">### Outros Testes</span></span>
-<span id="cb8-350"><a href="#cb8-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-351"><a href="#cb8-351" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">...</span><span class="co">]</span></span>
-<span id="cb8-352"><a href="#cb8-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-353"><a href="#cb8-353" aria-hidden="true" tabindex="-1"></a>:::: progress</span>
-<span id="cb8-354"><a href="#cb8-354" aria-hidden="true" tabindex="-1"></a>:::: {.progress-bar style="width: 100%;"}</span>
-<span id="cb8-355"><a href="#cb8-355" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb8-356"><a href="#cb8-356" aria-hidden="true" tabindex="-1"></a>::::</span></code><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">...</span><span class="co">]</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
@@ -1711,7 +1699,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>Construído <a href="https://quarto.org/"> Pacote Quarto no R4.3</a>.</p>
+<p>Construído usando o <a href="https://quarto.org/"> Pacote Quarto</a>.</p>
 </div>
   </div>
 </footer>

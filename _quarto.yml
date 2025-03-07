@@ -5,23 +5,22 @@ project:
 book:
   title: "Análise de Sobrevivência"
   subtitle: "Iniciação Ciêntifica - PIBIC 2024/2025 (UFPA)"
-  date: "01/25/2024"
   
   author:
-    
-    name: "**Breno Cauã Rodrigues da Silva**"
+  - name: "Breno Cauã Rodrigues da Silva"
     orcid: 0009-0005-9740-2069
-    corresponding: true
     affiliations:
       - name: "Universidade Federal do Pará"
       - name: "Instituto de Ciências Exatas e Naturais"
       - name: "Falculdade de Estatística"
+  - name: "Prof Dr Paulo Cerqueira dos Santos Jr"
+    orcid: 0000-0002-6310-5040
       
   page-footer:
     left: |
       **SILVA, B.C.R**
     right: |
-      Construído <a href="https://quarto.org/"> Pacote Quarto no R4.3</a>.
+      Construído usando o <a href="https://quarto.org/"> Pacote Quarto</a>.
   repo-url : https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA
   downloads: [pdf, docx]
   sharing: [twitter, facebook]
@@ -58,10 +57,10 @@ format:
     fig-pos: "H"
     number-sections: true
     pdf-engine: xelatex
+    header-includes: \usepackage{indentfirst}
     fontsize: 12pt
     geometry: margin=2.5cm
     echo: false
-    keep-tex: true  # Mantém o recuo padrão do LaTeX
   docx:
     number-sections: true
 

@@ -45,13 +45,13 @@ $$
 \hat{S}_{KM}(t) = \prod_{j \text{ : } t_{j} < t} \left( \dfrac{n_{j} - d_{j}}{n_{j}} \right) = \prod_{j \text{ : } t_{j} < t} \left( 1 - \dfrac{d_{j}}{n_{j}} \right)
 $$ {#eq-ESTKaplanMeier}
 
-De forma intuitiva, por assim dizer, a @eq-ESTKaplanMeier é proveniente da @eq-DecomposeSt, sendo está, uma decomposição de $S(t)$ em termos $q_{j}$'s. Assim, a @eq-ESTKaplanMeier é justificada se os $q_{j}$'s forem estimados por $d_{j}/n_{j}$, que em palavras está expresso na @eq-FormProbQj. No artigo original de 1958, Kaplan e Meier provam que a @eq-ESTKaplanMeier é um *Estimador de Máxima Verossimilhança* (EMV) para $S(t)$. Seguindo certos passos, é possível provar que que $\hat{S}_{KM}(t)$ é EMV de $S(t)$. Supondo que $d_{j}$ observações falham no tempo tempo $t_{j}$, para $j = 1, \cdots, k$, e $m_{j}$ observações são censuradas no intervalo $[t{j}, t_{j+1})$, nos tempos $t_{j1}, \cdots, t_{jm_{j}}$. A probabilidade de falha no tempo $t_{j}$ é, então,
+De forma intuitiva, por assim dizer, a @eq-ESTKaplanMeier é proveniente da @eq-DecomposeSt, sendo está, uma decomposição de $S(t)$ em termos $q_{j}$'s. Assim, a @eq-ESTKaplanMeier é justificada se os $q_{j}$'s forem estimados por $d_{j}/n_{j}$, que em palavras está expresso na @eq-FormProbQj. No artigo original de 1958, Kaplan e Meier provam que a @eq-ESTKaplanMeier é um *Estimador de Máxima Verossimilhança* (EMV) para $S(t)$. Seguindo certos passos, é possível provar que que $\hat{S}_{KM}(t)$ é EMV de $S(t)$. Supondo que $d_{j}$ observações falham no tempo tempo $t_{j}$, para $j = 1, \cdots, k$, e $m_{j}$ observações são censuradas no intervalo $[t{j}, t_{j+1})$, nos tempos $t_{j1}, \ldots, t_{jm_{j}}$. A probabilidade de falha no tempo $t_{j}$ é, então,
 
 $$
 S(t_{j}) - S(t_{j}+),
 $$
 
-\noindent com $S(t_{j}+) = \lim_{\Delta t \to 0+} S(t_{j} + \Delta t)$, $j = 1, \cdots, k$. Por outro lado, a contribuição para a função de verossimilhança de um tempo de sobrevivência censurado em $t_{jl}$ para $l = 1, \cdots, m_{j}$, é:
+\noindent com $S(t_{j}+) = \lim_{\Delta t \to 0+} S(t_{j} + \Delta t)$, $j = 1, \cdots, k$. Por outro lado, a contribuição para a função de verossimilhança de um tempo de sobrevivência censurado em $t_{jl}$ para $l = 1, \ldots, m_{j}$, é:
 
 $$
 P(T > t_{jl}) = S(t_{jl}+).
@@ -215,7 +215,6 @@ No tempo $t_{j}$, os dados podem ser organizados em uma tabela de contingência 
 #| label: tbl-ExampleTableContig
 
 library(knitr)
-library(kableExtra)
 
 # Criando a tabela em R
 kable(
@@ -297,7 +296,6 @@ dados <- dados %>%
 # Aplicando o Teste de Logrank
 TestLogrank <- survdiff(Surv(tempos, cens) ~ grupo, data = dados, rho = 0)
 print(TestLogrank)
-
 ```
 
 Ao fixar o nível de significância em 5% ($\alpha = 0,05$), rejeitamos a hipótese nula. Essa conclusão baseia-se no valor $p$ (probabilidade de significância) obtido no teste, calculado como $p-valor =$ `r TestLogrank$pvalue`. Como o $p-valor < \alpha$, rejeita-se $H_{0}$. Assim, conclui-se que as curvas de sobrevivência dos grupos são diferentes ao longo do tempo, ao nível de significância de 5%.
@@ -349,8 +347,3 @@ cat("Código em R a ser preenchido")
 ### Outros Testes
 
 [...]
-
-:::: progress
-:::: {.progress-bar style="width: 100%;"}
-::::
-::::

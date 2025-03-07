@@ -61,7 +61,7 @@ $$
 \lambda(t | \mathbf{x}) = \alpha \exp\{ - \mathbf{x'} \boldsymbol{\beta} \}.
 $$ {#eq-AFTexpht}
 
-## Distribuição Weibull
+## Modelo Weibull
 
 Para modelos AFT, baseados na distribuição Weibull, a função de sobrevivência é dada por:
 
@@ -75,7 +75,7 @@ $$
 \lambda(t | \mathbf{x}) = \dfrac{ \gamma }{ \alpha^{\gamma} } t^{\gamma - 1} \exp\{ - \mathbf{x'} \boldsymbol{\beta} \}
 $$ {#eq-AFTeeibht}
 
-## Distribuição Exponencial por Partes
+## Modelo Exponencial por Partes
 
 [...]
 
@@ -107,11 +107,18 @@ Portanto, o parâmetro ou o conjunto de parâmetros $\theta$ que maximiza $\ln{L
 
 ## Implementação Computacional
 
-### Distribuição Exponencial
+### Modelo Exponencial
 
 #### Geração dos Dados
 
 - **Funções de Geração:**
+
+Pode-se simular dados de sobrevivência conforme um modelo AFT baseado na distribuição exponencial através da expressão:
+$$
+T = - \dfrac{\exp\{\mathbf{x'} \boldsymbol{\beta}\} \ln{[1 - U]} }{\alpha},
+$$
+
+onde $U \sim Uniforme(0, 1)$. Sendo este o *Método da Tranformação da Inversa*.
 
 ```{r}
 time <- function(t=t, alpha.par=alpha.par, beta.par=beta.par, x.mat=x.mat, u.unif=u.unif){
@@ -204,6 +211,12 @@ summary(ajust)
 
 - **Implementando a função log-verossimilhança:**
 
+A função log-verossimilhança, a ser maximizada, para um modelo AFT baseado na distribuição exponencial é dada por:
+
+$$
+\ln L(\theta) = \sum_{i = 1}^{n} \delta_{i} \ln{ \alpha \exp\{ - \mathbf{x'}_{i} \boldsymbol{\beta} \} } + \ln{ \exp \left\{- \alpha \left( \dfrac{t_{i}}{\exp\{ \mathbf{x'}_{i} \boldsymbol{\beta} \}} \right) \right\} }.
+$$
+
 ```{r}
 StAFTexp <- function(t, alpha.par, x.mat=x.mat, beta.par) {
   # Combinação linear dos preditores lineares
@@ -244,7 +257,14 @@ fit <- optim(par=init, fn = loglikelihood,
 fit
 ```
 
-### Distribuição Weibull
+### Modelo Weibull
+
+Pode-se simular dados de sobrevivência conforme um modelo AFT baseado na distribuição Weibull através da expressão:
+$$
+T = - \alpha \exp\{\mathbf{x'} \boldsymbol{\beta}\} (\ln{[1 - U]})^{1/\gamma},
+$$
+
+onde $U \sim Uniforme(0, 1)$. Sendo este o *Método da Tranformação da Inversa*.
 
 #### Geração dos Dados
 
@@ -342,6 +362,12 @@ summary(ajust)
 
 - **Implementando a função log-verossimilhança:**
 
+A função log-verossimilhança, a ser maximizada, para um modelo AFT baseado na distribuição Weibull é dada por:
+
+$$
+\ln L(\theta) = \sum_{i = 1}^{n} \delta_{i} \ln{ \dfrac{ \gamma }{ \alpha^{\gamma} } t_{i}^{\gamma - 1} \exp\{ - \mathbf{x'}_{i} \boldsymbol{\beta} \} } + \ln{ \exp \left\{ - \left( \dfrac{t_{i}}{\alpha \exp\{ - \mathbf{x'}_{i} \boldsymbol{\beta} \} } \right)^{\gamma} \right\} }.
+$$
+
 ```{r}
 StAFTweib <- function(t=times, gamma.par=gamma.par, alpha.par=alpha.par, x.mat=x.mat, beta.par=beta.par) {
   elimpred <- as.numeric(exp(x.mat%*%beta.par))
@@ -387,7 +413,7 @@ fit <- optim(par=init, fn = loglikelihood,
 fit
 ```
 
-### Distribuição Exponencial por Partes
+### Modelo Exponencial por Partes
 
 :::: progress
 :::: {.progress-bar style="width: 100%;"}

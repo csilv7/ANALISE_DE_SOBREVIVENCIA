@@ -1,8 +1,3 @@
-:::: progress
-:::: {.progress-bar style="width: 100%;"}
-::::
-::::
-
 # Técnicas Paramétricas - Modelos Probabilísticos
 
 ## Introdução
@@ -996,7 +991,7 @@ knitr::kable(
 )
 ```
 
-Foram simulados `r n` tempos de falha, dentre eles, `r prop.cens * 100` são tempos de falha censurados. Deixa-se uma sugestão de variar essa proporção e avaliar a qualidade das estimativas. De posse dos dados simulados, gerou-se a @fig-HistSimulCens.
+Foram simulados `r n` tempos de falha, dentre eles, `r prop.cens * 100`% são tempos de falha censurados. Deixa-se uma sugestão de variar essa proporção e avaliar a qualidade das estimativas. De posse dos dados simulados, gerou-se a @fig-HistSimulCens.
 
 
 ```{r, warning=FALSE}
@@ -1102,8 +1097,3 @@ ggplot(all.data, aes(x = Time, y = Survival)) +
 ```
 
 [...]
-
-:::: progress
-:::: {.progress-bar style="width: 100%;"}
-::::
-::::
