@@ -57,11 +57,7 @@ $$
 \end{cases}
 $$
 
-Portanto, a variável resposta na análise de sobrevivência é representada por duas colunas no conjunto de dados.
-
-Se o estudo também incluir covariáveis, os dados são representados por $(t_{i}, \delta_{i}, \mathbf{x}i)$. Caso a censura seja intervalar, a representação é $(l{i}, u_{i}, \delta_{i}, \mathbf{x}_i)$.
-
-Para exemplos de dados de sobrevivência, veja a Seção 1.5 do livro de @colosimo2006analise.
+Portanto, a variável resposta na análise de sobrevivência é representada por duas colunas no conjunto de dados. Se o estudo também incluir covariáveis, os dados são representados por $(t_{i}, \delta_{i}, \mathbf{x}_{i})$. Caso a censura seja intervalar, a representação é $(l{i}, u_{i}, \delta_{i}, \mathbf{x}_{i})$. Para exemplos de dados de sobrevivência, veja a Seção 1.5 do livro de @colosimo2006analise.
 
 ## Especificando o Tempo de Sobrevivência
 
@@ -75,7 +71,7 @@ $$
 S(t) = P(T > t),
 $$ {#eq-fSobrevida}
 
-uma conclusão a qual podemos chegar, é que a probabilidade de uma observação não sobreviver até o tempo $t$, é a acumulada até o ponto $t$, logo,
+\noindent uma conclusão a qual podemos chegar, é que a probabilidade de uma observação não sobreviver até o tempo $t$, é a acumulada até o ponto $t$, logo,
 
 $$
 F(t) = 1 - S(t).
@@ -87,16 +83,16 @@ A probabilidade da falha ocorrer em um intervalo de tempo $[t_{1}, t_{2})$ pode 
 
 A taxa de falha no intervalo $[t_{1}, t_{2})$ é definida como a probabilidade de que a falha ocorra neste intervalo, dado que não ocorreu antes de $t_{1}$, dividida pelo comprimento do intervalo. Assim, a taxa de falha no intervalo $[t_{1}, t_{2})$ é expressa por $$\dfrac{S(t_{1}) - S(t_{2})}{(t_{2} - t_{1})S(t_{1})}.$$
 
-De forma geral, redefinindo o intervalo como $[t, t + \Delta t)$ a expressão assume a seguinte forma:
+\noindent De forma geral, redefinindo o intervalo como $[t, t + \Delta t)$ a expressão assume a seguinte forma:
 
 $$
-\lambda(t) = \dfrac{S(t) - S(t + \Delta_{t})}{\Delta t \text{ } S(t)}
+\lambda(t) = \dfrac{S(t) - S(t + \Delta_{t})}{\Delta t \text{ } S(t)}.
 $$
 
 Assumindo $\Delta t$ bem pequeno, $\lambda(t)$ representa a taxa de falha instantânea no tempo $t$ condicional à sobrevivência até o tempo $t$. Observe que as taxas de falha são números positivos, mas sem limite superior. A função de taxa de falha $\lambda(t)$ é bastante útil para descrever a distribuição do tempo de vida de pacientes. Ela descreve a forma em que a taxa instantânea de falha muda com o tempo. A função de taxa de falha de $T$ é, então, definida como:
 
 $$
-\lambda(t) = \lim_{\Delta t \to 0} \dfrac{P(t \leq T \leq t + \Delta t | T \geq t)}{\Delta t}
+\lambda(t) = \lim_{\Delta t \to 0} \dfrac{P(t \leq T \leq t + \Delta t | T \geq t)}{\Delta t}.
 $$ {#eq-fTaxaFalha}
 
 A função de taxa de falha é mais informativa do que a função de sobrevivência. Diferentes funções de sobrevivência podem ter formas semelhantes, enquanto as respectivas funções de taxa de falha podem diferir drasticamente. Desta forma, a modelagem da função de taxa de falha é um importante método para dados de sobrevivência.
@@ -125,7 +121,7 @@ $$
 \text{vmr}(t) = \dfrac{\int_{0}^{\infty} (u - t) f(u) du}{S(t)} = \dfrac{\int_{0}^{\infty} S(u) du}{S(t)},
 $$ {#eq-TemVidaMediaResid}
 
-sendo $f(\cdot)$ a função densidade de $T$. Observe que $\text{vmr}(0) = t_{m}$.
+\noindent sendo $f(\cdot)$ a função densidade de $T$. Observe que $\text{vmr}(0) = t_{m}$.
 
 ## Relações entre as Funções
 

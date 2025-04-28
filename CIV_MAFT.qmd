@@ -1,7 +1,11 @@
-:::: progress
-:::: {.progress-bar style="width: 100%;"}
-::::
-::::
+::: progress
+::: {.progress-bar style="width: 100%;"}
+:::
+:::
+
+```{r, include=FALSE}
+options(OutDec = ",", digits = 4)
+```
 
 # Modelos de Tempo de Vida Acelerado
 
@@ -12,7 +16,7 @@ No capítulo anterior, foram apresentados modelos paramétricos para dados de so
 No modelo de regressão linear clássico, a relação entre a variável resposta $Y$ e as covariáveis $\mathbf{x'}$ é aditiva, ou seja, mudanças nas covariáveis alteram $Y$ de maneira linear. O modelo de regressão linear clássico é expresso como:
 
 $$
-Y = \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} \ldots + \beta_{p} X_{p} + \varepsilon,
+Y = \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} + \ldots + \beta_{p} X_{p} + \varepsilon,
 $$ {#eq-LinearModel}
 
 onde $\varepsilon$ é a parte estocástica (erro) que segue uma distribuição $Normal(0, \sigma^{2})$.

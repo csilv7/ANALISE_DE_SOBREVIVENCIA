@@ -57,7 +57,9 @@ format:
     fig-pos: "H"
     number-sections: true
     pdf-engine: xelatex
-    header-includes: \usepackage{indentfirst}
+    indent: true
+    header-includes: |
+      \usepackage{indentfirst}
     fontsize: 12pt
     geometry: margin=2.5cm
     echo: false
