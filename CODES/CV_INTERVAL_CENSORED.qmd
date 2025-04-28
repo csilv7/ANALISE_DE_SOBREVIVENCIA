@@ -1,0 +1,204 @@
+---
+title: "Análise de Sobrevivência - Modelos AFT"
+subtitle: "em Dados sujeitos à Censura Intervalar"
+author: "Breno C R Silva"
+format:
+  html:
+    #theme: "lux"
+    #fontcolor: "black"
+    number-sections: true
+    code-copy: true
+    toc: true
+    toc-title: Índice
+    
+lang: pt
+---
+
+```{r, include=FALSE}
+options(OutDec = ",", digits = 4)
+```
+
+# Modelagem de Dados Sujeitos à Censura Intervalar
+
+## Exemplo Simulado
+
+...
+
+## Exemplo do Livro
+
+Será ajustado um modelo de sobrevivência com dados do estudo de câncer de mama apresentado na Seção 8.2.1 do livro Análise de Sobrevivência Aplicada de Colosimo e Giolo (2006).
+
+```{r}
+#| tbl-cap: "Dez Primeiras Observações dos Dados do Estudo de Câncer de Mama."
+#| label: tbl-SIMULexpAFT
+#| tbl-cap-location: top
+
+# Carregamento dos dados
+breast <- read.table("https://docs.ufpr.br/~giolo/asa/dados/breast.txt", h = TRUE)
+breast$left <- ifelse(breast$left == 0, 0.01, breast$left)
+breast$right <- ifelse(is.na(breast$right), Inf, breast$right)
+```
+
+### Ajuste via Modelo Weibull
+
+1. Ajuste via Pacote `survival`:
+
+```{r}
+# Chamando o Pacote
+library(survival)
+
+# Ajustando o modelo
+ajust.surv <- survreg(Surv(left, right, type = "interval2") ~ ther, breast, dist = "weibull")
+
+# Visualização do ajuste
+summary(ajust.surv)
+```
+
+2. Ajuste via Função `optim`:
+
+```{r}
+# Para o Tempo de Falha não Censurado
+surv.interval <- function(L, R, x.cov, coeffs.par, shape.par, scale.par) {
+  # Preditor Linear
+  effect <- x.cov %*% coeffs.par
+  
+  # Contribuição para Função Verossimilhança
+  surv.L <- 1-pweibull(q = L/exp(effect), shape = shape.par, scale = scale.par)
+  surv.R <- 1-pweibull(q = R/exp(effect), shape = shape.par, scale = scale.par)
+  return(surv.L - surv.R)
+}
+
+# Para o Tempo de Falha Censurado
+surv.cens <- function(L, x.cov, coeffs.par, shape.par, scale.par) {
+  # Preditor Linear
+  effect <- x.cov %*% coeffs.par
+  
+  # Contribuição para Função Verossimilhança
+  surv.L <- 1-pweibull(q = L/exp(effect), shape = shape.par, scale = scale.par)
+  return(surv.L)
+}
+
+# Função Log-verossimilhança
+loglikelihood <- function(par, interval, cens, X.cov) {
+  # Número de parâmetros
+  n.par <- length(par)
+  
+  # Distinção de parâmetros
+  shape.par <- par[1]
+  scale.par <- exp(par[2])
+  coeffs.par <- par[3:n.par]
+  
+  # Distinção dos Limites
+  L <- interval[, 1]
+  R <- interval[, 2]
+  
+  # Função Log-verossimilhança
+  S1 <- surv.interval(L = L, R = R, x.cov = X.cov, coeffs.par = coeffs.par,
+                      shape.par = shape.par, scale.par = scale.par)
+  S2 <- surv.cens(L = L, x.cov = X.cov, coeffs.par = coeffs.par,
+                  shape.par = shape.par, scale.par = scale.par)
+  flv <- sum(cens * log(S1) + (1 - cens) * log(S2))
+  return(-flv)
+  
+}
+```
+
+
+```{r, warning=FALSE, message=FALSE}
+y <- cbind(breast$left, breast$right) # Variável Resposta
+X <- cbind(breast$ther)               # Matrix de Covariáveis
+
+# Número de parâmetros para estimar
+n.par <- 2 + ncol(X)
+
+# Chute Inicial
+init <- rep(1, n.par)
+
+# Maximização
+ajust.optim <- optim(par=init, fn = loglikelihood, 
+                     gr = NULL, method = "BFGS", hessian = TRUE, 
+                     interval=y, cens=breast$cens, X.cov=X)
+
+# Visualização do Ajuste
+ajust.optim
+```
+
+### Ajuste via Modelo Modelo Exponencial por Partes de Potência
+
+1. Ajuste via Pacote `eha`:
+
+```{r}
+# Chamando o Pacote
+library(eha)
+```
+
+2. Ajuste via Função `optim`:
+
+O objetivo é usar a função de otimização do **R** para maximizar a função $$\ell(\theta) = \sum_{i=1}^{n} \delta_{i} \ln{\left[ S(l_{i} | \mathbf{x}) - S(u_{i} | \mathbf{x}) \right]} + (1-\delta_{i}) \ln{\left[ S(l_{i} | \mathbf{x}) \right]}.$$
+
+```{r}
+# Para o Tempo de Falha não Censurado
+surv.interval <- function(L, R, x.cov, coeffs.par, cuts.points, rates.par, power.par) {
+  # Preditor linear
+  effect <- x.cov %*% coeffs.par
+  
+  # Contribuição para Função Verossimilhança
+  surv.L <- 1 - ppch(q = L/exp(effect), cuts = cuts.points, levels = rates.par)^power.par
+  surv.R <- 1 - ppch(q = R/exp(effect), cuts = cuts.points, levels = rates.par)^power.par
+  return(surv.L - surv.R)
+}
+# Para o Tempo de Falha Censurado
+surv.cens <- function(L, x.cov, coeffs.par, cuts.points, rates.par, power.par) {
+  # Preditor Linear
+  effect <- x.cov %*% coeffs.par
+  
+  # Contribuição para Função Verossimilhança
+  surv.L <- 1 - ppch(q = L/exp(effect), cuts = cuts.points, levels = rates.par)^power.par
+  return(surv.L)
+}
+
+# Função Log-verossimilhança
+loglikelihood <- function(par, interval, cens, X, cuts.points) {
+  # Número de parâmetros
+  n.par <- length(par)
+  
+  # Distinção de parâmetros
+  rates.par <- par[1:(length(cuts.points) + 1)]
+  power.par <- par[(length(cuts.points) + 2)]
+  coeffs.par <- par[(length(cuts.points) + 3):n.par]
+  
+  # Distinção dos Limites
+  L <- interval[, 1]
+  R <- interval[, 2]
+  
+  # Função Log-verossimilhança
+  S1 <- surv.interval(L=L, R=R, x.cov=X, coeffs.par=coeffs.par,
+                      cuts.points=cuts.points, rates.par=rates.par,
+                      power.par=power.par)
+  S2 <- surv.cens(L=L, x.cov=X, coeffs.par=coeffs.par,
+                  cuts.points=cuts.points, rates.par=rates.par,
+                  power.par=power.par)
+  flv <- sum(cens * log(S1) + (1 - cens) * log(S2))
+  return(-flv)
+}
+```
+
+```{r}
+y <- cbind(breast$left, breast$right) # Variável Resposta
+X <- cbind(breast$ther)               # Matrix de Covariáveis
+cuts <- c(10, 20, 30, 40)             # Pontos de Corte
+
+# Número de parâmetros para estimar
+n.par <- length(cuts) + 2 + ncol(X)
+
+# Chute Inicial
+init <- rep(0.5, n.par)
+
+# Maximização
+ajust.optim <- optim(par=init, fn = loglikelihood, 
+                     gr = NULL, method = "BFGS", hessian = TRUE, 
+                     interval=y, cens=breast$cens, X=X, cuts.points=cuts)
+
+# Visualização do Ajuste
+ajust.optim
+```

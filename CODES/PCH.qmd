@@ -1,0 +1,427 @@
+---
+title: "Piecewise Constant Hazard"
+author: "Breno C R Silva"
+format: html
+lang: pt
+---
+
+#  Distribuição Exponencial por Partes
+
+## Implementação Computacional
+
+```{r}
+library(ggplot2)
+library(survival)
+library(eha)
+```
+
+### Caso Univariado Sem Censura
+
+- **Simulação:**
+
+```{r}
+# Semente aleatória
+set.seed(123456789)
+
+# Parâmetros de simulação
+n <- 1000                   # Tamanho da amostra
+rates <- c(0.5, 1, 1.5, 2)  # Parâmetro de escala
+breaks <- c(0.4, 1.2, 1.8)  # Pontos de corte
+
+# Simulação de tempos
+times <- rpch(n, cuts = breaks, levels = rates)
+
+# Pondo em formato Data Frame
+df <- data.frame(times = times, cens = rep(1, n))
+```
+
+- **Estimação:**
+
+```{r}
+# Fução de Sobrevivência
+survival.pch <- function(times, cuts.points, levels.par) {
+  st <- 1 - ppch(q = times, cuts = cuts.points, levels = levels.par)
+  return(st)
+}
+
+# Função Taxa de Falha
+hazard.pch <- function(times, cuts.points, levels.par) {
+  ht <- hpch(x = times, cuts = cuts.points, levels = levels.par)
+  return(ht)
+}
+
+# Função log-verossimilhança
+loglikelihood <- function(par, times, cens, cuts.points) {
+  st <- survival.pch(times = times, cuts.points = cuts.points, levels.par = par)
+  ht <- hazard.pch(times = times, cuts.points = cuts.points, levels.par = par)
+  
+  fll <- sum(cens * log(ht) + log(st))
+  
+  return(-fll)
+}
+```
+
+```{r, warning=FALSE}
+init <- rep(1, length(rates))
+
+fit <- optim(par=init, fn = loglikelihood, 
+             gr = NULL, method = "BFGS", hessian = TRUE, 
+             times=df$times, cens=df$cens, cuts.points=breaks)
+fit
+```
+
+### Caso Univariado Com Censura
+
+- **Simulação:**
+
+```{r}
+# --------------------------
+# [1] Configurações Iniciais
+# --------------------------
+
+set.seed(123456789) # Semente para reprodutibilidade
+
+# ---------------------------
+# [2] Parâmetros da Simulação
+# ---------------------------
+n <- 1000                       # Tamanho da amostra
+rates <- c(0.5, 1, 1.5, 2)      # Taxas de falha nos intervalos
+breaks <- c(0.4, 1.2, 1.8)      # Pontos de corte
+#cens.rate <- 1                 # Taxa da censura exponencial
+weib.shape <- 2                 # Parâmetro de forma da Weibull
+weib.scale <- 2                 # Parâmetro de escala da Weibull
+
+# ----------------------
+# [3] Geração dos dados
+# ----------------------
+
+t <- rpch(n, cuts = breaks, levels = rates)              # Tempo de evento
+#c <- rexp(n, rate = cens.rate)                           # Tempo censurado
+c <- rweibull(n, shape = weib.shape, scale = weib.scale) # Tempo censurado
+
+# Tempos observados
+times <- pmin(t, c)
+
+# Indicadora de censura
+delta <- as.numeric(t <= c)
+
+# Formato Data Frame
+df.cens <- data.frame(times = times, cens = delta)
+prop.cens <- (1 - mean(df.cens$cens)) * 100
+```
+
+- **Estimação:**
+
+```{r}
+# Fução de Sobrevivência
+survival.pch <- function(times, cuts.points, levels.par) {
+  st <- 1 - ppch(q = times, cuts = cuts.points, levels = levels.par)
+  return(st)
+}
+
+# Função Taxa de Falha
+hazard.pch <- function(times, cuts.points, levels.par) {
+  ht <- hpch(x = times, cuts = cuts.points, levels = levels.par)
+  return(ht)
+}
+
+# Função log-verossimilhança
+loglikelihood <- function(par, times, cens, cuts.points) {
+  st <- survival.pch(times = times, cuts.points = cuts.points, levels.par = par)
+  ht <- hazard.pch(times = times, cuts.points = cuts.points, levels.par = par)
+  
+  fll <- sum(cens * log(ht) + log(st))
+  
+  return(-fll)
+}
+```
+
+```{r, warning=FALSE}
+init.cens <- rep(1, length(rates))
+
+fit.cens <- optim(par=init, fn = loglikelihood,
+                  gr = NULL, method = "BFGS", hessian = TRUE,
+                  times=df.cens$times, cens=df.cens$cens, cuts.points=breaks)
+fit.cens
+```
+
+### Caso Multivariado Com Censura
+
+```{r}
+time <- function(t, cuts.points=cuts.points, rates.par=rates.par, x.mat=x.mat, beta.par=beta.par, u.unif) {
+  effect <- x.mat%*%beta.par
+  surv <- 1 - ppch(q = t/exp(effect), cuts = cuts.points, levels = rates.par)
+  return(surv - u.unif)
+}
+
+gen.pch <- function(n, cuts.points, rates.par, x.mat, beta.par) {
+  # Vetor para armazenar os tempos gerados
+  pch.times <- numeric(n)
+  
+  for (i in 1:n) {
+    # Gerando um único valor de U para cada iteração
+    u <- runif(1)
+    
+    # Encontrando a raiz para cada observação
+    raiz <- uniroot(
+      time, interval = c(0, 10000), cuts.points = cuts.points, 
+      rates.par = rates.par, x.mat = x.mat[i,], 
+      beta.par = beta.par, u.unif = u
+    )
+    
+    pch.times[i] <- raiz$root
+  }
+  
+  return(pch.times)
+}
+```
+
+
+```{r}
+# --------------------------
+# [1] Configurações Iniciais
+# --------------------------
+
+set.seed(123456789) # Semente para reprodutibilidade
+
+# ---------------------------
+# [2] Parâmetros da Simulação
+# ---------------------------
+n <- 1000                       # Tamanho da amostra
+rates <- c(0.5, 1, 1.5, 2)      # Taxas de falha nos intervalos
+breaks <- c(0.4, 1.2, 1.8)      # Pontos de corte
+cens.rate <- 1                  # Taxa da censura exponencial
+#weib.shape <- 2                 # Parâmetro de forma da Weibull
+#weib.scale <- 2                 # Parâmetro de escala da Weibull
+
+# ----------------------
+# [3] Geração dos dados
+# ----------------------
+
+# Matriz Design
+x1 <- rbinom(n, size = 1, prob=0.5)
+x2 <- rnorm(n)
+X <- cbind(1, x1, x2)
+
+# Vetor de Coeficientes
+coeffs <- c(0.5, -0.5, 0.5)
+
+# Tempo de evento
+t <- gen.pch(n, cuts.points = breaks, rates.par = rates, x.mat = X, beta.par = coeffs)
+
+# Tempo censurado
+c <- rexp(n, rate = cens.rate)
+#c <- rweibull(n, shape = weib.shape, scale = weib.scale)
+
+# Tempos observados
+times <- pmin(t, c)
+
+# Indicadora de censura
+delta <- as.numeric(t <= c)
+
+# Formato Data Frame
+dados <- data.frame(times = times, cens = delta, const = 1, x1 = x1, x2 = x2)
+prop.dados <- (1 - mean(df.cens$cens)) * 100
+```
+
+```{r}
+head(dados, 15)
+```
+
+```{r}
+ajust <- pchreg(Surv(times, delta)~x1+x2, data = dados, cuts = breaks)
+summary(ajust)
+```
+
+```{r}
+# Fução de Sobrevivência
+survival.aft.pch <- function(times, cuts.points, levels.par, x.mat, beta.par) {
+  effect <- x.mat%*%beta.par
+  st <- 1 - ppch(q = times/exp(effect), cuts = cuts.points, levels = levels.par)
+  return(st)
+}
+
+# Função Taxa de Falha
+hazard.aft.pch <- function(times, cuts.points, levels.par, x.mat, beta.par) {
+  effect <- x.mat%*%beta.par
+  f0 <- dpch(x = times/exp(effect), cuts = cuts.points, levels = levels.par)
+  s0 <- 1 - ppch(q = times/exp(effect), cuts = cuts.points, levels = levels.par)
+  h0 <- f0 / s0
+  ht <- h0 / exp(effect)
+  return(ht)
+}
+
+# Função log-verossimilhança
+loglikelihood <- function(par, times, cens, cuts.points, x.mat) {
+  npar <- length(par)
+  rates.par <- par[1:4]
+  beta.par <- par[5:npar]
+  
+  st <- survival.aft.pch(times=times, cuts.points=cuts.points, levels.par=rates.par, x.mat=x.mat, beta.par=beta.par)
+  ht <- hazard.aft.pch(times=times, cuts.points=cuts.points, levels.par=rates.par, x.mat=x.mat, beta.par=beta.par)
+  
+  fll <- sum(cens * log(ht) + log(st))
+  
+  return(-fll)
+}
+```
+
+
+```{r, warning=FALSE}
+n.rep <- length(rates) + length(coeffs)
+init <- rep(0.01, n.rep)
+
+X <- as.matrix(dados[, 3:ncol(dados)])
+
+fit <- optim(par=init, fn = loglikelihood, 
+             gr = NULL, method = "BFGS", hessian = TRUE, 
+             times=dados$times, cens=dados$cens, cuts.points=breaks, x.mat=X)
+fit
+```
+
+#  Distribuição Exponencial por Partes de Potência
+
+## Implementação Computacional
+
+```{r}
+library(ggplot2)
+library(survival)
+library(eha)
+```
+
+### Caso Multivariado Com Censura
+
+```{r}
+time <- function(t, cuts.points=cuts.points, rates.par=rates.par, power.par=power.par, x.mat=x.mat, beta.par=beta.par, u.unif) {
+  effect <- x.mat%*%beta.par
+  surv <- 1 - (ppch(q = t/exp(effect), cuts = cuts.points, levels = rates.par))^power.par
+  return(surv - u.unif)
+}
+
+gen.pch <- function(n, cuts.points, rates.par, power.par, x.mat, beta.par) {
+  # Vetor para armazenar os tempos gerados
+  pch.times <- numeric(n)
+  
+  for (i in 1:n) {
+    # Gerando um único valor de U para cada iteração
+    u <- runif(1)
+    
+    # Encontrando a raiz para cada observação
+    raiz <- uniroot(
+      time, interval = c(0, 10000), cuts.points = cuts.points, 
+      rates.par = rates.par, power.par = power.par, x.mat = x.mat[i,], 
+      beta.par = beta.par, u.unif = u
+    )
+    
+    pch.times[i] <- raiz$root
+  }
+  
+  return(pch.times)
+}
+```
+
+
+```{r}
+# --------------------------
+# [1] Configurações Iniciais
+# --------------------------
+
+set.seed(123456789) # Semente para reprodutibilidade
+
+# ---------------------------
+# [2] Parâmetros da Simulação
+# ---------------------------
+n <- 1000                       # Tamanho da amostra
+rates <- c(0.5, 1, 1.5, 2)      # Taxas de falha nos intervalos
+power <- 3/2                      # Parâmetro de potência
+breaks <- c(0.4, 1.2, 1.8)      # Pontos de corte
+cens.rate <- 1                  # Taxa da censura exponencial
+weib.shape <- 2                 # Parâmetro de forma da Weibull
+weib.scale <- 2                 # Parâmetro de escala da Weibull
+
+# ----------------------
+# [3] Geração dos dados
+# ----------------------
+
+# Matriz Design
+x1 <- rbinom(n, size = 1, prob=0.5)
+x2 <- rnorm(n)
+X <- cbind(1, x1, x2)
+
+# Vetor de Coeficientes
+coeffs <- c(0.5, -0.5, 0.5)
+
+# Tempo de evento
+t <- gen.pch(n, cuts.points = breaks, rates.par = rates, power.par = power, x.mat = X, beta.par = coeffs)
+
+# Tempo censurado
+c <- rexp(n, rate = cens.rate)
+#c <- rweibull(n, shape = weib.shape, scale = weib.scale)
+
+# Tempos observados
+times <- pmin(t, c)
+
+# Indicadora de censura
+delta <- as.numeric(t <= c)
+
+# Formato Data Frame
+dados <- data.frame(times = times, cens = delta, const = 1, x1 = x1, x2 = x2)
+prop.dados <- (1 - mean(dados$cens)) * 100
+```
+
+```{r}
+head(dados, 15)
+prop.dados
+```
+
+```{r}
+ajust <- pchreg(Surv(times, delta)~x1+x2, data = dados, cuts = breaks)
+summary(ajust)
+```
+
+```{r}
+# Fução de Sobrevivência
+survival.aft.pch <- function(times, cuts.points, levels.par, power.par, x.mat, beta.par) {
+  effect <- x.mat%*%beta.par
+  st <- 1 - (ppch(q = times/exp(effect), cuts = cuts.points, levels = levels.par))^power.par
+  return(st)
+}
+
+# Função Taxa de Falha
+hazard.aft.pch <- function(times, cuts.points, levels.par, power.par, x.mat, beta.par) {
+  effect <- x.mat%*%beta.par
+  f0 <- power.par*(ppch(q=times/exp(effect),cuts=cuts.points,levels=levels.par))^(power.par-1)*dpch(x=times/exp(effect),cuts=cuts.points,levels=levels.par)
+  s0 <- 1 - (ppch(q = times/exp(effect), cuts = cuts.points, levels = levels.par))^power.par
+  h0 <- f0 / s0
+  ht <- h0 / exp(effect)
+  return(ht)
+}
+
+# Função log-verossimilhança
+loglikelihood <- function(par, times, cens, cuts.points, x.mat) {
+  npar <- length(par)
+  rates.par <- par[1:4]
+  power.par <- par[5]
+  beta.par <- par[6:npar]
+  
+  st <- survival.aft.pch(times=times, cuts.points=cuts.points, levels.par=rates.par, power.par=power.par, x.mat=x.mat, beta.par=beta.par)
+  ht <- hazard.aft.pch(times=times, cuts.points=cuts.points, levels.par=rates.par, power.par=power.par, x.mat=x.mat, beta.par=beta.par)
+  
+  fll <- sum(cens * log(ht) + log(st))
+  
+  return(-fll)
+}
+```
+
+
+```{r, warning=FALSE}
+n.rep <- length(rates) + length(coeffs) + 1
+init <- rep(1, n.rep)
+
+X <- as.matrix(dados[, 3:ncol(dados)])
+
+fit <- optim(par=init, fn = loglikelihood, 
+             gr = NULL, method = "BFGS", hessian = TRUE, 
+             times=dados$times, cens=dados$cens, cuts.points=breaks, x.mat=X)
+fit
+```

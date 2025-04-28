@@ -1,0 +1,200 @@
+---
+title: "Modelos AFT"
+author: "Breno C R Silva"
+format: html
+lang: pt
+---
+
+# Modelos de Tempo de Vida Acelerados
+
+## Introdução
+
+- Função de Sobrevivênia:
+
+$$
+S (t | x) = P (T > t / \exp\{ \mathbf{x^{\intercal}} \boldsymbol{\beta}\}).
+$$
+
+- Função Risco ou Taxa de Falha:
+
+$$
+\lambda(t | \mathbf{x}) = \lambda_{0}(t) g(\mathbf{x}),
+$$
+
+onde $\lambda_{0}(t)$ é a função de risco basal e $g(\mathbf{x}) = \exp\{ - \mathbf{x^{\intercal}} \boldsymbol{\beta}\}$ entra como a função que mensura o efeito das covariáveis.
+
+## Implementação Computacional - Modelo Exponencial por Partes
+
+### Geração dos Dados
+
+```{r, warning=FALSE, message=FALSE}
+# S(t) = U
+time <- function(t, cuts.points=cuts.points, rates.par=rates.par, x.cov=x.cov, coeff.par=coeff.par, u.unif) {
+  effect <- x.cov %*% coeff.par
+  survival <- 1 - ppch(q = t/exp(effect), cuts = cuts.points, levels = rates.par)
+  return(survival - u.unif)
+}
+
+# Solução numérica
+gen.pch <- function(n, cuts.points, rates.par, x.cov, coeff.par) {
+  # Vetor para armazenar os tempos gerados
+  pch.times <- numeric(n)
+  
+  for (i in 1:n) {
+    # Gerando um único valor de U para cada iteração
+    u <- runif(1)
+    
+    # Encontrando a raiz para cada observação
+    raiz <- uniroot(
+      time, interval = c(0, 10000), cuts.points = cuts.points, 
+      rates.par = rates.par, x.cov = x.cov[i,], 
+      coeff.par = coeff.par, u.unif = u
+    )
+    
+    pch.times[i] <- raiz$root
+  }
+  
+  return(pch.times)
+}
+```
+
+```{r, warning=FALSE, message=FALSE}
+# --------------------------
+# [1] Configurações Iniciais
+# --------------------------
+
+options(OutDec = ",", digits = 4)
+set.seed(123456789) # Semente para reprodutibilidade
+library(eha)
+
+# ---------------------------
+# [2] Parâmetros da Simulação
+# ---------------------------
+
+n <- 1000                       # Tamanho da amostra
+rates <- c(0.5, 1, 1.5, 2)      # Taxas de falha nos intervalos
+breaks <- c(0.4, 1.2, 1.8)      # Pontos de corte
+cens.rate <- 1                  # Taxa da censura exponencial
+
+# ----------------------
+# [3] Geração dos dados
+# ----------------------
+
+# Matriz Design
+x1 <- rbinom(n, size = 1, prob=0.5)
+x2 <- rnorm(n)
+X <- cbind(x1, x2)
+
+# Vetor de Coeficientes
+coeffs <- c(-0.5, 0.5)
+
+# Tempo de evento
+t <- gen.pch(n, cuts.points = breaks, rates.par = rates, x.cov = X, coeff.par = coeffs)
+
+# Tempo censurado
+c <- rexp(n, rate = cens.rate)
+
+# Tempos observados
+times <- pmin(t, c)
+
+# Indicadora de censura
+delta <- as.numeric(t <= c)
+
+# Formato Data Frame
+dados <- data.frame(times = times, cens = delta, x1 = x1, x2 = x2)
+
+# Proporção de censura nos dados
+prop.cens <- (1 - mean(dados$cens)) * 100
+```
+
+A proporção de censura nos dados foi `r prop.cens`%. Veja as 10 primeiras observações dos pseudo tempos de falha simulados dispostos na @tbl-SIMULATED_DATA.
+
+```{r, warning=FALSE, message=FALSE}
+#| tbl-cap: "Dez Primeiras Observações dos Pseudos Tempos de Falha Simulados."
+#| label: tbl-SIMULATED_DATA
+#| tbl-cap-location: top
+
+knitr::kable(
+  head(dados, 10), 
+  col.names = c("Tempos", "Censura", "$X_{1}$", "$X_{2}$"),
+  escape = FALSE,
+  align = "c",
+  booktabs = TRUE
+)
+```
+
+### Estimção de Parâmetros
+
+#### Ajuste do modelo ATF usando o pacote `eha`:
+
+```{r, warning=FALSE, message=FALSE}
+# Ajustando
+ajust <- pchreg(Surv(times, delta)~x1+x2, data = dados, cuts = breaks)
+summary(ajust)
+```
+
+#### Maximizando a $\ell (\theta)$
+
+```{r, warning=FALSE, message=FALSE}
+# Função de Sobrevivência
+survival.pch <- function(times, cuts.points, rates.par, x.cov, coeff.par) {
+  # Preditor linear
+  effect <- x.cov %*% coeff.par
+  
+  # Sobrevivência
+  survival <- 1 - ppch(q = times/exp(effect), cuts = cuts.points, levels = rates.par)
+  
+  # Retornar
+  return(survival)
+}
+
+# Função Taxa de Falha ou Risco
+hazard.pch <- function(times, cuts.points, rates.par, x.cov, coeff.par) {
+  # Preditor linear
+  effect <- x.cov %*% coeff.par
+  
+  # Função densidade, sobrevivência e risco basal
+  f0 <- dpch(x = times/exp(effect), cuts = cuts.points, levels = rates.par)
+  s0 <- 1 - ppch(q = times/exp(effect), cuts = cuts.points, levels = rates.par)
+  h0 <- f0 / s0
+  
+  # Função risco
+  hazard <- h0 / exp(effect)
+  
+  # Retornar
+  return(hazard)
+}
+
+# Função log-verossimilhança
+loglikelihood <- function(par, times, cens, cuts.points, x.cov) {
+  n.par <- length(par)
+  rates <- par[1:(length(cuts.points)+1)]
+  #rates <- exp(par[1:(length(cuts.points)+1)])
+  coeff <- par[(length(cuts.points)+2):n.par]
+  
+  # Função de Sobrevivência e Função Risco
+  st <- survival.pch(times = times, cuts.points = cuts.points, rates.par = rates, coeff.par = coeff, x.cov = X)
+  ht <- hazard.pch(times = times, cuts.points = cuts.points, rates.par = rates, coeff.par = coeff, x.cov = X)
+  
+  # Função log-verossimilhança
+  flv <- sum(cens * log(ht) + log(st))
+  return(-flv)
+  
+}
+```
+
+```{r, warning=FALSE, message=FALSE}
+# Número de parâmetros para estimar
+n.par <- length(breaks) + 1 + ncol(X)
+
+# Chute Inicial
+init <- rep(1, n.par)
+
+# Maximização
+fit <- optim(par = init, fn = loglikelihood, gr = NULL, method = "BFGS",
+             hessian = TRUE, times=dados$times, cens=dados$cens,
+             cuts.points=breaks, x.cov=X)
+
+# Visualizando o ajuste
+fit
+```

@@ -1,0 +1,492 @@
+---
+title: "Análise de Sobrevivência - Modelos AFT"
+author: "Breno C R Silva"
+format:
+  html:
+    #theme: "lux"
+    #fontcolor: "black"
+    number-sections: true
+    code-copy: true
+    toc: true
+    toc-title: Índice
+    
+lang: pt
+---
+
+```{=html}
+<style>
+  body{text-align: justify}
+</style>
+```
+
+# Modelos de Tempo de Vida Acelerado
+
+```{r, include=FALSE}
+options(OutDec = ",", digits = 4)
+```
+
+----------
+
+## Introdução
+
+No capítulo anterior, foram apresentados modelos paramétricos para dados de sobrevivência. Entretanto, esses modelos não contemplam a inclusão de covariáveis na análise do tempo de sobrevivência. Neste capítulo, exploraremos esse método.
+
+No modelo de regressão linear clássico, a relação entre a variável resposta $Y$ e as covariáveis $\mathbf{x^{\intercal}}$ é aditiva, ou seja, mudanças nas covariáveis alteram $Y$ de maneira linear. O modelo de regressão linear clássico é expresso como:
+
+$$
+Y = \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} + \ldots + \beta_{p} X_{p} + \varepsilon,
+$$ {#eq-LinearModel}
+
+onde $\varepsilon$ é a parte estocástica (erro) que segue uma distribuição $\text{Normal}(0; \sigma^{2})$.
+
+No entanto, em análise de sobrevivência, essa suposição não se sustenta, pois o efeito das covariáveis geralmente acelera ou retarda o tempo de falha, tornando necessária uma abordagem multiplicativa. Este modelo de regressão é chamado de Modelo de *Tempo de Vida Acelerado* (Accelerated Failure Time - AFT).
+
+No modelo AFT, assume-se que o tempo de falha $T$ é afetado por um fator de aceleração exponencial das covariáveis. Esse fator multiplicativo indica se o tempo até o evento será prolongado ou encurtado. Assim, o modelo é definido como:
+
+$$
+T = \exp\{ \mathbf{x^{\intercal}} \boldsymbol{\beta} \} \varepsilon = \exp\{ \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} \ldots + \beta_{p} X_{p} \} \varepsilon,
+$$ {#eq-RelationAFT}
+
+onde $\varepsilon$ é um termo de erro multiplicativo que captura a variabilidade não explicada pelas covariáveis. Aplicando a transformação logarítmica em $T$ obtém-se a forma linearizável da @eq-RelationAFT que aproxima-se da @eq-LinearModel, de forma que
+
+$$
+\ln[T] = \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} \ldots + \beta_{p} X_{p} + v,
+$$
+
+onde $v = \ln[\varepsilon]$ segue uma distribuição de valor extremo. Essa escolha para a distribuição dos erros decorre do fato de que os tempos de sobrevivência frequentemente apresentam forte assimetria à direita. Portanto, os erros não podem ser adequadamente representados por uma distribuição normal, sendo mais apropriado assumir distribuições como Log-normal, Weibull ou Exponencial.
+
+Nos modelos AFT, a função de sobrevivência sofre um ajuste devido ao efeito das covariáveis, que podem acelerar ou retardar o tempo de falha. Assim, a função de sobrevivência condicional às covariáveis é expressa como:
+
+$$
+S (t | \mathbf{x}) = P (T > t / \exp\{ \mathbf{x^{\intercal}} \boldsymbol{\beta}\}).
+$$ {#eq-fSobrAFT}
+
+Como o tempo de falha é ajustado pelo fator de aceleração, a função de risco também precisa ser reformulada para incorporar o efeito das covariáveis. A forma geral da função de risco em modelos AFT é dada por:
+
+$$
+\lambda(t | \mathbf{x}) = \lambda_{0}(t) g(\mathbf{x}).
+$$ {#eq-fhazardAFT}
+
+Nesta expressão, $\lambda_{0}(t)$, representa a função de risco basal, isto é, representa o risco no tempo $t$ quando todas as covariáveis são iguais a zero, ou seja, na ausência de efeitos das covariáveis. Já o termo $g(\mathbf{x}) = \exp\{ - \mathbf{x^{\intercal}} \boldsymbol{\beta}\}$ age como um fator de ajuste, mensurando o impacto das covariáveis na taxa de falha.
+
+----------
+
+## Modelo Exponencial
+
+Com base na definição geral de *Modelos AFT*, podemos especificar com base em algumas distribuições a forma analítica da @eq-fSobrAFT e @eq-fhazardAFT.
+
+Para o modelo exponencial a função de sobrevivência pode ser escrita como: $$S (t | \mathbf{x}) = \exp\{ -\alpha(\mathbf{x}) t \},$$ onde $\alpha(\mathbf{x}) = \exp\{ \mathbf{x^{\intercal}} \boldsymbol{\beta}\} = \exp\{ \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} \ldots + \beta_{p} X_{p} \}$. 
+
+Entretanto, tem-se uma outra forma de parametrização. Está forma de parametrição nos permite estimar o efeito da covariáveis e o parâmetro de taxa da distribuição separadamente. Desta forma, definimos a função de sobrevivência como: $$S (t | \mathbf{x}) = \exp\left\{ -\alpha \left( \dfrac{t}{\exp\{ \beta_{1} X_{1} + \ldots + \beta_{p} X_{p} \}} \right) \right\}.$$ 
+
+A grande diferença entre as parametrizações apresentadas está na escrita do preditor linear. Repare que na primeira parametrização apresenta se todas as covariáveis forem zero a função de sobrevivência será: $$S (t | \mathbf{x}) = \exp\{ -\exp\{\beta_{0}\} t \},$$ de forma similar, na segunda parametrização apresentada, se o efeito de todas as covariáveis for zero, temos a função de sobrevivência expressa por: $$S (t | \mathbf{x}) = \exp\{ -\alpha t \}.$$ Logo, estimar a quantidade $\exp\{\beta_{0}\}$ é o mesmo que estimar o parâmetro de taxa $\alpha$ do modelo exponencial.
+
+A função risco, para as duas parametrizações apresentadas, é, respectivamente,
+
+- $\lambda(t | \mathbf{x}) = \alpha(\mathbf{x}) = \exp\{ \mathbf{x^{\intercal}} \boldsymbol{\beta}\} = \exp\{ \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} \ldots + \beta_{p} X_{p} \}$;
+- $\lambda(t | \mathbf{x}) = \alpha \exp\{ \beta_{1} X_{1} + \ldots + \beta_{p} X_{p} \}$
+
+----------
+
+### Implementação Computacional
+
+Depois de definirmos a distribuição dos tempos de falha, isto é, saber a estrutura do modelo que os representa. Deve-se estimar as quantidades desconhecidas no modelo, ou seja, os parâmetros da regressão $\beta_{i}$ com $i = 0, \ldots, p$ ou os parâmetros da regressão $\beta_{i}$ com $i = 1, \ldots, p$ e o parâmetro da distribuição $\alpha$. Tal escolha depende apenas do pesquisar, visto que é apenas uma forma diferente se parametrização.
+
+----------
+
+#### Censura à Direita
+
+Vamos gerar pseudos tempos de falha para mostrar o processo de estimação do modelo. Para gerar os pseudo tempos de falha podemos usar o *Método da Transformação Inversa*. Usando o Método da Transformação Inversa segundo um modelo exponencial com inclusão de covariáveis, temos $$S(t | \mathbf{x}) =  U,$$ tal que $U \sim \text{Uniforme}(0; 1)$. Logo, os pseudos tempos de falha são obtidos a partir de $$T = S^{-1}(u | \mathbf{x}).$$
+
+Desta forma, para as parametrizações apresentadas, temos:
+
+1. $T = - \dfrac{\ln{[U]}}{\alpha(\mathbf{x})}$ onde $\alpha(\mathbf{x}) = \exp\{ \mathbf{x^{\intercal}} \boldsymbol{\beta}\} = \exp\{ \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} \ldots + \beta_{p} X_{p} \}$;
+2. $T = - \dfrac{ \exp\{ \beta_{1} X_{1} + \ldots + \beta_{p} X_{p} \} \ln{[U]}}{\alpha}$.
+
+Para primeiros exemplos foram adotados duas covariáveis: $X_{1}$ e $X_{2}$. Tais covariáveis foram amostradas, respectivamente, de uma $\text{Bernoulli}(0,5)$ e uma $\text{Normal}(0; 1)$. A @tbl-SIMULexpAFT apresenta os valores obtidos na simulação de $n = 1000$ pseudo tempos de falha.
+
+```{r, message=FALSE, warning=FALSE}
+#| tbl-cap: "Dez Primeiras Observações dos Pseudos Tempos de Falha Simulados."
+#| label: tbl-SIMULexpAFT
+#| tbl-cap-location: top
+
+
+# ----------------------
+# [1] FUNÇÕES DE GERAÇÃO
+# ----------------------
+
+# Método (Numérico) da Tranformação Inversa
+time <- function(t, rate.par, x.cov, coeffs.par, u.unif) {
+  # Preditor Linear
+  effect <- x.cov %*% coeffs.par
+  
+  # Função de Sobrevivência
+  survival <- 1 - pexp(q = t/exp(effect), rate = rate.par)
+  
+  # S(t) = U
+  return(survival - u.unif)
+}
+gen.exp <- function(n, rate.par, x.cov, coeffs.par) {
+  # Vetor para armazenar os tempos gerados
+  exp.times <- numeric(n)
+  
+  for (i in 1:n) {
+    # Gerando um único valor de U para cada iteração
+    u <- runif(1)
+    
+    # Encontrando a raiz para cada observação
+    raiz <- uniroot(
+      time, c(0, 10000), rate.par=rate.par, x.cov=x.cov[i,],
+      coeffs.par=coeffs.par, u.unif=u
+    )
+    
+    # Pseudo Tempo de Falha observado
+    exp.times[i] <- raiz$root
+  }
+  
+  # Vetor dos Pseudos Tempos de Falha
+  return(exp.times)
+}
+
+# ---------------------------------------------
+# [2] PARÂMETROS DE GERAÇÃO E GERAÇÃO DOS DADOS
+# ---------------------------------------------
+set.seed(123456789)
+n <- 1000      # Tamanho da amostra
+rate <- 1.5    # Taxa de falha
+cens.rate <- 1 # Taxa da censura (dist exponencial)
+
+# Matriz Design
+x1 <- rbinom(n, size = 1, prob=0.5)
+x2 <- rnorm(n, mean = 0, sd = 1)
+X <- cbind(x1, x2)
+
+# Vetor de Coeficientes
+coeffs <- c(-0.5, 0.5)
+
+# Tempo de Falha
+t <- gen.exp(n, rate.par = rate, x.cov = X, coeffs.par = coeffs)
+
+# Tempo de Censura
+c <- rexp(n, rate = cens.rate)
+
+# Tempos observados e Indicadora de censura
+times <- pmin(t, c)
+cens <- as.numeric(t <= c)
+
+# Formato Data Frame e Proporção de censura nos dados
+dados <- data.frame(times = times, cens = cens, x1 = x1, x2 = x2)
+prop.cens <- (1 - mean(dados$cens)) * 100
+
+# -------------------
+# [3] TABELA DE DADOS
+# -------------------
+
+library(knitr)
+
+kable(
+  head(dados, 10),
+  col.names = c("Tempo", "Censura", "$X_{1}$", "$X_{2}$"),
+  escape = FALSE,
+  align = "c",
+  booktabs = TRUE
+)
+```
+
+O ajuste do modelo, isto é, estimação de parâmetros é feito usando o método de máxima verossimilhança. Tal método consiste, basicamente, em maximizar a função log-verossimilhança e consequentemente maximizar a função verossimilhança. Segundo o modelo exponencial, definimos a função log-verossimilhança $$\ell (\theta) = \sum_{i=1}^{n} \delta_{i} \ln{ \left[ \lambda(t_{i} | \mathbf{x}_{i}) \right] }  + \ln{\left[ S(t_{i} | \mathbf{x}_{i}) \right]},$$ onde $\lambda(t_{i} | \mathbf{x}_{i}) \text{ e } S(t_{i} | \mathbf{x}_{i})$ são as funções de risco e sobrevivência para o $i$-ésimo indivíduo segundo o modelo exponencial.
+
+Vamos utilizar duas funções para encontrar as estimativas de verossimilhança para o modelo que está sendo utilizado.
+
+1. Usando a função (pronta) de ajuste do Pacote `survival`:
+
+```{r}
+library(survival)
+ajust <- survreg(Surv(times, cens)~x1+x2, dist = "exponential", data=dados)
+summary(ajust) ; taxa1 <- 1/exp(ajust$coefficients[1])
+```
+
+2. Usando o *Método Iterativo de Newton-Raphson* para maximixar $\ell (\theta)$, obtemos os seguintes resultados:
+
+```{r, warning=FALSE, message=FALSE}
+# Função de Sobrevivência
+survival.exp <- function(times, rate.par, x.cov, coeffs.par) {
+  # Preditor linear
+  effect <- x.cov %*% coeffs.par
+  
+  # Função de Sobrevivência
+  survival <- 1 - pexp(q = t/exp(effect), rate = rate.par)
+  
+  # Retornar
+  return(survival)
+}
+# Função Taxa de Falha ou Risco
+hazard.exp <-function(times, rate.par, x.cov, coeffs.par) {
+  # Preditor linear
+  effect <- x.cov %*% coeffs.par
+  
+  # Função densidade, sobrevivência e risco basal
+  #f0 <- dexp(x = times/exp(effect), rate = rate.par)
+  #s0 <- 1 - pexp(q = times/exp(effect), rate = rate.par)
+  #h0 <- f0 / s0
+  
+  # Função risco
+  hazard <- rate.par / exp(effect) # h0 / exp(effect)
+  
+  # Retornar
+  return(hazard)
+}
+
+# Função log-verossimilhança
+loglikelihood <- function(par, times, cens, x.cov) {
+  n.par <- length(par)
+  rate.par <- par[1]
+  coeffs.par <- par[2:n.par]
+  
+  # Função de Sobrevivência e Função Risco
+  st <- survival.exp(times=times, rate.par=rate.par, x.cov=x.cov, coeffs.par=coeffs.par)
+  ht <- hazard.exp(times=times, rate.par=rate.par, x.cov=x.cov, coeffs.par=coeffs.par)
+  
+  # Função log-verossimilhança
+  flv <- sum(cens * log(ht) + log(st))
+  return(-flv)
+}
+
+# Número de parâmetros para estimar
+n.par <- 1 + ncol(X)
+
+# Chute Inicial
+init <- rep(1, n.par)
+
+# Maximização
+fit <- optim(par = init, fn = loglikelihood, gr = NULL, method = "BFGS",
+             hessian = TRUE, times=dados$times, cens=dados$cens, x.cov=X)
+
+# Visualizando o ajuste
+fit ; taxa2 <- fit$par[1]
+```
+
+----------
+
+#### Censura Intervalar
+
+...
+
+## Modelo Weibull
+
+Com base na definição geral de *Modelos AFT*, podemos especificar com base em algumas distribuições a forma analítica da @eq-fSobrAFT e @eq-fhazardAFT.
+
+Para o modelo exponencial a função de sobrevivência pode ser escrita como: $$S (t | \mathbf{x}) = \exp\left\{ -\left( \dfrac{t}{\alpha(\mathbf{x})} \right)^{\gamma} \right\},$$ onde $\alpha(\mathbf{x}) = \exp\{ \mathbf{x^{\intercal}} \boldsymbol{\beta}\} = \exp\{ \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} \ldots + \beta_{p} X_{p} \}$. 
+
+Entretanto, tem-se uma outra forma de parametrização. Está forma de parametrição nos permite estimar o efeito da covariáveis e o parâmetro de taxa da distribuição separadamente. Desta forma, definimos a função de sobrevivência como: $$S (t | \mathbf{x}) = \exp\left\{ - \left(\dfrac{t}{ \alpha \exp\{ \beta_{1} X_{1} + \ldots + \beta_{p} X_{p} \}} \right)^{\gamma} \right\}.$$ 
+
+A explicação para o uso das duas parametrizações é a mesma dita no modelo exponencial. Logo, estimar a quantidade $\exp\{\beta_{0}\}$ é o mesmo que estimar o parâmetro de taxa $\alpha$ do modelo weibull.
+
+A função risco, para as duas parametrizações apresentadas, é, respectivamente,
+
+- $\lambda(t | \mathbf{x}) = \dfrac{ \gamma }{ \alpha(\mathbf{x})^{\gamma} } t^{\gamma - 1}$;
+- $\lambda(t | \mathbf{x}) = \dfrac{ \gamma }{ \alpha^{\gamma} } \dfrac{t^{\gamma - 1}}{\exp\{ \beta_{1} X_{1} + \ldots + \beta_{p} X_{p} \}}$
+
+### Implementação Computacional
+
+...
+
+#### Censura à Direita
+
+Vamos gerar pseudos tempos de falha para mostrar o processo de estimação do modelo. Para gerar os pseudo tempos de falha podemos usar o *Método da Transformação Inversa*. Usando o Método da Transformação Inversa segundo um modelo Weibull com inclusão de covariáveis, temos $$S(t | \mathbf{x}) =  U,$$ tal que $U \sim \text{Uniforme}(0; 1)$. Logo, os pseudos tempos de falha são obtidos a partir de $$T = S^{-1}(u | \mathbf{x}).$$
+
+Desta forma, para as parametrizações apresentadas, temos:
+
+1. $T = ...$ onde $\alpha(\mathbf{x}) = \exp\{ \mathbf{x^{\intercal}} \boldsymbol{\beta}\} = \exp\{ \beta_{0} + \beta_{1} X_{1} + \beta_{2} X_{2} \ldots + \beta_{p} X_{p} \}$;
+2. $T = ...$.
+
+Para primeiros exemplos foram adotados duas covariáveis: $X_{1}$ e $X_{2}$. Tais covariáveis foram amostradas, respectivamente, de uma $\text{Bernoulli}(0,5)$ e uma $\text{Normal}(0; 1)$. A @tbl-SIMULweibAFT apresenta os valores obtidos na simulação de $n = 1000$ pseudo tempos de falha.
+
+```{r, message=FALSE, warning=FALSE}
+#| tbl-cap: "Dez Primeiras Observações dos Pseudos Tempos de Falha Simulados."
+#| label: tbl-SIMULweibAFT
+#| tbl-cap-location: top
+
+
+# ----------------------
+# [1] FUNÇÕES DE GERAÇÃO
+# ----------------------
+
+# Método (Numérico) da Tranformação Inversa
+time <- function(t, shape.par, scale.par, x.cov, coeffs.par, u.unif) {
+  # Preditor Linear
+  effect <- x.cov %*% coeffs.par
+  
+  # Função de Sobrevivência
+  survival <- 1 - pweibull(q=t/exp(effect), shape=shape.par, scale=scale.par)
+  
+  # S(t) = U
+  return(survival - u.unif)
+}
+gen.weib <- function(n, shape.par, scale.par, x.cov, coeffs.par) {
+  # Vetor para armazenar os tempos gerados
+  weib.times <- numeric(n)
+  
+  for (i in 1:n) {
+    # Gerando um único valor de U para cada iteração
+    u <- runif(1)
+    
+    # Encontrando a raiz para cada observação
+    raiz <- uniroot(
+      time, c(0, 10000), shape.par=shape.par, scale.par=scale.par, 
+      x.cov=x.cov[i,], coeffs.par=coeffs.par, u.unif=u
+    )
+    
+    # Pseudo Tempo de Falha observado
+    weib.times[i] <- raiz$root
+  }
+  
+  # Vetor dos Pseudos Tempos de Falha
+  return(weib.times)
+}
+
+# ---------------------------------------------
+# [2] PARÂMETROS DE GERAÇÃO E GERAÇÃO DOS DADOS
+# ---------------------------------------------
+set.seed(123456789)
+n <- 1000      # Tamanho da amostra
+shape <- 2     # Parâmetro de Forma
+scale <- 2     # Parâmetro de Escala
+cens.rate <- 1 # Taxa da censura (dist exponencial)
+
+# Matriz Design
+x1 <- rbinom(n, size = 1, prob=0.5)
+x2 <- rnorm(n, mean = 0, sd = 1)
+X <- cbind(x1, x2)
+
+# Vetor de Coeficientes
+coeffs <- c(-0.5, 0.5)
+
+# Tempo de Falha
+t <- gen.weib(n, shape.par = shape, scale.par = scale, x.cov = X, coeffs.par = coeffs)
+
+# Tempo de Censura
+c <- rexp(n, rate = cens.rate)
+
+# Tempos observados e Indicadora de censura
+times <- pmin(t, c)
+cens <- as.numeric(t <= c)
+
+# Formato Data Frame e Proporção de censura nos dados
+dados <- data.frame(times = times, cens = cens, x1 = x1, x2 = x2)
+prop.cens <- (1 - mean(dados$cens)) * 100
+
+# -------------------
+# [3] TABELA DE DADOS
+# -------------------
+
+library(knitr)
+
+kable(
+  head(dados, 10),
+  col.names = c("Tempo", "Censura", "$X_{1}$", "$X_{2}$"),
+  escape = FALSE,
+  align = "c",
+  booktabs = TRUE
+)
+```
+
+O ajuste do modelo, isto é, estimação de parâmetros é feito usando o método de máxima verossimilhança. Tal método consiste, basicamente, em maximizar a função log-verossimilhança e consequentemente maximizar a função verossimilhança. Segundo o modelo Weibull, definimos a função log-verossimilhança $$\ell (\theta) = \sum_{i=1}^{n} \delta_{i} \ln{ \left[ \lambda(t_{i} | \mathbf{x}_{i}) \right] }  + \ln{\left[ S(t_{i} | \mathbf{x}_{i}) \right]},$$ onde $\lambda(t_{i} | \mathbf{x}_{i}) \text{ e } S(t_{i} | \mathbf{x}_{i})$ são as funções de risco e sobrevivência para o $i$-ésimo indivíduo segundo o modelo Weibull.
+
+Vamos utilizar duas funções para encontrar as estimativas de verossimilhança para o modelo que está sendo utilizado.
+
+1. Usando a função (pronta) de ajuste do Pacote `survival`:
+
+```{r}
+library(survival)
+ajust <- survreg(Surv(times, cens)~x1+x2, dist = "weibull", data=dados)
+summary(ajust) ; taxa1 <- exp(ajust$coefficients[1]) ; forma1 <- 1/ajust$scale
+```
+
+2. Usando o *Método Iterativo de Newton-Raphson* para maximixar $\ell (\theta)$, obtemos os seguintes resultados:
+
+```{r, warning=FALSE, message=FALSE}
+# Função de Sobrevivência
+survival.weib <- function(times, shape.par, scale.par, x.cov, coeffs.par) {
+  # Preditor linear
+  effect <- x.cov %*% coeffs.par
+  
+  # Função de Sobrevivência
+  survival <- 1 - pweibull(q = t/exp(effect), shape = shape.par, scale = scale.par)
+  
+  # Retornar
+  return(survival)
+}
+# Função Taxa de Falha ou Risco
+hazard.weib <- function(times, shape.par, scale.par, x.cov, coeffs.par) {
+  # Preditor linear
+  effect <- x.cov %*% coeffs.par
+  
+  # Função densidade, sobrevivência e risco basal
+  f0 <- dweibull(x = times/exp(effect), shape = shape.par, scale = scale.par)
+  s0 <- 1 - pweibull(q = t/exp(effect), shape = shape.par, scale = scale.par)
+  h0 <- f0 / s0
+  
+  # Função risco
+  hazard <- h0 / exp(effect)
+  
+  # Retornar
+  return(hazard)
+}
+
+# Função log-verossimilhança
+loglikelihood <- function(par, times, cens, x.cov) {
+  n.par <- length(par)
+  shape.par <- par[1]
+  scale.par <- exp(par[2])
+  coeffs.par <- par[3:n.par]
+  
+  # Função de Sobrevivência e Função Risco
+  st <- survival.weib(times=times, shape.par=shape.par, scale.par=scale.par, 
+                      x.cov=x.cov, coeffs.par=coeffs.par)
+  ht <- hazard.weib(times=times, shape.par=shape.par, scale.par=scale.par, 
+                      x.cov=x.cov, coeffs.par=coeffs.par)
+  
+  # Função log-verossimilhança
+  flv <- sum(cens * log(ht) + log(st))
+  return(-flv)
+}
+
+# Número de parâmetros para estimar
+n.par <- 2 + ncol(X)
+
+# Chute Inicial
+init <- rep(1, n.par)
+
+# Maximização
+fit <- optim(par = init, fn = loglikelihood, gr = NULL, method = "BFGS",
+             hessian = TRUE, times=dados$times, cens=dados$cens, x.cov=X)
+
+# Visualizando o ajuste
+fit ; taxa2 <- fit$par[1]
+```
+
+#### Censura Intervalar
+
+## Modelo Log-normal
+
+### Implementação Computacional
+
+#### Censura à Direita
+
+#### Censura Intervalar
+
+## Modelo Exponencial por Partes
+
+### Implementação Computacional
+
+#### Censura à Direita
+
+#### Censura Intervalar
+
+## Modelo Exponencial por Partes de Potência
+
+### Implementação Computacional
+
+#### Censura à Direita
+
+#### Censura Intervalar
