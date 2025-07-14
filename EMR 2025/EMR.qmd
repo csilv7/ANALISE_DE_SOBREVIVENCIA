@@ -1,0 +1,40 @@
+---
+format: 
+  pdf:
+    documentclass: article
+    number-sections: True
+    papersize: a4
+    fontsize: 11pt
+    indent: True
+    header-includes: |
+      \input{EMR.tex}
+
+bibliography: EMR.bib
+dpi: 600
+lang: pt
+---
+
+```{=latex}
+\begin{center}
+\Large{\textbf{Modelos de Tempo de Vida Acelerado segundo Distribuições Exponencial por Partes e Exponencial por Partes Potência Aplicados a Dados de Câncer de Mama com Censura Intervalar}}
+\end{center}
+
+\begin{center}
+    Breno Cauã Rodrigues da Silva
+    \footnote[1]{Faculdade de Estatística, Universidade Federal do Pará - breno.silva@icen.ufpa.br}
+
+    Dr Paulo Cerqueira do Santos Jr
+    \footnote[2]{Faculdade de Estatística, Universidade Federal do Pará - email@email.com.br}
+
+    \vspace{0.5cm}
+    \large{\textbf{Resumo}}
+\end{center}
+
+[...].
+
+\vspace{0.5cm}
+\textbf{Palavras-chave:} palavra 1; palavra 2; palavra 3; palavra 4; palavra 5.
+```
+
+::: {#refs}
+:::
