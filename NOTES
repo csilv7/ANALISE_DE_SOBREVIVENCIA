@@ -1,3 +1,22 @@
+> runApp('EMR 2025/DETRAN/AUX.R')
+Listening on http://127.0.0.1:3743
+
+
+processing file: DTEST.Rmd
+                                                                                                  
+output file: DTEST.knit.md
+"C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools/pandoc" +RTS -K512m -RTS DTEST.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output pandoc1492c4e8425c.tex --lua-filter "C:\Users\user\AppData\Local\R\win-library\4.4\rmarkdown\rmarkdown\lua\pagebreak.lua" --lua-filter "C:\Users\user\AppData\Local\R\win-library\4.4\rmarkdown\rmarkdown\lua\latex-div.lua" --embed-resources --standalone --highlight-style tango --pdf-engine pdflatex --variable graphics --variable "geometry:margin=1in" --include-in-header "C:\Users\user\AppData\Local\Temp\RtmpueC6GA\rmarkdown-str1492c9705513.html" 
+A new version of TeX Live has been released. If you need to install or update any LaTeX packages, you have to upgrade TinyTeX with tinytex::reinstall_tinytex(repository = "illinois").
+! LaTeX Error: Unicode character   (U+2009)
+               not set up for use with LaTeX.
+
+Try other LaTeX engines instead (e.g., xelatex) if you are using pdflatex. See https://bookdown.org/yihui/rmarkdown-cookbook/latex-unicode.html
+
+
+Aviso: Error in : LaTeX failed to compile C:\Users\user\AppData\Local\Temp\RtmpueC6GA\file1492c66151640.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See file1492c66151640.log for more info.
+
+
+
 # ---------------
 # TABELA DE DADOS
 # ---------------

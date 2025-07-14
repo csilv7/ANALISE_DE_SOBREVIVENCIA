@@ -21,10 +21,11 @@ book:
       **SILVA, B.C.R**
     right: |
       Construído usando o <a href="https://quarto.org/"> Pacote Quarto</a>.
-  repo-url : https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA
+      
   downloads: [pdf, docx]
   sharing: [twitter, facebook]
   page-navigation: true
+  repo-url: https://github.com/csilv7/ANALISE_DE_SOBREVIVENCIA
   chapters:
     - index.qmd
     - CI_CONC_BASIC.qmd
@@ -59,7 +60,7 @@ format:
     pdf-engine: xelatex
     indent: true
     header-includes: |
-      \usepackage{indentfirst}
+      \input{header.tex}
     fontsize: 12pt
     geometry: margin=2.5cm
     echo: false
