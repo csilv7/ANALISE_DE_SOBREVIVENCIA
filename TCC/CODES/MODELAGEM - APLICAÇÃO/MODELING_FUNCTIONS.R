@@ -91,7 +91,7 @@ loglikelihood.MEP <- function(par, interval, cens, X, cuts.points) {
   )
   
   flv <- sum(cens * log(S1) + (1 - cens) * log(S2))
-  return(-flv)
+  return(flv)
 }
 
 # --------------------------------------------
@@ -152,5 +152,5 @@ loglikelihood.MEPP <- function(par, interval, cens, X, cuts.points) {
   )
   
   flv <- sum(cens * log(S1) + (1 - cens) * log(S2))
-  return(-flv)
+  return(flv)
 }

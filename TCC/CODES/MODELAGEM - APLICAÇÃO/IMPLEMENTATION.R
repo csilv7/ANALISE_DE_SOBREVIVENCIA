@@ -38,7 +38,7 @@ X <- as.matrix(breast$ther, ncol = 1)
 cens <- breast$cens
 
 # Partições a serem testadas
-bmax.values <- 2:10
+bmax.values <- 2:6
 
 # Data frames para armazenar resultados
 results <- data.frame(
@@ -63,7 +63,7 @@ for (bmax in bmax.values) {
   init.MEP <- rep(1, n.par.MEP)
   fit.MEP <- optim(
     par = init.MEP, fn = loglikelihood.MEP, method = "BFGS", hessian = TRUE,
-    interval = y, cens = cens, X = X, cuts.points = cuts
+    interval = y, cens = cens, X = X, cuts.points = cuts, control = list(fnscale=-1)
   )
   
   # Calcular AIC e BIC do MEP
@@ -75,7 +75,7 @@ for (bmax in bmax.values) {
   init.MEPP <- rep(1, n.par.MEPP)
   fit.MEPP <- optim(
     par = init.MEPP, fn = loglikelihood.MEPP, method = "BFGS", hessian = TRUE,
-    interval = y, cens = cens, X = X, cuts.points = cuts
+    interval = y, cens = cens, X = X, cuts.points = cuts, control = list(fnscale=-1)
   )
   
   # Calcular AIC e BIC do MEPP
